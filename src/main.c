@@ -3,6 +3,7 @@
 #include <SDL/SDL.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
+#include "formes/carre.h"
 
 static unsigned int WINDOW_WIDTH = 800;
 static unsigned int WINDOW_HEIGHT = 600;
@@ -13,7 +14,7 @@ void reshape(int winWidth, int winHeight) {
   glViewport(0, 0, winWidth, winHeight);
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
-  gluOrtho2D(-1., 1., -1., 1.);
+  gluOrtho2D(-100., 100., -100., 100.);
 }
 
 void setVideoMode(int winWidth, int winHeight) {
@@ -45,7 +46,7 @@ int main(int argc, char** argv) {
         
         glClear(GL_COLOR_BUFFER_BIT);
 
-        glEnd();
+        dessinCarre(1);
         SDL_GL_SwapBuffers();
 
         SDL_Event e;
@@ -69,6 +70,22 @@ int main(int argc, char** argv) {
                     case SDLK_ESCAPE : 
                       loop = 0;
                       break;
+
+                    case SDLK_RIGHT : 
+                      printf("droite\n");
+                      // aller à droite
+                      break;
+
+                    case SDLK_LEFT : 
+                      // aller à gauche 
+                      printf("gauche\n");
+                      break;
+
+                    case SDLK_SPACE :
+                      // Sauter
+                      printf("saut\n");
+                      break;
+
                     default : break;
                   }
                   break;
@@ -77,6 +94,11 @@ int main(int argc, char** argv) {
                   break;
             }
         }
+
+      Uint32 elapsedTime = SDL_GetTicks() - startTime;
+      if(elapsedTime < FRAMERATE_MILLISECONDS) {
+        SDL_Delay(FRAMERATE_MILLISECONDS - elapsedTime);
+      }
     }
   
     SDL_Quit();
