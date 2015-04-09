@@ -9,13 +9,13 @@ void dessinCarre(int filled){
     glBegin(GL_LINE_LOOP);
   }
      // Haut gauche
-     glVertex2f(-.5,-.5);
+     glVertex2f(-5,-5);
      // Haut droite
-     glVertex2f(.5,-.5);
+     glVertex2f(5,-5);
           // BAs droite
-     glVertex2f(.5,.5);
+     glVertex2f(5,5);
      // Bas gauche
-     glVertex2f(-.5,.5);
+     glVertex2f(-5,5);
 
   glEnd();
 

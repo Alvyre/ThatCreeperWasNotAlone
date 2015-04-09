@@ -18,6 +18,7 @@ all: $(APP_BIN)
 $(APP_BIN): $(OBJ_FILES)
 	@mkdir -p $(BIN_PATH)
 	$(CC) -o $(BIN_PATH)/$(APP_BIN) $(OBJ_FILES) $(LDFLAGS)
+	@echo "Execute via ./bin/$(APP_BIN)"
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
 	@mkdir -p "$(@D)"

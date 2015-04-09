@@ -14,7 +14,7 @@ void reshape(int winWidth, int winHeight) {
   glViewport(0, 0, winWidth, winHeight);
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
-  gluOrtho2D(-100., 100., -100., 100.);
+  gluOrtho2D(-1000., 1000., -1000., 1000.);
 }
 
 void setVideoMode(int winWidth, int winHeight) {
@@ -40,6 +40,10 @@ int main(int argc, char** argv) {
     SDL_WM_SetCaption("Thomas Was Alone", NULL);
 
     int loop = 1;
+    float mouvement_x = 0;
+    float mouvement_y = 0;
+    float x = 0;
+    float y = 0;
     while(loop) {
        /* temps au dÃ©but de la boucle */
         Uint32 startTime = SDL_GetTicks();
@@ -47,6 +51,10 @@ int main(int argc, char** argv) {
         glClear(GL_COLOR_BUFFER_BIT);
 
         dessinCarre(1);
+
+        glTranslatef(x, y, 0);
+
+
         SDL_GL_SwapBuffers();
 
         SDL_Event e;
@@ -56,8 +64,7 @@ int main(int argc, char** argv) {
                 break;
             }
 
-
-            switch(e.type) {                  
+            switch(e.type) {                 
                 case SDL_VIDEORESIZE:
                   windowWidth  = e.resize.w;
                   windowHeight = e.resize.h;
@@ -71,19 +78,43 @@ int main(int argc, char** argv) {
                       loop = 0;
                       break;
 
-                    case SDLK_RIGHT : 
-                      printf("droite\n");
-                      // aller à droite
+                    case SDLK_RIGHT :
+                      mouvement_x = 1;
                       break;
 
                     case SDLK_LEFT : 
-                      // aller à gauche 
-                      printf("gauche\n");
+                      mouvement_x = -1;
                       break;
 
                     case SDLK_SPACE :
-                      // Sauter
-                      printf("saut\n");
+                      mouvement_y = 1;
+                      break;
+
+                    default : break;
+                  }
+                  break;
+
+                  case SDL_KEYUP:
+                  switch(e.key.keysym.sym){
+                    case SDLK_RIGHT :
+                      if (mouvement_x > 0)
+                      {
+                        mouvement_x = 0;
+                      }
+                      break;
+
+                    case SDLK_LEFT : 
+                      if (mouvement_x < 0)
+                      {
+                        mouvement_x = 0;
+                      }
+                      break;
+
+                    case SDLK_SPACE :
+                      if (mouvement_y > 0)
+                      {
+                        mouvement_y = 0;
+                      }
                       break;
 
                     default : break;
@@ -94,6 +125,21 @@ int main(int argc, char** argv) {
                   break;
             }
         }
+
+        if (mouvement_x != 0)
+        {
+          x += mouvement_x;
+        } else {
+          x = 0;
+        }
+        
+        if (mouvement_y != 0)
+        {
+          y += mouvement_y;
+        } else {
+          y = 0;
+        }
+
 
       Uint32 elapsedTime = SDL_GetTicks() - startTime;
       if(elapsedTime < FRAMERATE_MILLISECONDS) {
