@@ -14,7 +14,7 @@ void reshape(int winWidth, int winHeight) {
   glViewport(0, 0, winWidth, winHeight);
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
-  gluOrtho2D(-1000., 1000., -1000., 1000.);
+  gluOrtho2D(-1000., 1000., -1000.*winHeight/(float)winWidth, 1000.*winHeight/(float)winWidth);
 }
 
 void setVideoMode(int winWidth, int winHeight) {
@@ -22,7 +22,7 @@ void setVideoMode(int winWidth, int winHeight) {
     fprintf(stderr, "Impossible d'ouvrir la fenetre. Fin du programme.\n");
     exit(EXIT_FAILURE);
   }
-  reshape(WINDOW_WIDTH,WINDOW_HEIGHT);
+  reshape(winWidth, winHeight);
 }
 
 int main(int argc, char** argv) { 
