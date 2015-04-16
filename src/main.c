@@ -7,6 +7,7 @@
 #include "level.h"
 #include "formes/carre.h"
 #include "perso.h"
+#include "deplacements.h"
 
 static const unsigned int BIT_PER_PIXEL = 32;
 static const Uint32 FRAMERATE_MILLISECONDS = 1000 / 60;
@@ -46,8 +47,9 @@ int main(int argc, char** argv) {
   float mouvement_y = 0;
 
 // Création du level
-  //int lines = WINDOW_HEIGHT/TAILLE_CASE ;
-  //int columns = WINDOW_WIDTH/TAILLE_CASE ;
+  //const int lines = WINDOW_HEIGHT/TAILLE_CASE ;
+  //const int columns = WINDOW_WIDTH/TAILLE_CASE ;
+  //printf("lines = %d, columns = %d\n",lines,columns );
 int level[30][40] = { // FIXME accepte 30 & 40 mais pas les variables
 
   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
@@ -108,20 +110,35 @@ while(loop) {
   
 
 //affichage du décor
+
   creeDecor(level);
 //affichage du joueur
+
   glColor3f(perso1.color.r,perso1.color.g,perso1.color.b);
   dessinCarre(1,perso1.posX,perso1.posY);
   glColor3f(1,1,1);
 
+// mouvement joueur
+  SDL_Event e;
+  directions(&perso1, e);
 
+// calcul de la gravité test
+  //printf("perso y = %d\n",perso1.posY );
+//   if (perso1.posY==832) {
+//   perso1.posY = 832;
+//   perso1.gravite = -1*(perso1.saute*10);
+//   perso1.posY += perso1.gravite;
+//   printf("y = %d\n",perso1.posY );
+// } else {
+//   perso1.gravite++;
+// }
 
 //glTranslatef(x, y, 0);
 
 
   SDL_GL_SwapBuffers();
 
-  SDL_Event e;
+  
   while(SDL_PollEvent(&e)) {
     if(e.type == SDL_QUIT) {
       loop = 0;
@@ -135,75 +152,10 @@ while(loop) {
       setVideoMode(windowWidth,windowHeight);
       break;
 
-      case SDL_KEYDOWN:
-      switch(e.key.keysym.sym){
-        case 'q' : 
-        case SDLK_ESCAPE : 
-        loop = 0;
-        break;
-
-        case SDLK_RIGHT :
-        mouvement_x = 2;
-        break;
-
-        case SDLK_LEFT : 
-        mouvement_x = -2;
-        break;
-
-        case SDLK_SPACE :
-        mouvement_y = -1;
-        break;
-
-        default : break;
-      }
-      break;
-
-      case SDL_KEYUP:
-      switch(e.key.keysym.sym){
-        case SDLK_RIGHT :
-        if (mouvement_x > 0)
-        {
-          mouvement_x = 0;
-        }
-        break;
-
-        case SDLK_LEFT : 
-        if (mouvement_x < 0)
-        {
-          mouvement_x = 0;
-        }
-        break;
-
-        case SDLK_SPACE :
-        if (mouvement_y > 0)
-        {
-          mouvement_y = 0;
-        }
-        break;
-
-        default : break;
-      }
-      break;
-
       default:
       break;
     }
   }
-
-  if (mouvement_x != 0)
-  {
-    perso1.posX += mouvement_x;
-  } else {
-    perso1.posX += 0;
-  }
-
-  if (mouvement_y != 0)
-  {
-    perso1.posY += mouvement_y;
-  } else {
-    perso1.posY += 0;
-  }
-
 
   Uint32 elapsedTime = SDL_GetTicks() - startTime;
   if(elapsedTime < FRAMERATE_MILLISECONDS) {

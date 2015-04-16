@@ -3,7 +3,7 @@
 void initPerso(Personnage *personnage, int width, int height, int posCaseX, int posCaseY, Color3f color){
 
 	personnage->centerX = posCaseX + TAILLE_CASE /2;
-	personnage->centerX = posCaseY+ TAILLE_CASE /2;
+	personnage->centerY = posCaseY+ TAILLE_CASE /2;
 	personnage->posCaseX = posCaseX;
 	personnage->posCaseY = posCaseY;
 	personnage->posX = posCaseX * TAILLE_CASE;
@@ -19,4 +19,5 @@ void initPerso(Personnage *personnage, int width, int height, int posCaseX, int 
 	personnage->lateral = false;
 	personnage->saute = false;
 	personnage->repos = true;
+	personnage->active = false;
 }

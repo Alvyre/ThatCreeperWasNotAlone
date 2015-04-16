@@ -17,7 +17,7 @@ void creeDecor(int level[WINDOW_HEIGHT/TAILLE_CASE][WINDOW_WIDTH/TAILLE_CASE]){
 		for (j = 0; j < columns; j++) //width
 		{	
 			//affiche le grid
-			dessinCarre(0,j*32,i*32);
+			//dessinCarre(0,j*32,i*32);
 			if (level[i][j] == 1)
 			{
 				dessinCarre(1,j*32,i*32);

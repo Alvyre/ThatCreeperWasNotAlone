@@ -1,6 +1,6 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
-#include "Const.h"
+#include "main.h"
 
 // TODO : taille
 void dessinCarre(int filled, int posX, int posY){

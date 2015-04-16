@@ -1,3 +1,6 @@
+#include "deplacements.h"
+#include "main.h"
+
 /************************************/
 /*   Gestion des déplacements       */
 /************************************/
@@ -5,33 +8,39 @@
 
 // Touches de direction
 
-/*
-void directions(Personnage *perso, SDL_Event e) {
-    switch(e.type) {                 
-      
-      case SDL_KEYDOWN:
-      switch(e.key.keysym.sym){
-        case 'q' : 
-        case SDLK_ESCAPE : 
-        loop = 0;
-        break;
 
+void directions(Personnage *perso, SDL_Event e) {
+    if(e.type == SDL_KEYDOWN){
+
+    	switch(e.key.keysym.sym){
         case SDLK_RIGHT :
-        mouvement_x = 1;
-        break;
+        	deplacement(perso, 1);
+        break; 
 
         case SDLK_LEFT : 
-        mouvement_x = -1;
+        	deplacement(perso, -1);
         break;
-
         case SDLK_SPACE :
-        mouvement_y = 1;
-        break;
-
+        	perso->saute = true;
         default : break;
-      }
+
+      	}
+
+    }
+    else if(e.type == SDL_KEYUP){               
+		switch(e.key.keysym.sym){
+        	case SDLK_RIGHT :
+        	case SDLK_LEFT : 
+        		deplacement(perso, 0);
+        break;
+        default : break;
+		}
+	}
 }
 
-si e.type = SDL_KEYDOWN
-
-*/
+void deplacement(Personnage *perso, int sens) {  
+	perso->sens = sens; //direction du perso 
+	perso->posX += perso->vitesse * perso->sens;// position du perso en px
+	perso->posCaseX = perso->posX / TAILLE_CASE ; // position du perso en case
+	perso->lateral = true;
+}

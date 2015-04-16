@@ -25,6 +25,8 @@ typedef struct Personnage
 	bool saute;
 	bool repos;
 
+	bool active; // perso actif (controlable) ou pas
+
 
 }Personnage;
 
