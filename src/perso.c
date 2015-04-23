@@ -2,8 +2,8 @@
 
 void initPerso(Personnage *personnage, int width, int height, int posCaseX, int posCaseY, Color3f color){
 
-	personnage->centerX = posCaseX + TAILLE_CASE /2;
-	personnage->centerY = posCaseY+ TAILLE_CASE /2;
+	personnage->centerX = (posCaseX * TAILLE_CASE) + (width * TAILLE_CASE)/2;
+	personnage->centerY = (posCaseY * TAILLE_CASE) + (height * TAILLE_CASE)/2;
 	personnage->posCaseX = posCaseX;
 	personnage->posCaseY = posCaseY;
 	personnage->posX = posCaseX * TAILLE_CASE;

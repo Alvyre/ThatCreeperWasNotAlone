@@ -80,7 +80,7 @@ int main(int argc, char** argv) {
 
     // mouvement joueur
     SDL_Event e;
-    directions(&perso1, e);
+    directions(&perso1, e, level);
 
     // calcul de la gravité test
     if (perso1.saute)
