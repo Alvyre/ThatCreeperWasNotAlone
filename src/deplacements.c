@@ -13,16 +13,23 @@ void directions(Personnage *perso, SDL_Event e) {
     if(e.type == SDL_KEYDOWN){
 
     	switch(e.key.keysym.sym){
-        case SDLK_RIGHT :
-        	deplacement(perso, 1);
-        break; 
+            case SDLK_RIGHT :
+            	deplacement(perso, 1);
+            break; 
 
-        case SDLK_LEFT : 
-        	deplacement(perso, -1);
-        break;
-        case SDLK_SPACE :
-        	perso->saute = true;
-        default : break;
+            case SDLK_LEFT : 
+            	deplacement(perso, -1);
+            break;
+
+            case SDLK_SPACE :
+                if (perso-> saute == false)
+                {
+                    perso->saute = true;
+                    perso->gravite = -30;
+                }
+            break;
+
+            default : break;
 
       	}
 
@@ -32,7 +39,7 @@ void directions(Personnage *perso, SDL_Event e) {
         	case SDLK_RIGHT :
         	case SDLK_LEFT : 
         		deplacement(perso, 0);
-        break;
+            break;
         default : break;
 		}
 	}

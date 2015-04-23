@@ -1,9 +1,12 @@
-#include "main.h"
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
 #include <SDL/SDL.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
+
+
+#include "main.h"
 #include "level.h"
 #include "formes/carre.h"
 #include "perso.h"
@@ -43,45 +46,11 @@ int main(int argc, char** argv) {
   SDL_WM_SetCaption("Thomas Was Alone", NULL);
 
   int loop = 1;
-  float mouvement_x = 0;
-  float mouvement_y = 0;
 
+  int **level = calloc(WINDOW_HEIGHT/TAILLE_CASE, sizeof(int*));
   // Création du level
-  //const int lines = WINDOW_HEIGHT/TAILLE_CASE ;
-  //const int columns = WINDOW_WIDTH/TAILLE_CASE ;
-  //printf("lines = %d, columns = %d\n",lines,columns );
-  int level[30][40] = { // FIXME accepte 30 & 40 mais pas les variables --> malloc
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
-    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
-  };
+  initLevel(level);
+
 
   //creation perso;
   Personnage perso1;
@@ -91,8 +60,9 @@ int main(int argc, char** argv) {
   RED.b = 0;
 
   // perso, width, height, caseX, caseY, color
-  initPerso(&perso1,1,1,4,26,RED);
+  initPerso(&perso1, 1, 1, 4, 26, RED);
 
+  int gravite = 2;
 
   while(loop) {
     /* temps au début de la boucle */
@@ -104,27 +74,27 @@ int main(int argc, char** argv) {
     creeDecor(level);
 
     //affichage du joueur
-    glColor3f(perso1.color.r,perso1.color.g,perso1.color.b);
-    dessinCarre(1,perso1.posX,perso1.posY);
-    glColor3f(1,1,1);
+    glColor3f(perso1.color.r, perso1.color.g, perso1.color.b);
+    dessinCarre(1, perso1.posX, perso1.posY);
+    glColor3f(1, 1, 1);
 
     // mouvement joueur
     SDL_Event e;
     directions(&perso1, e);
 
     // calcul de la gravité test
-    //printf("perso y = %d\n",perso1.posY );
-    //   if (perso1.posY==832) {
-    //   perso1.posY = 832;
-    //   perso1.gravite = -1*(perso1.saute*10);
-    //   perso1.posY += perso1.gravite;
-    //   printf("y = %d\n",perso1.posY );
-    // } else {
-    //   perso1.gravite++;
-    // }
+    if (perso1.saute)
+    {
+      perso1.gravite += gravite;
+      perso1.posY += perso1.gravite;
 
-    //glTranslatef(x, y, 0);
-
+      if (isPixelGround(perso1.posX, perso1.posY, level))
+      {
+        perso1.gravite = 0;
+        perso1.saute = false;
+      }
+      
+    }
 
     SDL_GL_SwapBuffers();
 
@@ -138,7 +108,18 @@ int main(int argc, char** argv) {
         case SDL_VIDEORESIZE:
         windowWidth  = e.resize.w;
         windowHeight = e.resize.h;
-        setVideoMode(windowWidth,windowHeight);
+        setVideoMode(windowWidth, windowHeight);
+        break;
+
+        case SDL_KEYDOWN:
+          switch(e.key.keysym.sym){
+            case 'q' : 
+            case SDLK_ESCAPE :
+              freeLevel(level);
+              loop = 0;
+              break;
+              default : break;
+          }
         break;
 
         default:
