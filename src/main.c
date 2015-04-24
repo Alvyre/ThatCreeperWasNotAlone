@@ -62,7 +62,7 @@ int main(int argc, char** argv) {
   RED.b = 0;
 
   // perso, width, height, caseX, caseY, color
-  initPerso(&perso1, 1, 1, 4, 4, RED);
+  initPerso(&perso1, 1, 2, 4, 4, RED);
 
   //int gravite = 2;
 
@@ -77,7 +77,7 @@ int main(int argc, char** argv) {
     creeDecor(level);                                           // Affichage décor
 
     glColor3f(perso1.color.r, perso1.color.g, perso1.color.b);  // Affichage du joueur
-    dessinCarre(1, perso1.posX, perso1.posY);
+    dessinPerso(&perso1);
     glColor3f(1, 1, 1);
 
     /* GESTION TOUCHE */

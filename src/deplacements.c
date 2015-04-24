@@ -96,8 +96,8 @@ void deplacement(Personnage *perso, int **map) {
  
     
     for (C = (perso->centerX - (perso->width*TAILLE_CASE/2) )/TAILLE_CASE; C<(perso->centerX+(perso->width*TAILLE_CASE/2))/TAILLE_CASE; C++) { 
-        if (map[L][C]== 1 && perso->centerY >= (L-1)*TAILLE_CASE+(perso->height*TAILLE_CASE/2)) {   
-            perso->centerY = (L-1)*TAILLE_CASE+(perso->height*TAILLE_CASE/2);
+        if (map[L][C] == 1 && perso->centerY >= (L-perso->height)*TAILLE_CASE+(perso->height*TAILLE_CASE/2)) {   
+            perso->centerY = (L-perso->height)*TAILLE_CASE+(perso->height*TAILLE_CASE/2);
             perso->posY = perso->centerY - (perso->height*TAILLE_CASE/2);
             perso->gravite = -1*(int)(perso->saute)*11;
             return;             
