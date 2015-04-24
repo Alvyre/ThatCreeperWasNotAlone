@@ -16,6 +16,11 @@ typedef struct Personnage
 	int posX;
 	int posY;
 	Color3f color;
+	// variables touches
+	bool gauche;
+	bool droite;
+	bool haut;
+	bool bas;
 	// variables déplacements
 	int gravite;
 	int vitesse;
@@ -32,5 +37,7 @@ typedef struct Personnage
 
 
 void initPerso(Personnage *personnage, int width, int height, int posCaseX, int posCaseY, Color3f color);
+void gestionJoueur(Personnage *perso, int** map);
+
 
 #endif /* PERSO_H */

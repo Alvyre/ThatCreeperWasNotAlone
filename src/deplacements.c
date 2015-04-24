@@ -8,53 +8,80 @@
 
 // Touches de direction
 
-
-void directions(Personnage *perso, SDL_Event e, int **map) {
+// Appuyer sur une touche
+void appuyer(Personnage *perso, SDL_Event e){
     if(e.type == SDL_KEYDOWN){
 
-    	switch(e.key.keysym.sym){
+        switch(e.key.keysym.sym){
             case SDLK_RIGHT :
-            	deplacement(perso, 1, map);
+                perso->droite = true;
             break; 
 
             case SDLK_LEFT : 
-            	deplacement(perso, -1, map);
+                perso->gauche = true;
+            break;
+
+            case SDLK_UP : 
+                perso->haut = true;
+            break;
+
+            case SDLK_DOWN : 
+                perso->bas = true;
             break;
 
             case SDLK_SPACE :
-                if (perso-> saute == false)
-                {
-                    perso->saute = true;
-                    perso->gravite = -30;
-                }
+                    perso->haut = true;
             break;
 
             default : break;
 
-      	}
-
+        }
     }
-    else if(e.type == SDL_KEYUP){               
-		switch(e.key.keysym.sym){
-        	case SDLK_RIGHT :
-        	case SDLK_LEFT : 
-        		deplacement(perso, 0, map);
+}
+// Appuyer sur une touche
+void relacher(Personnage *perso, SDL_Event e){
+    if(e.type == SDL_KEYUP){
+
+        switch(e.key.keysym.sym){
+            case SDLK_RIGHT :
+                perso->droite = false;
+            break; 
+
+            case SDLK_LEFT : 
+                perso->gauche = false;
             break;
-        default : break;
-		}
-	}
+
+            case SDLK_UP : 
+                perso->haut = false;
+            break;
+
+            case SDLK_DOWN : 
+                perso->bas = false;
+            break;
+
+            case SDLK_SPACE :
+                    perso->haut = false;
+            break;
+
+            default : break;
+
+        }
+    }
 }
 
-void deplacement(Personnage *perso, int sens, int **map) {  
-	perso->sens = sens;   //direction du perso 
-    perso->posX += perso->vitesse * perso->sens;  // deplacement en x
-    perso->centerX = perso->posX + (perso->width*TAILLE_CASE)/2;  // maj centre X du perso   
-    perso->centerY = perso->posY + (perso->height*TAILLE_CASE)/2;
+void deplacement(Personnage *perso, int **map) {
 
-    int C = (perso->centerX + (perso->width*TAILLE_CASE/2) * perso->sens)/TAILLE_CASE; // colonne à tester
-    int L = (perso->centerY - (perso->height*TAILLE_CASE/2))/ TAILLE_CASE;  // ligne à tester
-    
-    //Colision latéral                          
+    /* deplacement latéral  */
+
+    perso->posX += perso->vitesse * perso->sens;                                                // X = vitesse * sens
+
+
+    /* Colisions */
+
+    int C = (perso->centerX + (perso->width*TAILLE_CASE/2) * perso->sens)/TAILLE_CASE;          // Colonne à tester pour la colision
+    int L = (perso->centerY - (perso->height*TAILLE_CASE/2))/ TAILLE_CASE;                      // Ligne à tester pour la colision
+
+    // Colision latérale
     for (; L<perso->centerY/TAILLE_CASE+1; L++) {
         if (map[L][C]==1) {
             perso->centerX = C*TAILLE_CASE + TAILLE_CASE/2 -TAILLE_CASE*perso->sens;
@@ -62,4 +89,20 @@ void deplacement(Personnage *perso, int sens, int **map) {
         }
     }
 
+    // Collision sol + saut
+
+    perso->centerY += perso->gravite;
+    perso->posY = perso->centerY - (perso->height*TAILLE_CASE)/2;
+ 
+    
+    for (C = (perso->centerX - (perso->width*TAILLE_CASE/2) )/TAILLE_CASE; C<(perso->centerX+(perso->width*TAILLE_CASE/2))/TAILLE_CASE; C++) { 
+        if (map[L][C]== 1 && perso->centerY >= (L-1)*TAILLE_CASE+(perso->height*TAILLE_CASE/2)) {   
+            perso->centerY = (L-1)*TAILLE_CASE+(perso->height*TAILLE_CASE/2);
+            perso->posY = perso->centerY - (perso->height*TAILLE_CASE/2);
+            perso->gravite = -1*(int)(perso->saute)*11;
+            return;             
+        }
+    }
+     
+    if (perso->gravite++ > TAILLE_CASE) perso->gravite = TAILLE_CASE;
 }

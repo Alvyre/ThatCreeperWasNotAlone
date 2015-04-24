@@ -45,11 +45,13 @@ int main(int argc, char** argv) {
 
   SDL_WM_SetCaption("Thomas Was Alone", NULL);
 
-  int loop = 1;
 
+
+  int loop = 1;
   int **level = calloc(WINDOW_HEIGHT/TAILLE_CASE, sizeof(int*));
   // Création du level
   initLevel(level);
+
 
 
   //creation perso;
@@ -60,9 +62,9 @@ int main(int argc, char** argv) {
   RED.b = 0;
 
   // perso, width, height, caseX, caseY, color
-  initPerso(&perso1, 1, 1, 4, 26, RED);
+  initPerso(&perso1, 1, 1, 4, 4, RED);
 
-  int gravite = 2;
+  //int gravite = 2;
 
   while(loop) {
     /* temps au début de la boucle */
@@ -70,31 +72,24 @@ int main(int argc, char** argv) {
 
     glClear(GL_COLOR_BUFFER_BIT);
 
-    //affichage du décor
-    creeDecor(level);
+    /* AFFICHAGE */
 
-    //affichage du joueur
-    glColor3f(perso1.color.r, perso1.color.g, perso1.color.b);
+    creeDecor(level);                                           // Affichage décor
+
+    glColor3f(perso1.color.r, perso1.color.g, perso1.color.b);  // Affichage du joueur
     dessinCarre(1, perso1.posX, perso1.posY);
     glColor3f(1, 1, 1);
 
-    // mouvement joueur
+    /* GESTION TOUCHE */
     SDL_Event e;
-    directions(&perso1, e, level);
+    appuyer(&perso1,e);
+    relacher(&perso1,e);
 
-    // calcul de la gravité test
-    if (perso1.saute)
-    {
-      perso1.gravite += gravite;
-      perso1.posY += perso1.gravite;
+    /* GESTION JOUEUR */
 
-      if (isPixelGround(perso1.posX, perso1.posY, level))
-      {
-        perso1.gravite = 0;
-        perso1.saute = false;
-      }
-      
-    }
+    gestionJoueur(&perso1, level);
+
+
 
     SDL_GL_SwapBuffers();
 
