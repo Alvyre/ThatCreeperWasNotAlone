@@ -89,7 +89,7 @@ void deplacement(Personnage *perso, int **map) {
         }
     }
 
-    // Collision sol + saut
+    // Colision sol + saut
 
     perso->centerY += perso->gravite;
     perso->posY = perso->centerY - (perso->height*TAILLE_CASE)/2;
@@ -105,4 +105,16 @@ void deplacement(Personnage *perso, int **map) {
     }
      
     if (perso->gravite++ > TAILLE_CASE) perso->gravite = TAILLE_CASE;
+
+    // Colision roof
+    if (perso->gravite < 0) {                    
+        L = (perso->centerY-(perso->height*TAILLE_CASE/2))/TAILLE_CASE;                   
+        for (C=(perso->centerX-(perso->width*TAILLE_CASE/2))/TAILLE_CASE; C<(perso->centerX+(perso->width*TAILLE_CASE/2))/TAILLE_CASE; C++) { 
+            if (map[L][C] > 0) {      
+                perso->centerY = (L+2)*TAILLE_CASE-(perso->height*TAILLE_CASE/2);
+                perso->posY = perso->centerY - (perso->height*TAILLE_CASE/2);
+                perso->gravite=1;
+            }
+        }
+    }
 }
