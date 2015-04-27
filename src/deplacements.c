@@ -79,10 +79,11 @@ void deplacement(Personnage *perso, int **map) {
     /* Colisions */
 
     int C = (perso->centerX + (perso->width*TAILLE_CASE/2) * perso->sens)/TAILLE_CASE;          // Colonne à tester pour la colision
-    int L = perso->centerY / TAILLE_CASE-perso->height/2.0;                                                     // Ligne à tester pour la colision
-
+    int L = perso->centerY / TAILLE_CASE-perso->height/2.0;
+    printf("%f\n",(perso->centerY/TAILLE_CASE+perso->height/2.0) );                                                     // Ligne à tester pour la colision
+    printf("%d\n",(int)(perso->centerY/TAILLE_CASE+perso->height/2.0) );
     // Colision latérale
-    for (; L<perso->centerY/TAILLE_CASE+perso->height/2.0; L++) {
+    for (; L<perso->centerY/(TAILLE_CASE+perso->height/2.0); L++) {
         if (map[L][C]==1) {
             perso->centerX = C*TAILLE_CASE + TAILLE_CASE/2 -TAILLE_CASE*perso->sens;
         }
