@@ -11,10 +11,6 @@ typedef struct Personnage
 	int centerY;
 	int width;
 	int height;
-	int posCaseX;
-	int posCaseY;
-	int posX;
-	int posY;
 	Color3f color;
 	// variables touches
 	bool gauche;

@@ -28,6 +28,7 @@ void initLevel(int** level){
   for (j = 0; j < COLUMNS; j++)
   {
     level[27][j] = 1;
+    level[28][j] = 1;
   }
 }
 

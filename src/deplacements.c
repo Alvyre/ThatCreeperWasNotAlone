@@ -73,32 +73,29 @@ void deplacement(Personnage *perso, int **map) {
 
     /* deplacement latéral  */
 
-    perso->posX += perso->vitesse * perso->sens;                                                // X = vitesse * sens
+    perso->centerX += perso->vitesse * perso->sens;                                                // X = vitesse * sens
 
 
     /* Colisions */
 
     int C = (perso->centerX + (perso->width*TAILLE_CASE/2) * perso->sens)/TAILLE_CASE;          // Colonne à tester pour la colision
-    int L = (perso->centerY - (perso->height*TAILLE_CASE/2))/ TAILLE_CASE;                      // Ligne à tester pour la colision
+    int L = perso->centerY / TAILLE_CASE-perso->height/2.0;                                                     // Ligne à tester pour la colision
 
     // Colision latérale
-    for (; L<perso->centerY/TAILLE_CASE+1; L++) {
+    for (; L<perso->centerY/TAILLE_CASE+perso->height/2.0; L++) {
         if (map[L][C]==1) {
             perso->centerX = C*TAILLE_CASE + TAILLE_CASE/2 -TAILLE_CASE*perso->sens;
-            perso->posX = perso->centerX - (perso->width*TAILLE_CASE)/2;
         }
     }
 
     // Colision sol + saut
 
     perso->centerY += perso->gravite;
-    perso->posY = perso->centerY - (perso->height*TAILLE_CASE)/2;
  
     
     for (C = (perso->centerX - (perso->width*TAILLE_CASE/2) )/TAILLE_CASE; C<(perso->centerX+(perso->width*TAILLE_CASE/2))/TAILLE_CASE; C++) { 
-        if (map[L][C] == 1 && perso->centerY >= (L-perso->height)*TAILLE_CASE+(perso->height*TAILLE_CASE/2)) {   
-            perso->centerY = (L-perso->height)*TAILLE_CASE+(perso->height*TAILLE_CASE/2);
-            perso->posY = perso->centerY - (perso->height*TAILLE_CASE/2);
+        if (map[L][C] == 1 && perso->centerY >= (L-perso->height/2.0)*TAILLE_CASE) {   
+            perso->centerY = (L-perso->height/2.0)*TAILLE_CASE;
             perso->gravite = -1*(int)(perso->saute)*11;
             return;             
         }
@@ -112,7 +109,6 @@ void deplacement(Personnage *perso, int **map) {
         for (C=(perso->centerX-(perso->width*TAILLE_CASE/2))/TAILLE_CASE; C<(perso->centerX+(perso->width*TAILLE_CASE/2))/TAILLE_CASE; C++) { 
             if (map[L][C] > 0) {      
                 perso->centerY = (L+2)*TAILLE_CASE-(perso->height*TAILLE_CASE/2);
-                perso->posY = perso->centerY - (perso->height*TAILLE_CASE/2);
                 perso->gravite=1;
             }
         }

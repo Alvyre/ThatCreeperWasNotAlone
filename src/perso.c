@@ -5,10 +5,6 @@ void initPerso(Personnage *personnage, int width, int height, int posCaseX, int 
 
 	personnage->centerX = (posCaseX * TAILLE_CASE) + (width * TAILLE_CASE)/2;
 	personnage->centerY = (posCaseY * TAILLE_CASE) + (height * TAILLE_CASE)/2;
-	personnage->posCaseX = posCaseX;
-	personnage->posCaseY = posCaseY;
-	personnage->posX = posCaseX * TAILLE_CASE;
-	personnage->posY = posCaseY * TAILLE_CASE;
 	personnage->width = width;
 	personnage->height = height;
 	personnage->color.r = color.r;
@@ -32,10 +28,6 @@ void gestionJoueur(Personnage *perso,int** map){
 	perso->saute = -1 * (int)(perso->haut)*11;
 	perso->repos = (int)(!perso->droite && !perso->gauche && !perso->haut && !perso->bas);
 	perso->lateral = perso->droite || perso->gauche;
-
-
-	perso->centerX = perso->posX + (perso->width*TAILLE_CASE)/2;  // maj centre X du perso   
-    perso->centerY = perso->posY + (perso->height*TAILLE_CASE)/2;
 
 	deplacement(perso, map);
 }
