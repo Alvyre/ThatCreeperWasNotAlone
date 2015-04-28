@@ -31,3 +31,6 @@ bin/*
 
 # Debug files
 *.dSYM/
+
+#Trash files
+.Trash*
