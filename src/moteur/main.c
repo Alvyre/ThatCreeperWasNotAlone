@@ -63,7 +63,7 @@ int main(int argc, char** argv) {
   RED.b = 0;
 
   // perso, width, height, caseX, caseY, color
-  initPerso(&perso1, 1, 4, 4, 10, RED);
+  initPerso(&perso1, 1, 2, 4, 10, RED);
 
   //int gravite = 2;
 
