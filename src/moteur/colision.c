@@ -3,7 +3,18 @@
 /************************************/
 
 #include "moteur/colision.h"
-// collisions latérales
+
+/***********************************************************************************/
+/*	 Function checkLateral														   */
+/*   																			   */
+/*   @param : Perso : personnage 												   */
+/*	 @param : L     : ligne centre perso 										   */
+/*	 @param : C     : colonne bas du perso 										   */
+/*	 @param : D     : distance entre le centre du perso et le bord à tester        */
+/*	 @param : H 	: ligne où se trouve le haut du perso   					   */
+/*   																			   */
+/***********************************************************************************/
+
 
 void checkLateral(Personnage *perso,int L, int C, uint D, int H, int* result, int** level) {
 	for (L=H; L<perso->centerY/TAILLE_CASE+1; L++) {											// vérifie toutes lignes (grille) sur lesquelles il se tient
@@ -19,17 +30,13 @@ void checkLateral(Personnage *perso,int L, int C, uint D, int H, int* result, in
 }
 
 
-//     // Colision latérale
-//     for (; L<perso->centerY/(TAILLE_CASE+perso->height/2.0); L++) {
-//         if (map[L][C]==1) {
-//             perso->centerX = C*TAILLE_CASE + TAILLE_CASE/2 -TAILLE_CASE*perso->sens;
-//         }
-//     }
-
-
-
-
-// colision avec un bloc de type solide
+/***********************************************************************************/
+/*	 Function checkSolide														   */
+/*   																			   */
+/*   @param : Perso : personnage 												   */
+/*	 @param : Y     : position sur Y avant déplacement							   */
+/*   																			   */
+/***********************************************************************************/
 
 bool checkSolide(Personnage *perso,uint Y) {
 
@@ -39,7 +46,18 @@ bool checkSolide(Personnage *perso,uint Y) {
 	return false;
 }
 
-// collision roof
+
+/***********************************************************************************/
+/*	 Function checkPlafond														   */
+/*   																			   */
+/*   @param : Perso : personnage 												   */
+/*	 @param : C     : colonne à tester											   */
+/*	 @param : L     : ligne à tester en haut du perso							   */
+/*	 @param : D     : distance de la colonne à tester					           */
+/*	 @param : H 	: hauteur reelle de l'objet				   					   */
+/*   																			   */
+/***********************************************************************************/
+
 bool checkPlafond(Personnage *perso,int C,int L,uint D,uint H, int **level){															
 		for (C=(perso->centerX-D)/TAILLE_CASE; C<(perso->centerX+D)/TAILLE_CASE; C++) {			// cases occupées par les limites X du perso 
 			if (level[L][C] == 1) {																// si la case n'est pas vide
