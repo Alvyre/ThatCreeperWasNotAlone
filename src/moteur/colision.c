@@ -19,6 +19,14 @@ void checkLateral(Personnage *perso,int L, int C, uint D, int H, int* result, in
 }
 
 
+//     // Colision latérale
+//     for (; L<perso->centerY/(TAILLE_CASE+perso->height/2.0); L++) {
+//         if (map[L][C]==1) {
+//             perso->centerX = C*TAILLE_CASE + TAILLE_CASE/2 -TAILLE_CASE*perso->sens;
+//         }
+//     }
+
+
 
 
 // colision avec un bloc de type solide
@@ -50,3 +58,5 @@ bool checkPlafond(Personnage *perso,int C,int L,uint D,uint H, int **level){
 		perso->gravite = perso->saute;															// saut
 		return true	;																			// actions effectuées
 }
+
+
