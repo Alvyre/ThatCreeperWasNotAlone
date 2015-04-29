@@ -1,5 +1,5 @@
-#include "perso.h"
-#include "deplacements.h"
+#include "moteur/perso.h"
+#include "moteur/deplacements.h"
 
 void initPerso(Personnage *personnage, int width, int height, int posCaseX, int posCaseY, Color3f color){
 
@@ -25,9 +25,10 @@ void initPerso(Personnage *personnage, int width, int height, int posCaseX, int 
 
 void gestionJoueur(Personnage *perso,int** map){
 	perso->sens = (int)perso->droite - (int)perso->gauche;
-	perso->saute = -1 * (int)(perso->haut)*11;
+	perso->saute = -1 * (int)(perso->haut) *11;
 	perso->repos = (int)(!perso->droite && !perso->gauche && !perso->haut && !perso->bas);
 	perso->lateral = perso->droite || perso->gauche;
 
-	deplacement(perso, map);
+
+	deplacementJoueur(perso, map);
 }

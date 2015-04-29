@@ -1,5 +1,5 @@
-#include "main.h"
-#include "level.h"
+#include "moteur/main.h"
+#include "initialisation/level.h"
 #include "formes/carre.h"
 
 #define LINES WINDOW_HEIGHT/TAILLE_CASE //30

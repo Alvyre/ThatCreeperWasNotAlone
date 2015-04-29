@@ -2,7 +2,7 @@
 #define PERSO_H
 
 
-#include "main.h"
+#include "moteur/main.h"
 #include <stdbool.h>
 
 typedef struct Personnage
@@ -23,7 +23,7 @@ typedef struct Personnage
 	int sens;
 	// variables mouvements
 	bool lateral;
-	bool saute;
+	int saute;
 	bool repos;
 
 	bool active; // perso actif (controlable) ou pas

@@ -1,7 +1,7 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
-#include "main.h"
-#include "perso.h"
+#include "moteur/main.h"
+#include "moteur/perso.h"
 
 // TODO : taille
 void dessinCarre(int filled, int posX, int posY){
