@@ -75,3 +75,11 @@ bool isPixelGround(int pixelX, int pixelY, int **level){
 	}
 	return false;
 }
+
+int convertPixelToCase(int pixel){
+	return pixel/TAILLE_CASE;
+}
+
+int convertCaseToPixel(int Case){
+	return Case*TAILLE_CASE;
+}

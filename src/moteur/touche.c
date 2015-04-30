@@ -26,7 +26,7 @@ void appuyer(Personnage *perso, SDL_Event e){
             break;
 
             case SDLK_SPACE :
-                    perso->haut = true;
+                perso->haut = true;
             break;
 
             default : break;
