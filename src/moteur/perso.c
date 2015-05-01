@@ -14,7 +14,7 @@ void initPerso(Personnage *personnage, int width, int height, int posCaseX, int 
 	personnage->droite = false;
 	personnage->haut = false;
 	personnage->bas = false;
-	personnage->gravite = 10;
+	personnage->gravite = 15;
 	personnage->vitesse = 5;
 	personnage->sens = 0;
 	personnage->lateral = false;

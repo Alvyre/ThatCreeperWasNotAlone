@@ -80,6 +80,6 @@ int convertPixelToCase(int pixel){
 	return pixel/TAILLE_CASE;
 }
 
-int convertCaseToPixel(int Case){
+int convertCaseToPixel(float Case){
 	return Case*TAILLE_CASE;
 }

@@ -46,8 +46,6 @@ int main(int argc, char** argv) {
 
   SDL_WM_SetCaption("Thomas Was Alone", NULL);
 
-
-
   int loop = 1;
   int **level = calloc(WINDOW_HEIGHT/TAILLE_CASE, sizeof(int*));
   // Création du level
@@ -63,7 +61,7 @@ int main(int argc, char** argv) {
   RED.b = 0;
 
   // perso, width, height, caseX, caseY, color
-  initPerso(&perso1, 1, 4, 4, 10, RED);
+  initPerso(&perso1, 2, 8, 4, 10, RED);
 
   //int gravite = 2;
 

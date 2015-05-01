@@ -26,7 +26,12 @@ void appuyer(Personnage *perso, SDL_Event e){
             break;
 
             case SDLK_SPACE :
-                perso->haut = true;
+                // FIXME : cube is fuking flying in the sky if the key is fucking pressed continuously
+                if (perso->haut == false)
+                {
+                    perso->haut = true;
+                    perso->gravite = -10;
+                }
             break;
 
             default : break;
@@ -57,6 +62,7 @@ void relacher(Personnage *perso, SDL_Event e){
 
             case SDLK_SPACE :
                     perso->haut = false;
+                    perso->gravite = 10;
             break;
 
             default : break;

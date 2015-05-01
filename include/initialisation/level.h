@@ -9,7 +9,7 @@ void freeLevel(int** level);
 void creeDecor(int **level);
 bool isPixelGround(int pixelX, int pixelY, int **level);
 int convertPixelToCase(int pixel);
-int convertCaseToPixel(int Case);
+int convertCaseToPixel(float Case);
 
 
 #endif /* LEVEL_H */

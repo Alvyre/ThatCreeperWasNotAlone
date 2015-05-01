@@ -9,13 +9,8 @@
 
 void deplacementJoueur(Personnage *perso, int** level){
 
-    int ligne;                                                                                                                                          // ligne (grille) du centre du perso
-    int colonne;                                                                                                                                          // colonne (grille) du centre du perso
     int Ls;                                                                                                                                         // ligne (grille) du point bas du perso, on considère que ses pieds sont à 1 pixel du bord de la case
     int Cs;                                                                                                                                         // colonne (grille) du bord du perso dans le sens de son déplacement
-    int A;                                                                                                                                          // la tuile située sous le perso
-    uint Y;                                                                                                                                         // position sur Y avant déplacement
-    int* P = calloc(2,sizeof(int));                                                                                                                 // tableau de positions
 
     // Déplace en X
     if (perso->droite || perso->gauche)
@@ -23,45 +18,67 @@ void deplacementJoueur(Personnage *perso, int** level){
         perso->centerX += perso->vitesse * perso->sens;
     }
 
-    // ligne (grille) du centre du perso
-    ligne =  perso->centerY/TAILLE_CASE;
-    // colonne (grille) du centre du perso
-    colonne =  perso->centerX/TAILLE_CASE;
-
-    // Gravité s'applique toujours meme si le perso ne saute pas
-    int gravite = perso->gravite;
-    //perso->gravite++;
-    gravite++;
-    perso->centerY += gravite;
-    
-    // ligne (grille) du point bas du perso, on considère que ses pieds sont à 1 pixel du bord de la case
-    Ls = (perso->centerY+(perso->height/2))/TAILLE_CASE; 
-    // colonne (grille) du perso, concernée par la colision (sens)
-    Cs = (perso->centerX + perso->vitesse * perso->sens) / TAILLE_CASE;
-    
-    // FIXME : bug avec des perso ayant une hauteur impaire
-    if (level[Ls+perso->height/2][Cs] == 1)
-    {
-        gravite = 0;
-        perso->centerY = convertCaseToPixel(Ls + perso->height/2) - TAILLE_CASE*(perso->height/2.0);
-    }
-
+    // Saut
+    // FIXME : long press
     if (perso->haut)
     {
-        perso->centerY += perso->saute;
+        perso->gravite = -10;
+        perso->haut = false;
     }
-        
-    //checkLateral(perso,ligne,Cs,perso->vitesse*2,(perso->centerY-TAILLE_CASE/2)/TAILLE_CASE,P,level);                                               // collisions latérales
-        
-    //     ligne =  P[0];                                                                                                                                  // nouvelle valeur de L
-    //     // Cs = P[1];                                                                                                                                  // nouvelle valeur de Cs
-         //Y =  (ligne-1)*TAILLE_CASE;                                                                                                                     // la position sur Y avant collision    
+
+    // Gravité s'applique toujours meme si le perso ne saute pas
+    perso->centerY += perso->gravite++;
+    
+    // ligne (grille) du point bas du perso, on considère que ses pieds sont à 1 pixel du bord de la case
+    Ls = convertPixelToCase(perso->centerY+(perso->height/2.0));
+    // colonne (grille) du perso, concernée par la colision (sens)
+    Cs = convertPixelToCase(perso->centerX + perso->vitesse * perso->sens);
+    
+
+    /****************************************
+            A DEPLACER DANS FONCTIONS
+            UNE FOIS LES TEST TERMINES
+    ****************************************/
+    // Collisions avec le sol
+    // Parcours les cases devant et derière selon la largeur du solide et teste les collisions
+    // FIXME : bug avec des perso ayant une hauteur impaire
+    int k = 0;
+    for (k = Cs - perso->width/2; k <= Cs + perso->width/2; k++)
+    {
+        if (level[Ls+perso->height/2][k] == 1)
+        {
+            perso->gravite = 0;
+            perso->centerY = convertCaseToPixel(Ls + perso->height/2.0) - convertCaseToPixel(perso->height/2.0);
+        }
+    }
 
 
-        //if (perso->gravite <= 0 ) return;    // collision plafond
-        //if (level[ligne][colonne] == 1  && checkSolide(perso,Y)) return;                                                                                                // collision tout solide
+    // Collision latérales
+    // Parcours les cases devant et derrière le solide, selon sa largeur puis test les collisions
+    // Parcours le level en hauteur depuis le bas du solide jusqu'a sa hauteur maximum à la recherche d'obstacles
+    // Trouver d'ou vient cette putain de formule magique :  Ls + (perso->height-2)/2
+    int i = 0;
+    int j = 0;
+    for (i = Ls + (perso->height-2)/2; i > Ls-perso->height; i--)
+    {
+        for (j = Cs - perso->width; j < Cs+perso->width; j++)
+        {
+            if (level[i][Cs+1] == 1)
+            {
+                if (perso->sens == 1){
+                    perso->centerX = convertCaseToPixel(Cs+1) - convertCaseToPixel(perso->width/2.0);
+                }
+               
+            }
+            if (level[i][Cs-1] == 1){
+                if (perso->sens == -1){
+                    perso->centerX = convertCaseToPixel(Cs)+(perso->width *(TAILLE_CASE/2));
+                }
+            }
+        }
+    }
 
-        // Passe au moins une fois dans ce if ??
-        //if (perso->gravite++>TAILLE_CASE) perso->gravite=TAILLE_CASE;                                                                               // gravité
-        free (P);
+    /********************************
+          TODO : COLLISIONS CIEL
+    ********************************/
 }
