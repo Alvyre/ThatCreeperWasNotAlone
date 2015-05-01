@@ -17,15 +17,13 @@ void appuyer(Personnage *perso, SDL_Event e){
                 perso->gauche = true;
             break;
 
-            case SDLK_UP : 
-                perso->haut = true;
-            break;
-
             case SDLK_DOWN : 
                 perso->bas = true;
             break;
 
             case SDLK_SPACE :
+            case SDLK_UP : 
+
                 // FIXME : cube is fuking flying in the sky if the key is fucking pressed continuously
                 if (perso->haut == false)
                 {

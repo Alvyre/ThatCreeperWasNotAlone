@@ -20,11 +20,11 @@ void deplacementJoueur(Personnage *perso, int** level){
 
     // Saut
     // FIXME : long press
-    if (perso->haut)
-    {
-        perso->gravite = -10;
-        perso->haut = false;
-    }
+    // if (perso->haut)
+    // {
+    //     perso->gravite = -10;
+    //     perso->haut = false;
+    // }
 
     // Gravité s'applique toujours meme si le perso ne saute pas
     perso->centerY += perso->gravite++;
@@ -45,6 +45,11 @@ void deplacementJoueur(Personnage *perso, int** level){
     int k = 0;
     for (k = Cs - perso->width/2; k <= Cs + perso->width/2; k++)
     {
+        if (perso->haut && level[Ls+perso->height/2][k] == 1)
+        {
+            perso->gravite = -10;
+            perso->haut = false;
+        }
         if (level[Ls+perso->height/2][k] == 1)
         {
             perso->gravite = 0;
