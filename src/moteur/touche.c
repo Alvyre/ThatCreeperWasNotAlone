@@ -55,17 +55,22 @@ void relacher(Personnage *perso, SDL_Event e){
                 perso->droite = false;
             break;
 
-            case SDLK_UP : 
-                perso->haut = false;
-            break;
-
             case SDLK_DOWN : 
                 perso->bas = false;
+                // Fix pour si les deux touches sont appuyées en même temps
+                // l'un des deux à tendance à rester appuyée
+                perso->droite = false;
+                perso->gauche = false;
             break;
 
+            case SDLK_UP : 
             case SDLK_SPACE :
                 perso->haut = false;
                 perso->gravite = 10;
+                // Fix pour si les deux touches sont appuyées en même temps
+                // l'un des deux à tendance à rester appuyée
+                perso->droite = false;
+                perso->gauche = false;
             break;
 
             default : break;
