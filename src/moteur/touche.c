@@ -7,7 +7,6 @@
 // Appuyer sur une touche
 void appuyer(Personnage *perso, SDL_Event e){
     if(e.type == SDL_KEYDOWN){
-
         switch(e.key.keysym.sym){
             case SDLK_RIGHT :
                 perso->droite = true;
@@ -23,8 +22,6 @@ void appuyer(Personnage *perso, SDL_Event e){
 
             case SDLK_SPACE :
             case SDLK_UP : 
-
-                // FIXME : cube is fuking flying in the sky if the key is fucking pressed continuously
                 if (perso->haut == false)
                 {
                     perso->haut = true;
@@ -33,9 +30,11 @@ void appuyer(Personnage *perso, SDL_Event e){
             break;
 
             default : break;
-
         }
     }
+
+
+    
 }
 // Appuyer sur une touche
 void relacher(Personnage *perso, SDL_Event e){
@@ -44,10 +43,16 @@ void relacher(Personnage *perso, SDL_Event e){
         switch(e.key.keysym.sym){
             case SDLK_RIGHT :
                 perso->droite = false;
+                // Fix pour si les deux touches sont appuyées en même temps
+                // l'un des deux à tendance à rester appuyée
+                perso->gauche = false;
             break; 
 
             case SDLK_LEFT : 
                 perso->gauche = false;
+                // Fix pour si les deux touches sont appuyées en même temps
+                // l'un des deux à tendance à rester appuyée
+                perso->droite = false;
             break;
 
             case SDLK_UP : 
@@ -59,8 +64,8 @@ void relacher(Personnage *perso, SDL_Event e){
             break;
 
             case SDLK_SPACE :
-                    perso->haut = false;
-                    perso->gravite = 10;
+                perso->haut = false;
+                perso->gravite = 10;
             break;
 
             default : break;
