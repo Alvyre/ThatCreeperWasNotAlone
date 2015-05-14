@@ -2,6 +2,7 @@
 #include "moteur/main.h"
 #include "moteur/colision.h"
 #include "initialisation/level.h"
+#include <math.h>
 
 /************************************/
 /*   Gestion des déplacements       */
@@ -63,22 +64,29 @@ void deplacementJoueur(Personnage *perso, int** level){
     // Parcours le level en hauteur depuis le bas du solide jusqu'a sa hauteur maximum à la recherche d'obstacles
     // Trouver d'ou vient cette putain de formule magique :  Ls + (perso->height-2)/2
     int i = 0;
-    int j = 0;
+    int halfWidth = 0;
+    float gap = 0;
     for (i = Ls + (perso->height-2)/2; i > Ls-perso->height; i--)
     {
-        for (j = Cs - perso->width; j < Cs+perso->width; j++)
+        halfWidth = (int)ceil(perso->width/2.0);
+
+        if (level[i][Cs + halfWidth] == 1 || Cs+halfWidth >= convertPixelToCase(WINDOW_WIDTH))
         {
-            if (level[i][Cs+1] == 1)
-            {
-                if (perso->sens == 1){
-                    perso->centerX = convertCaseToPixel(Cs+1) - convertCaseToPixel(perso->width/2.0);
+            if (perso->sens == 1){
+                perso->centerX = convertCaseToPixel(Cs+halfWidth) - convertCaseToPixel(perso->width/2.0);
+            }           
+        }
+        // si la case précédente est un bloc ou n'existe pas (bord)
+        if (level[i][Cs-halfWidth] == 1 || Cs-halfWidth < 0){
+            if (perso->sens == -1){
+                // FIXME : trouver une façon plus propre d'ajouter 1 
+                // pour les largeurs paires et 0.5 pour les impaires
+                if ((perso->width)%2 == 0){
+                    gap = 1;
+                } else {
+                    gap = 0.5;
                 }
-               
-            }
-            if (level[i][Cs-1] == 1){
-                if (perso->sens == -1){
-                    perso->centerX = convertCaseToPixel(Cs)+(perso->width *(TAILLE_CASE/2));
-                }
+                perso->centerX = convertCaseToPixel(Cs+gap);
             }
         }
     }

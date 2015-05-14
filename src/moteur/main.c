@@ -4,6 +4,7 @@
 #include <SDL/SDL.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
+#include <math.h>
 
 
 #include "moteur/main.h"
@@ -61,7 +62,7 @@ int main(int argc, char** argv) {
   RED.b = 0;
 
   // perso, width, height, caseX, caseY, color
-  initPerso(&perso1, 2, 8, 4, 10, RED);
+  initPerso(&perso1, 3, 8, 4, 10, RED);
 
   //int gravite = 2;
 
