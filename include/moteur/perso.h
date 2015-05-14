@@ -2,7 +2,7 @@
 #define PERSO_H
 
 
-#include "main.h"
+#include "moteur/main.h"
 #include <stdbool.h>
 
 typedef struct Personnage
@@ -11,18 +11,19 @@ typedef struct Personnage
 	int centerY;
 	int width;
 	int height;
-	int posCaseX;
-	int posCaseY;
-	int posX;
-	int posY;
 	Color3f color;
+	// variables touches
+	bool gauche;
+	bool droite;
+	bool haut;
+	bool bas;
 	// variables déplacements
 	int gravite;
 	int vitesse;
 	int sens;
 	// variables mouvements
 	bool lateral;
-	bool saute;
+	int saute;
 	bool repos;
 
 	bool active; // perso actif (controlable) ou pas
@@ -32,5 +33,7 @@ typedef struct Personnage
 
 
 void initPerso(Personnage *personnage, int width, int height, int posCaseX, int posCaseY, Color3f color);
+void gestionJoueur(Personnage *perso, int** map);
+
 
 #endif /* PERSO_H */
