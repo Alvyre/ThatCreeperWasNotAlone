@@ -19,14 +19,6 @@ void deplacementJoueur(Personnage *perso, int** level){
         perso->centerX += perso->vitesse * perso->sens;
     }
 
-    // Saut
-    // FIXME : long press
-    // if (perso->haut)
-    // {
-    //     perso->gravite = -10;
-    //     perso->haut = false;
-    // }
-
     // Gravité s'applique toujours meme si le perso ne saute pas
     perso->centerY += perso->gravite++;
     
@@ -64,11 +56,10 @@ void deplacementJoueur(Personnage *perso, int** level){
     // Parcours le level en hauteur depuis le bas du solide jusqu'a sa hauteur maximum à la recherche d'obstacles
     // Trouver d'ou vient cette putain de formule magique :  Ls + (perso->height-2)/2
     int i = 0;
-    int halfWidth = 0;
+    int halfWidth = (int)ceil(perso->width/2.0);
     float gap = 0;
-    for (i = Ls + (perso->height-2)/2; i > Ls-perso->height; i--)
+    for (i = Ls + (perso->height-2)/2; i > Ls; i--)
     {
-        halfWidth = (int)ceil(perso->width/2.0);
 
         if (level[i][Cs + halfWidth] == 1 || Cs+halfWidth >= convertPixelToCase(WINDOW_WIDTH))
         {
@@ -94,4 +85,18 @@ void deplacementJoueur(Personnage *perso, int** level){
     /********************************
           TODO : COLLISIONS CIEL
     ********************************/
+    // Haut perso
+    int topPerso = convertPixelToCase(perso->centerY) - perso->height/2;
+
+    // Parcours, les cases comprises entre le début et la fin du perso (en largeur)
+    for (i = Cs-halfWidth; i <= Cs+halfWidth; i++)
+    {
+        if (level[topPerso][i] == 1 )
+        {
+            perso->gravite = 0;
+            perso->gravite++;
+        }
+    }
+    
+
 }
