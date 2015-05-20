@@ -37,8 +37,10 @@ void freeLevel(int** level){
 	int i = 0;
 	for(i = 0; i < COLUMNS; i++) {
 		free(level[i]);
+		level[i] = NULL;
 	}
 	free(level);
+	level = NULL;
 }
 
 

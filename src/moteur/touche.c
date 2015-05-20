@@ -9,10 +9,14 @@ void appuyer(Personnage *perso, SDL_Event e){
     if(e.type == SDL_KEYDOWN){
         switch(e.key.keysym.sym){
             case SDLK_RIGHT :
+                perso->gauche = false;
+                perso->haut = false;
                 perso->droite = true;
             break; 
 
             case SDLK_LEFT : 
+                perso->droite = false;
+                perso->haut = false;
                 perso->gauche = true;
             break;
 
@@ -27,6 +31,7 @@ void appuyer(Personnage *perso, SDL_Event e){
                     perso->haut = true;
                     perso->gravite = -10;
                     perso->saute = true;
+
                 }
             break;
 
@@ -43,25 +48,27 @@ void relacher(Personnage *perso, SDL_Event e){
 
         switch(e.key.keysym.sym){
             case SDLK_RIGHT :
+                perso->gauche = false;
                 perso->droite = false;
                 // Fix pour si les deux touches sont appuyées en même temps
                 // l'un des deux à tendance à rester appuyée
-                perso->gauche = false;
+                
             break; 
 
             case SDLK_LEFT : 
+                perso->droite = false;
                 perso->gauche = false;
                 // Fix pour si les deux touches sont appuyées en même temps
                 // l'un des deux à tendance à rester appuyée
-                perso->droite = false;
+                
             break;
 
             case SDLK_DOWN : 
                 perso->bas = false;
                 // Fix pour si les deux touches sont appuyées en même temps
                 // l'un des deux à tendance à rester appuyée
-                perso->droite = false;
-                perso->gauche = false;
+                //perso->droite = false;
+                //perso->gauche = false;
             break;
 
             case SDLK_UP : 
