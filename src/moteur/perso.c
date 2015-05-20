@@ -18,14 +18,14 @@ void initPerso(Personnage *personnage, int width, int height, int posCaseX, int 
 	personnage->vitesse = 5;
 	personnage->sens = 0;
 	personnage->lateral = false;
-	personnage->saute = 0;
+	personnage->saute = false;
 	personnage->repos = true;
 	personnage->active = false;
 }
 
 void gestionJoueur(Personnage *perso,int** map){
 	perso->sens = (int)perso->droite - (int)perso->gauche;
-	perso->saute = -1 * (int)(perso->haut) *21;
+	//perso->saute = -1 * (int)(perso->haut) *21;
 	// Booleen ou int ?
 	perso->repos = (int)(!perso->droite && !perso->gauche && !perso->haut && !perso->bas);
 	perso->lateral = perso->droite || perso->gauche;

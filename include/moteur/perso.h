@@ -23,7 +23,7 @@ typedef struct Personnage
 	int sens;
 	// variables mouvements
 	bool lateral;
-	int saute;
+	bool saute;
 	bool repos;
 
 	bool active; // perso actif (controlable) ou pas

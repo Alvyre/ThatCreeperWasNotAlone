@@ -22,10 +22,11 @@ void appuyer(Personnage *perso, SDL_Event e){
 
             case SDLK_SPACE :
             case SDLK_UP : 
-                if (perso->haut == false)
+                if (perso->haut == false && perso->saute == false)
                 {
                     perso->haut = true;
                     perso->gravite = -10;
+                    perso->saute = true;
                 }
             break;
 
@@ -69,8 +70,8 @@ void relacher(Personnage *perso, SDL_Event e){
                 perso->gravite = 10;
                 // Fix pour si les deux touches sont appuyées en même temps
                 // l'un des deux à tendance à rester appuyée
-                perso->droite = false;
-                perso->gauche = false;
+                //perso->droite = false;
+                //perso->gauche = false;   // desactivé sinon mouvements pas fluides
             break;
 
             default : break;

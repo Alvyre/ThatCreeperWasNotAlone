@@ -48,9 +48,12 @@ void collisionGround(Personnage *perso, int** level){
     {
         if (level[line + halfHeight][i] == 1)
         {
-            perso->gravite = 0;
+            perso->gravite = 10;
             perso->centerY = convertCaseToPixel(line + halfHeight) - convertCaseToPixel(perso->height/2.0);
+            perso->saute = false;
+           
         }
+
     }
 }
 
