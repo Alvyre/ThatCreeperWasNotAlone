@@ -30,7 +30,7 @@ void collisionTop(Personnage *perso, int** level){
 
 /**
  * Parcours les cases devant et derière selon la largeur du solide et teste les collisions
- * FIXME : bug avec des perso ayant une hauteur impaire
+ * FIXME : bug avec des perso ayant une hauteur impaire : il se place bien mais ne veut plus sauter à moins de définir une gravité énorme à chaque saut genre -25 dans touche.c
  * 
  * @param *perso
  */
@@ -44,11 +44,10 @@ void collisionGround(Personnage *perso, int** level){
 	int halfWidth = (int)ceil(perso->width/2.0);
 	int halfHeight = (int)ceil(perso->height/2.0);
 
-    for (i = column - halfWidth; i <= column + halfWidth; i++)
+    for (i = column - halfWidth; i <= column + perso->width/2; i++)
     {
         if (level[line + halfHeight][i] == 1)
         {
-        	
             perso->gravite = 0;
             perso->centerY = convertCaseToPixel(line + halfHeight) - convertCaseToPixel(perso->height/2.0);
         }
