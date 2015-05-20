@@ -44,12 +44,12 @@ void collisionGround(Personnage *perso, int** level){
 	int halfWidth = (int)ceil(perso->width/2.0);
 	int halfHeight = (int)ceil(perso->height/2.0);
 
-    for (i = column - halfWidth; i <= column + perso->width/2; i++)
+    for (i = column - halfWidth; i <= column + halfWidth; i++)
     {
-        if (level[line + halfHeight][i] == 1)
+         if (level[line + halfHeight][i] == 1)
         {
             perso->gravite = 10;
-            perso->centerY = convertCaseToPixel(line + halfHeight) - convertCaseToPixel(perso->height/2.0);
+            perso->centerY = convertCaseToPixel(line + perso->height/2.0) - convertCaseToPixel(perso->height/2.0);
             perso->saute = false;
            
         }
