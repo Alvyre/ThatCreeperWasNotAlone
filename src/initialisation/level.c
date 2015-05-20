@@ -59,24 +59,6 @@ void creeDecor(int **level){
 	}
 }
 
-bool isPixelGround(int pixelX, int pixelY, int **level){
-	
-
-	int colonne = pixelX/TAILLE_CASE;
-	int line = pixelY/TAILLE_CASE;
-	printf("colonne %d\n", colonne);
-	printf("ligne %d\n", line);
-
-	if (line >= 0 && colonne >= 0 && line <= LINES && colonne <= COLUMNS)
-	{
-		if (level[line+1][colonne] == 1)
-		{
-			return true;
-		}
-	}
-	return false;
-}
-
 int convertPixelToCase(int pixel){
 	return pixel/TAILLE_CASE;
 }

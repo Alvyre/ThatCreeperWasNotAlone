@@ -9,4 +9,4 @@
 void appuyer(Personnage *perso, SDL_Event e);
 void relacher(Personnage *perso, SDL_Event e);
 
-#endif /* TOUCHE_H */TOUCHE_H
+#endif /* TOUCHE_H */

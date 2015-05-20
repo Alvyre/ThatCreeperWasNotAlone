@@ -1,13 +1,14 @@
 #ifndef COLISION_H
 #define COLISION_H 
-
+#include <SDL/SDL.h>
+#include <math.h>
 #include "main.h"
 #include "perso.h"
-#include <SDL/SDL.h>
+#include "initialisation/level.h"
 
-void checkLateral(Personnage *perso,int L, int C, uint D, int H, int* result, int** level);
-bool checkSolide(Personnage *perso,uint Y);
-bool checkPlafond(Personnage *perso,int C,int L,uint D,uint H, int **level);
-bool hit(Personnage *perso,uint Y);
+
+void collisionTop(Personnage *perso, int** level);
+void collisionGround(Personnage *perso, int** level);
+void collisionLateral(Personnage *perso, int** level);
 
 #endif /* COLISION_H */
