@@ -1,36 +1,54 @@
 #include "moteur/main.h"
 #include "initialisation/level.h"
 #include "formes/carre.h"
+#include <string.h>
 
 #define LINES WINDOW_HEIGHT/TAILLE_CASE //30
 #define COLUMNS WINDOW_WIDTH/TAILLE_CASE //40
+#define MAX_CHAR_FILE 10000
 
 
 void initLevel(int** level){
 
 	int i = 0;
- 	int j = 0;
+
   	for (i = 0; i < COLUMNS; i++)
   	{
     	level[i] = calloc(COLUMNS, sizeof(int));
   	}
+}
 
-  	for (i = 0; i < LINES; i++)
-  	{
-    	for (j = 0; j < COLUMNS; j++)
-    	{
-      	level[i][j] = 0;
+void loadLevelFromFile(int** level, char const * path){
+	
+	int i = 0;
+	int j = 0;
+	char *buffer = NULL;
+	size_t length = 0;
+	char *ptr = NULL;
+	ssize_t read;
+	
+	FILE *file = fopen(path, "r");
+
+	if (file == NULL)
+	{
+		printf("Error opening the file !\n");
+		exit (EXIT_FAILURE);
+	} else {
+
+		// Parcours les lignes
+		while ((read = getline(&buffer, &length, file)) != -1) {
+			
+	        // Parcours les colonnes
+	        for (j = 0, ptr = buffer; j < COLUMNS; j++, ptr++){
+	            level[i][j] = (int)strtol(ptr, &ptr, 10);
+	        }
+
+	        i++;
     	}
-  	}
-  level[24][18] = 1;
-  level[24][19] = 1;
-  level[26][16] = 1;
-  level[17][9] = 1;
-  for (j = 0; j < COLUMNS; j++)
-  {
-    level[27][j] = 1;
-    level[28][j] = 1;
-  }
+
+		fclose(file);
+		
+	}
 }
 
 void freeLevel(int** level){

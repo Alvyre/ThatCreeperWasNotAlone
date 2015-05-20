@@ -51,6 +51,9 @@ int main(int argc, char** argv) {
   int **level = calloc(WINDOW_HEIGHT/TAILLE_CASE, sizeof(int*));
   // Création du level
   initLevel(level);
+  //FIXME : Choose level in menu 
+  char const *path = "./levels/level-1.csv";
+  loadLevelFromFile(level, path);
 
 
 
