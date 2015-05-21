@@ -18,7 +18,7 @@ bool collisionTop(Personnage *perso, int** level){
     int topPerso = convertPixelToCase(perso->centerY) - perso->height/2.0;
 
     // Parcours, les cases comprises entre le début et la fin du perso (en largeur)
-    for (i = convertPixelToCase(perso->centerX - halfWidth); i < convertPixelToCase(perso->centerX + halfWidth); i++)
+    for (i = convertPixelToCase(perso->centerX - halfWidth); i <= convertPixelToCase(perso->centerX + halfWidth); i++)
     {
         if (level[topPerso][i] == 1 )
         {
