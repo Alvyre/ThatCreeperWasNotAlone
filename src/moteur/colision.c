@@ -9,13 +9,14 @@
  * 
  * @param *perso
  */
-void collisionTop(Personnage *perso, int** level){
+bool collisionTop(Personnage *perso, int** level){
 	int i = 0;
 	int halfWidth = (int)ceil(perso->width/2.0);
 	// colonne (grille) du perso, concernée par la colision (sens)
     int column = convertPixelToCase(perso->centerX + perso->vitesse * perso->sens);
+    printf("column = %d\n", column);
 	 // Haut perso
-    int topPerso = convertPixelToCase(perso->centerY) - perso->height/2;
+    int topPerso = convertPixelToCase(perso->centerY) - perso->height/2.0;
 
     // Parcours, les cases comprises entre le début et la fin du perso (en largeur)
     for (i = column-halfWidth; i <= column+halfWidth; i++)
@@ -24,8 +25,10 @@ void collisionTop(Personnage *perso, int** level){
         {
             perso->gravite = 0;
             perso->gravite++;
+            return true;
         }
     }
+    return false;
 }
 
 /**
@@ -34,7 +37,7 @@ void collisionTop(Personnage *perso, int** level){
  * 
  * @param *perso
  */
- void collisionGround(Personnage *perso, int** level){
+ bool collisionGround(Personnage *perso, int** level){
     int i = 0;
 	// colonne (grille) du perso, concernée par la colision (sens)
    int column = convertPixelToCase(perso->centerX + perso->vitesse * perso->sens);
@@ -54,6 +57,7 @@ void collisionTop(Personnage *perso, int** level){
             perso->gravite = 10;
             perso->centerY = convertCaseToPixel(line + perso->height/2.0) - convertCaseToPixel(perso->height/2.0);
             perso->saute = false;
+            return true;
 
             }
         }
@@ -65,10 +69,12 @@ void collisionTop(Personnage *perso, int** level){
                 perso->gravite = 10;
                 perso->centerY = convertCaseToPixel(line + perso->height/2.0) - convertCaseToPixel(perso->height/2.0);
                 perso->saute = false;
+                return true;
 
             }
         }
     }
+    return false;
 }
 
 /**
@@ -90,7 +96,7 @@ void collisionLateral(Personnage *perso, int** level){
     float gap = 0;
     
     // Parcours de bas en haut le personnage pour tester les collisions
-    for (i = line + halfHeight - 1; i >= line - (perso->height/2); i--)
+    for (i = line + halfHeight - 1; i >= line - (perso->height/2.0); i--)
     {
 
         for (j = column - halfWidth; j <= column + halfWidth; j++)
@@ -99,6 +105,7 @@ void collisionLateral(Personnage *perso, int** level){
             {
                 if (perso->sens == 1){
                     perso->centerX = convertCaseToPixel(column + halfWidth) - convertCaseToPixel(perso->width/2.0);
+
                 }
                 if (perso->sens == -1){
                     // FIXME : trouver une façon plus propre d'ajouter 1 
@@ -109,6 +116,7 @@ void collisionLateral(Personnage *perso, int** level){
                         gap = 0.5;
                     }
                     perso->centerX = convertCaseToPixel(column + gap);
+
                 }       
             }
         }
@@ -118,4 +126,5 @@ void collisionLateral(Personnage *perso, int** level){
             
         }
     }
+
 }

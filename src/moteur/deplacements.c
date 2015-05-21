@@ -17,8 +17,11 @@ void deplacementJoueur(Personnage *perso, int** level){
     // Gravité s'applique toujours meme si le perso ne saute pas
     perso->centerY += perso->gravite++;
     
-    collisionTop(perso, level);
-    collisionGround(perso, level);
     collisionLateral(perso, level);
+    if(perso->gravite <0 && collisionTop(perso, level)) return;
+    if(collisionGround(perso, level)) return;
+    
+    
+
     
 }

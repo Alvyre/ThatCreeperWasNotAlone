@@ -7,8 +7,8 @@
 #include "initialisation/level.h"
 
 
-void collisionTop(Personnage *perso, int** level);
-void collisionGround(Personnage *perso, int** level);
+bool collisionTop(Personnage *perso, int** level);
+bool collisionGround(Personnage *perso, int** level);
 void collisionLateral(Personnage *perso, int** level);
 
 #endif /* COLISION_H */
