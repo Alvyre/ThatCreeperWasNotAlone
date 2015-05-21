@@ -53,11 +53,11 @@
 int collisionLateral(Personnage *perso, int** level){
     // Bas du perso
     int i1 = convertPixelToCase(perso->centerX - perso->width) - perso->width/2; // FIXME : impaire width
-    int j1 = convertPixelToCase(perso->centerY - perso->height);
+    int j1 = convertPixelToCase(perso->centerY - perso->height) - perso->height/2;
 
     // Haut du perso
     int i2 = convertPixelToCase(perso->centerX  + perso->width-1) + perso->width/2; // FIXME : impaire width
-    int j2 = convertPixelToCase(perso->centerY + perso->height -1);    
+    int j2 = convertPixelToCase(perso->centerY + perso->height -1)  + perso->height/2;    
 
     int i = 0;
     int j = 0;
@@ -66,10 +66,11 @@ int collisionLateral(Personnage *perso, int** level){
     for (i = i1; i <= i2; i++)
     {
         // Haut et bas
-        for (j = j1; j <= j2; j++)
+        for (j = j1; j <= j2 -1; j++)
         {
+            printf("j %d\n", j);
             if (level[j][i] == 1)
-            {   
+            {
                 // Collisions avant ou arrière
                 if (i > i1)
                 {
@@ -105,10 +106,10 @@ int testCollisonGround(Personnage *perso, int** level){
                 // collision haut ou bas
                if (j > j1)
                 {
-                    printf("-1\n");
+                    //printf("-1\n");
                     return -1;
                 } else {
-                    printf("1\n");
+                    //printf("1\n");
                     return 1;
                 }
             }

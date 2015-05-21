@@ -35,7 +35,7 @@ void deplacementJoueur(Personnage *perso, int** level){
     }
 
     // Gravité s'applique toujours meme si le perso ne saute pas
-     printf("%d\n", testCollisonGround(perso, level));
+     //printf("%d\n", testCollisonGround(perso, level));
 //     if(testCollisonGround(perso, level) == 0){
 //         perso->centerY += perso->gravite++;
 //     }
