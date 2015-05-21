@@ -83,10 +83,7 @@ int main(int argc, char** argv) {
     dessinPerso(&perso1);
     glColor3f(1, 1, 1);
 
-    /* GESTION TOUCHE */
-    SDL_Event e;
-    appuyer(&perso1,e);
-    relacher(&perso1,e);
+
 
     /* GESTION JOUEUR */
 
@@ -95,12 +92,17 @@ int main(int argc, char** argv) {
 
 
     SDL_GL_SwapBuffers();
-
+        SDL_Event e;
     while(SDL_PollEvent(&e)) {
       if(e.type == SDL_QUIT) {
         loop = 0;
         break;
       }
+
+      /* GESTION TOUCHE */
+
+      appuyer(&perso1,e);
+      relacher(&perso1,e);
 
       switch(e.type) {                 
         case SDL_VIDEORESIZE:

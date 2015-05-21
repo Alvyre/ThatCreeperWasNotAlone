@@ -9,7 +9,7 @@
 void deplacementJoueur(Personnage *perso, int** level){
 
     // Déplace en X
-    if (perso->droite || perso->gauche)
+    if (perso->sens)
     {
         perso->centerX += perso->vitesse * perso->sens;
     }

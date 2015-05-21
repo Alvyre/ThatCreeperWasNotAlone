@@ -24,6 +24,9 @@ void initPerso(Personnage *personnage, int width, int height, int posCaseX, int 
 }
 
 void gestionJoueur(Personnage *perso,int** map){
+	printf("droite : %d\n",(int)perso->droite );
+	printf("gauche : %d\n",(int)perso->gauche );
+	printf("haut : %d\n",(int)perso->haut );
 	perso->sens = 0;
 	perso->sens = (int)perso->droite - (int)perso->gauche;
 	if (perso->sens != 0)
