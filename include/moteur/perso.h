@@ -15,6 +15,7 @@ typedef struct Personnage
 	// variables touches
 	bool gauche;
 	bool droite;
+	int lastDirection;
 	bool haut;
 	bool bas;
 	// variables déplacements

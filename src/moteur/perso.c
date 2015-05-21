@@ -26,6 +26,10 @@ void initPerso(Personnage *personnage, int width, int height, int posCaseX, int 
 void gestionJoueur(Personnage *perso,int** map){
 	perso->sens = 0;
 	perso->sens = (int)perso->droite - (int)perso->gauche;
+	if (perso->sens != 0)
+	{
+		perso->lastDirection = perso->sens;
+	}
 	// Booleen ou int ?
 	perso->repos = (int)(!perso->droite && !perso->gauche && !perso->haut && !perso->bas);
 	perso->lateral = perso->droite || perso->gauche;
