@@ -5,32 +5,6 @@
 #include "moteur/colision.h"
 
 /**
- * Teste les collisions sur le haut du personnnage, sur toute sa largeur
- * 
- * @param *perso
- */
-bool collisionTop(Personnage *perso, int** level){
-	int i = 0;
-	int halfWidth = (perso->width/2.0);
-	// colonne (grille) du perso, concernée par la colision (sens)
-    int column = convertPixelToCase(perso->centerX + perso->vitesse * perso->sens);
-	 // Haut perso
-    int topPerso = convertPixelToCase(perso->centerY) - perso->height/2.0;
-
-    // Parcours, les cases comprises entre le début et la fin du perso (en largeur)
-    for (i = convertPixelToCase(perso->centerX - halfWidth); i <= convertPixelToCase(perso->centerX + halfWidth); i++)
-    {
-        if (level[topPerso][i] == 1 )
-        {
-            perso->gravite = 0;
-            perso->gravite++;
-            return true;
-        }
-    }
-    return false;
-}
-
-/**
  * Parcours les cases devant et derière selon la largeur du solide et teste les collisions
  * FIXME : bug avec des perso ayant une hauteur impaire : il se place bien mais ne veut plus sauter à moins de définir une gravité énorme à chaque saut genre -25 dans touche.c
  * 
@@ -95,7 +69,8 @@ int collisionLateral(Personnage *perso, int** level){
         for (j = j1; j <= j2; j++)
         {
             if (level[j][i] == 1)
-            {
+            {   
+                // Collisions avant ou arrière
                 if (i > i1)
                 {
                     return 1;
@@ -106,4 +81,39 @@ int collisionLateral(Personnage *perso, int** level){
         }
     }
     return 0;
+}
+
+int testCollisonGround(Personnage *perso, int** level){
+    int i1 = convertPixelToCase(perso->centerX - perso->width) - perso->width/2; // FIXME : impaire width
+    int j1 = convertPixelToCase(perso->centerY - perso->height) - perso->height/2;
+
+    // Haut du perso
+    int i2 = convertPixelToCase(perso->centerX  + perso->width-1) + perso->width/2; // FIXME : impaire width
+    int j2 = convertPixelToCase(perso->centerY + perso->height -1) + perso->height/2;   
+
+    int i = 0;
+    int j = 0;
+
+    // Latéral
+    for (i = i1; i <= i2; i++)
+    {
+        // Haut et bas
+        for (j = j1; j <= j2; j++)
+        {
+            if (level[j][i] == 1)
+            {
+                // collision haut ou bas
+               if (j > j1)
+                {
+                    printf("-1\n");
+                    return -1;
+                } else {
+                    printf("1\n");
+                    return 1;
+                }
+            }
+        }
+    }
+    return 0;
+
 }
