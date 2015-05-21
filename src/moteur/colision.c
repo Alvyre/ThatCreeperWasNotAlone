@@ -76,18 +76,17 @@ bool collisionTop(Personnage *perso, int** level){
     return false;
 }
 
-int testCollision(Personnage *perso, int** level){
+int collisionLateral(Personnage *perso, int** level){
     // Bas du perso
     int i1 = convertPixelToCase(perso->centerX - perso->width) - perso->width/2; // FIXME : impaire width
     int j1 = convertPixelToCase(perso->centerY - perso->height);
-   // printf("j1 %d\n", j1);
+
     // Haut du perso
     int i2 = convertPixelToCase(perso->centerX  + perso->width-1) + perso->width/2; // FIXME : impaire width
     int j2 = convertPixelToCase(perso->centerY + perso->height -1);    
-//printf("j2 %d\n", j2);
+
     int i = 0;
     int j = 0;
-    //level[11][7]  depuis le haut / depuis la gauche 
 
     // Latéral
     for (i = i1; i <= i2; i++)
@@ -107,56 +106,4 @@ int testCollision(Personnage *perso, int** level){
         }
     }
     return 0;
-}
-
-/**
- * Collision latérales
- * Parcours les cases devant et derrière le solide, selon sa largeur puis test les collisions
- * Parcours le level en hauteur depuis le bas du solide jusqu'a sa hauteur maximum à la recherche d'obstacles
- * 
- * @param *perso
- */
-void collisionLateral(Personnage *perso, int** level){
-	int i = 0;
-    int j = 0;
-    int halfWidth = (int)ceil(perso->width/2.0);
-    int halfHeight = (int)ceil(perso->height/2.0);
-    // colonne (grille) du perso, concernée par la colision (sens)
-    int column = convertPixelToCase(perso->centerX + perso->vitesse * perso->sens);
-    //ligne (grille) du point bas du perso, on considère que ses pieds sont à 1 pixel du bord de la case
-    int line = convertPixelToCase(perso->centerY + (perso->height/2.0));
-    float gap = 0;
-    
-    // Parcours de bas en haut le personnage pour tester les collisions
-    for (i = line + halfHeight - 1; i >= line - (perso->height/2.0); i--)
-    {
-
-        for (j = column - halfWidth; j <= column + halfWidth; j++)
-        {
-           if (level[i][j] == 1 || j >= convertPixelToCase(WINDOW_WIDTH) || j - halfWidth < 0)
-            {
-                if (perso->sens == 1){
-                    perso->centerX = convertCaseToPixel(column + halfWidth) - convertCaseToPixel(perso->width/2.0);
-
-                }
-                if (perso->sens == -1){
-                    // FIXME : trouver une façon plus propre d'ajouter 1 
-                    // pour les largeurs paires et 0.5 pour les impaires
-                    if ((perso->width)%2 == 0){
-                        gap = 1;
-                    } else {
-                        gap = 0.5;
-                    }
-                    perso->centerX = convertCaseToPixel(column + gap);
-
-                }       
-            }
-        }
-        
-        // si la case précédente est un bloc ou n'existe pas (bord)
-        if (level[i][column - halfWidth] == 1 || column - halfWidth < 0){
-            
-        }
-    }
-
 }
