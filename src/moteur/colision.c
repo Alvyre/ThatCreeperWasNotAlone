@@ -14,12 +14,11 @@ bool collisionTop(Personnage *perso, int** level){
 	int halfWidth = (perso->width/2.0);
 	// colonne (grille) du perso, concernée par la colision (sens)
     int column = convertPixelToCase(perso->centerX + perso->vitesse * perso->sens);
-    printf("column = %d\n", column);
 	 // Haut perso
     int topPerso = convertPixelToCase(perso->centerY) - perso->height/2.0;
 
     // Parcours, les cases comprises entre le début et la fin du perso (en largeur)
-    for (i = convertPixelToCase(perso->centerX - halfWidth); i <= convertPixelToCase(perso->centerX + halfWidth); i+=32)
+    for (i = convertPixelToCase(perso->centerX - halfWidth); i < convertPixelToCase(perso->centerX + halfWidth); i++)
     {
         if (level[topPerso][i] == 1 )
         {
@@ -44,13 +43,13 @@ bool collisionTop(Personnage *perso, int** level){
 	//ligne (grille) du point bas du perso, on considère que ses pieds sont à 1 pixel du bord de la case
    int line = convertPixelToCase(perso->centerY + (perso->height/2.0));
 
-   int halfWidth = (int)ceil(perso->width/2.0);
+   int halfWidth = (perso->width/2.0);
    int halfHeight = (int)ceil(perso->height/2.0);
 
    // FXIME : Trouver une façon plus propre de régler ça
-   if (perso->lastDirection == 1)
-   {  
-        for (i = column - halfWidth; i < column + halfWidth; i++)
+   // if (perso->lastDirection == 1)
+   // {  
+        for (i = convertPixelToCase(perso->centerX - halfWidth); i <= convertPixelToCase(perso->centerX + halfWidth); i++)
         {
            if (level[line + halfHeight][i] == 1)
            {
@@ -61,20 +60,53 @@ bool collisionTop(Personnage *perso, int** level){
 
             }
         }
-    } else {
-        for (i = column - halfWidth; i <= column + halfWidth; i++)
-        {
-            if (level[line + halfHeight][i] == 1)
-            {
-                perso->gravite = 10;
-                perso->centerY = convertCaseToPixel(line + perso->height/2.0) - convertCaseToPixel(perso->height/2.0);
-                perso->saute = false;
-                return true;
+    // } else {
+    //     for (i = column - halfWidth; i <= column + halfWidth; i++)
+    //     {
+    //         if (level[line + halfHeight][i] == 1)
+    //         {
+    //             perso->gravite = 10;
+    //             perso->centerY = convertCaseToPixel(line + perso->height/2.0) - convertCaseToPixel(perso->height/2.0);
+    //             perso->saute = false;
+    //             return true;
 
+    //         }
+    //     }
+    // }
+    return false;
+}
+
+int testCollision(Personnage *perso, int** level){
+    // Bas du perso
+    int i1 = convertPixelToCase(perso->centerX - perso->width) -1; // Pourquoi -1 ?
+    int j1 = convertPixelToCase(perso->centerY - perso->height);
+   // printf("j1 %d\n", j1);
+    // Haut du perso
+    int i2 = convertPixelToCase(perso->centerX  + perso->width-1) + 1; // Pourqoi + 1 ?
+    int j2 = convertPixelToCase(perso->centerY + perso->height -1);    
+//printf("j2 %d\n", j2);
+    int i = 0;
+    int j = 0;
+    //level[11][7]  depuis le haut / depuis la gauche 
+
+    // Latéral
+    for (i = i1; i <= i2; i++)
+    {
+        // Haut et bas
+        for (j = j1; j <= j2; j++)
+        {
+            if (level[j][i] == 1)
+            {
+                if (i > i1)
+                {
+                    return 1;
+                }else {
+                    return -1;
+                }
             }
         }
     }
-    return false;
+    return 0;
 }
 
 /**

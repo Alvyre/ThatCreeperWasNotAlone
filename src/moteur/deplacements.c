@@ -11,17 +11,37 @@ void deplacementJoueur(Personnage *perso, int** level){
     // Déplace en X
     if (perso->sens)
     {
-        perso->centerX += perso->vitesse * perso->sens;
+        //printf("%d\n", testCollision(perso, level));
+        // Collision devant --> on ne peut que reculer
+        if (testCollision(perso, level) == 1 && perso->sens == -1)
+        {
+
+                perso->centerX += perso->vitesse * perso->sens;
+
+        }
+        // Collision devant --> on ne peut qu'avance
+        if (testCollision(perso, level) == -1 && perso->sens == 1)
+        {
+
+            perso->centerX += perso->vitesse * perso->sens;
+
+        }
+        // Pas de collisions --> avance
+        if (testCollision(perso, level) == 0)
+        {
+            perso->centerX += perso->vitesse * perso->sens;
+        }
+        
     }
 
     // Gravité s'applique toujours meme si le perso ne saute pas
     perso->centerY += perso->gravite++;
     
-    collisionLateral(perso, level);
-    if(perso->gravite <0 && collisionTop(perso, level)) return;
-    if(collisionGround(perso, level)) return;
+    //collisionLateral(perso, level);
+    // if(perso->gravite < 0 && collisionTop(perso, level)) return;
+     if(collisionGround(perso, level)) return;
     
-    
+    //testCollision(perso, level);
 
     
 }
