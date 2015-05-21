@@ -78,11 +78,11 @@ bool collisionTop(Personnage *perso, int** level){
 
 int testCollision(Personnage *perso, int** level){
     // Bas du perso
-    int i1 = convertPixelToCase(perso->centerX - perso->width) -1; // Pourquoi -1 ?
+    int i1 = convertPixelToCase(perso->centerX - perso->width) - perso->width/2; // FIXME : impaire width
     int j1 = convertPixelToCase(perso->centerY - perso->height);
    // printf("j1 %d\n", j1);
     // Haut du perso
-    int i2 = convertPixelToCase(perso->centerX  + perso->width-1) + 1; // Pourqoi + 1 ?
+    int i2 = convertPixelToCase(perso->centerX  + perso->width-1) + perso->width/2; // FIXME : impaire width
     int j2 = convertPixelToCase(perso->centerY + perso->height -1);    
 //printf("j2 %d\n", j2);
     int i = 0;

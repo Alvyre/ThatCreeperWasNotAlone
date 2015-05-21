@@ -3,7 +3,6 @@
 #include <stdbool.h> //FXIME
 #include <stdio.h> // FIXME
 #include <stdlib.h> //FIXME
-#include <math.h>
 
 void initLevel(int** level);
 void freeLevel(int** level);
