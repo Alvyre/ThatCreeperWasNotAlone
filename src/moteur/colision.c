@@ -69,7 +69,9 @@ int collisionLateral(Personnage *perso, int** level){
         }
         else if (level[L][C]==1 && perso->sens == -1) {
             if(perso->width %2==0) perso->centerX = C * TAILLE_CASE - floor(halfWidth) - perso->width*TAILLE_CASE * perso->sens +1;
-            else                   perso->centerX = C * TAILLE_CASE - floor(halfWidth) - perso->width*TAILLE_CASE * perso->sens -15;
+            else {
+               perso->centerX = C * TAILLE_CASE - floor(halfWidth) - (perso->width/2.0)*TAILLE_CASE * perso->sens +1*TAILLE_CASE +2;
+            }                 
         }
     }
 }
