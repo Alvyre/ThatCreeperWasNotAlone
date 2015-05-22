@@ -2,7 +2,7 @@
 #define MAIN_H
 
 #ifndef TAILLE_CASE
-#define TAILLE_CASE 32
+#define TAILLE_CASE 32.0
 #endif
 
 typedef struct Color3f

@@ -20,11 +20,12 @@
    int halfWidth = (perso->width/2.0);
    int halfHeight = (int)ceil(perso->height/2.0);
 
-   // FXIME : Trouver une façon plus propre de régler ça
+   // FIXME : Trouver une façon plus propre de régler ça
    // if (perso->lastDirection == 1)
    // {  
-        for (i = convertPixelToCase(perso->centerX - halfWidth); i <= convertPixelToCase(perso->centerX + halfWidth); i++)
+        for (i = floor((perso->centerX)/32 - halfWidth); i <= ceil((perso->centerX)/32 + halfWidth); i++)
         {
+            
            if (level[line + halfHeight][i] == 1)
            {
             perso->gravite = 10;
@@ -68,7 +69,7 @@ int collisionLateral(Personnage *perso, int** level){
         // Haut et bas
         for (j = j1; j <= j2 -1; j++)
         {
-            printf("j %d\n", j);
+            //printf("j %d\n", j);
             if (level[j][i] == 1)
             {
                 // Collisions avant ou arrière
