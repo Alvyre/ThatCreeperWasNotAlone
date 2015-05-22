@@ -20,7 +20,7 @@
    int halfWidth = (perso->width/2.0);
    int halfHeight = (int)ceil(perso->height/2.0);
 
-        for (i = floor((perso->centerX)/32 - halfWidth); i <= ceil((perso->centerX)/32 + halfWidth); i++)
+        for (i = floor((perso->centerX)/TAILLE_CASE - halfWidth); i <= ceil((perso->centerX)/TAILLE_CASE + halfWidth); i++)
         {
             
            if (level[line + halfHeight][i] == 1)
