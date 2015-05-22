@@ -82,6 +82,7 @@ int main(int argc, char** argv) {
   initPerso(&perso3,  2, 2, 2, 5, GREEN);
   // Par défaut perso 1 actif
   perso1.active = true;
+
   //int gravite = 2;
 
   while(loop) {
