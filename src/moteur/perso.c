@@ -37,3 +37,24 @@ void gestionJoueur(Personnage *perso,int** map){
 
 	deplacementJoueur(perso, map);
 }
+
+void changeFocus(Personnage *perso1, Personnage *perso2, Personnage *perso3){
+	if (perso1->active)
+	{
+		perso1->active = false;
+		perso2->active = true;
+		return;
+	}
+	if (perso2->active)
+	{
+		perso2->active = false;
+		perso3->active = true;
+		return;
+	}
+	if (perso3->active)
+	{
+		perso3->active = false;
+		perso1->active = true;
+		return;
+	}
+}

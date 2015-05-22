@@ -15,7 +15,6 @@ void deplacementJoueur(Personnage *perso, int** level){
         // Collision devant --> on ne peut que reculer
         if (collisionLateral(perso, level) == 1 && perso->sens == -1)
         {
-
             perso->centerX += perso->vitesse * perso->sens;
 
         }

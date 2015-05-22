@@ -64,9 +64,24 @@ int main(int argc, char** argv) {
   RED.g = 0;
   RED.b = 0;
 
-  // perso, width, height, caseX, caseY, color
-  initPerso(&perso1, 3, 2, 4, 10, RED);
+  Personnage perso2;
+  Color3f BLUE;
+  BLUE.r = 0;
+  BLUE.g = 0;
+  BLUE.b = 1;
 
+
+  Personnage perso3;
+  Color3f GREEN;
+  GREEN.r = 0;
+  GREEN.g = 1;
+  GREEN.b = 0;
+  // perso, width, height, caseX, caseY, color
+  initPerso(&perso1, 2, 2, 4, 10, RED);
+  initPerso(&perso2, 2, 2, 10, 5, BLUE);
+  initPerso(&perso3,  2, 2, 2, 5, GREEN);
+  // Par défaut perso 1 actif
+  perso1.active = true;
   //int gravite = 2;
 
   while(loop) {
@@ -83,13 +98,29 @@ int main(int argc, char** argv) {
     dessinPerso(&perso1);
     glColor3f(1, 1, 1);
 
+    glColor3f(perso2.color.r, perso2.color.g, perso2.color.b);  // Affichage du joueur
+    dessinPerso(&perso2);
+    glColor3f(1, 1, 1);
 
+    glColor3f(perso3.color.r, perso3.color.g, perso3.color.b);  // Affichage du joueur
+    dessinPerso(&perso3);
+    glColor3f(1, 1, 1);
 
     /* GESTION JOUEUR */
 
-    gestionJoueur(&perso1, level);
-
-
+    if (perso1.active)
+    {
+      gestionJoueur(&perso1, level);
+    }
+    if (perso2.active)
+    {
+      gestionJoueur(&perso2, level);
+    }
+    if (perso3.active)
+    {
+      gestionJoueur(&perso3, level);
+    }
+    
 
     SDL_GL_SwapBuffers();
         SDL_Event e;
@@ -100,9 +131,22 @@ int main(int argc, char** argv) {
       }
 
       /* GESTION TOUCHE */
-
+    if (perso1.active)
+    {
       appuyer(&perso1,e);
       relacher(&perso1,e);
+    }
+    if (perso2.active)
+    {
+      appuyer(&perso2,e);
+      relacher(&perso2,e);
+    }
+    if (perso3.active)
+    {
+      appuyer(&perso3,e);
+      relacher(&perso3,e);
+    }
+      
 
       switch(e.type) {                 
         case SDL_VIDEORESIZE:
@@ -117,6 +161,9 @@ int main(int argc, char** argv) {
             case SDLK_ESCAPE :
               freeLevel(level);
               loop = 0;
+              break;
+            case SDLK_TAB:
+              changeFocus(&perso1, &perso2, &perso3);
               break;
               default : break;
           }

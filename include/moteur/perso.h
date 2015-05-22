@@ -35,6 +35,6 @@ typedef struct Personnage
 
 void initPerso(Personnage *personnage, int width, int height, int posCaseX, int posCaseY, Color3f color);
 void gestionJoueur(Personnage *perso, int** map);
-
+void changeFocus(Personnage *perso1, Personnage *perso2, Personnage *perso3);
 
 #endif /* PERSO_H */
