@@ -60,7 +60,7 @@ int collisionLateral(Personnage *perso, int** level){
     float halfHeight = perso->height/2.0;
 
     int C = floor((X + (halfWidth*TAILLE_CASE) * perso->sens) / TAILLE_CASE);    
-    int L = floor(Y - (halfHeight*TAILLE_CASE)) / TAILLE_CASE);
+    int L = floor((Y - (halfHeight*TAILLE_CASE)) / TAILLE_CASE);
  
     // latéral                          
     for (; L < (Y/TAILLE_CASE) +floor(halfHeight); L++) {
