@@ -1,6 +1,6 @@
 #ifndef LEVEL_H
 #define LEVEL_H
-#include <stdbool.h> //FXIME
+#include <stdbool.h> //FIXME
 #include <stdio.h> // FIXME
 #include <stdlib.h> //FIXME
 

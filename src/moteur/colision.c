@@ -53,12 +53,12 @@
 
 int collisionLateral(Personnage *perso, int** level){
     // Bas du perso
-    int i1 = convertPixelToCase(perso->centerX - perso->width) - perso->width/2; // FIXME : impaire width
-    int j1 = convertPixelToCase(perso->centerY - perso->height) - perso->height/2;
+    int i1 = floor(convertPixelToCase(perso->centerX) - perso->width/2.0); // FIXME : impaire width
+    int j1 = floor(convertPixelToCase(perso->centerY) - perso->height/2.0);
 
     // Haut du perso
-    int i2 = convertPixelToCase(perso->centerX  + perso->width-1) + perso->width/2; // FIXME : impaire width
-    int j2 = convertPixelToCase(perso->centerY + perso->height -1)  + perso->height/2;    
+    int i2 = ceil(convertPixelToCase(perso->centerX) + perso->width/2.0); // FIXME : impaire width
+    int j2 = ceil(convertPixelToCase(perso->centerY) + perso->height/2.0);    
 
     int i = 0;
     int j = 0;
@@ -86,12 +86,12 @@ int collisionLateral(Personnage *perso, int** level){
 }
 
 int testCollisonGround(Personnage *perso, int** level){
-    int i1 = convertPixelToCase(perso->centerX - perso->width) - perso->width/2; // FIXME : impaire width
-    int j1 = convertPixelToCase(perso->centerY - perso->height) - perso->height/2;
+    int i1 = floor(convertPixelToCase(perso->centerX) - perso->width/2.0); // FIXME : impaire width
+    int j1 = floor(convertPixelToCase(perso->centerY) - perso->height/2.0);
 
     // Haut du perso
-    int i2 = convertPixelToCase(perso->centerX  + perso->width-1) + perso->width/2; // FIXME : impaire width
-    int j2 = convertPixelToCase(perso->centerY + perso->height -1) + perso->height/2;   
+    int i2 = ceil(convertPixelToCase(perso->centerX) + perso->width/2.0); // FIXME : impaire width
+    int j2 = ceil(convertPixelToCase(perso->centerY) + perso->height/2.0);   
 
     int i = 0;
     int j = 0;
