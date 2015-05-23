@@ -4,6 +4,7 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <SDL/SDL.h>
+#include <stdbool.h>
 
 #include "moteur/main.h"
 
@@ -15,6 +16,10 @@ typedef struct camera
 
 	int currentX;
 	int currentY;
+
+	float Dx;
+	float Dy;
+	bool is_transition;
 } Camera;
 #include "moteur/perso.h"
 
@@ -22,6 +27,6 @@ typedef struct camera
 void initCam(Personnage *perso, Camera *camera);
 void scrolling(Camera *camera);
 void centerCam(Personnage *perso, Camera *camera);
-
+void smoothTransition(Camera *camera);
 
 #endif /* SCROLLING_H */

@@ -6,18 +6,21 @@ void initCam(Personnage *perso, Camera *camera){
 	camera->formerY = 0;
 	camera->currentX = perso->centerX;
 	camera->currentY = perso->centerY;
+	camera->Dx = 0;
+	camera->Dy = 0;
+	camera->is_transition = false;
 }
 
 void scrolling(Camera *camera){
-	int distanceX = camera->currentX - camera->formerX;
-	int distanceY = camera->currentY - camera->formerY;
+	camera->Dx = camera->currentX - camera->formerX;
+	camera->Dy = camera->currentY - camera->formerY;
 
 	if(camera->currentX < WINDOW_WIDTH/2){
 		glPopMatrix();
-		glTranslatef(0,0,0);			// retour au début
+		glTranslatef(0,0,0);			// retour au début  // FIXME C'EST DEGUEULASSE
 		glPushMatrix();
 	} 
-	else glTranslatef(-distanceX,0,0);
+	glTranslatef(-camera->Dx,0,0);
 }
 
 void centerCam(Personnage *perso, Camera *camera){
@@ -28,16 +31,14 @@ void centerCam(Personnage *perso, Camera *camera){
 	camera->currentX = perso->centerX;
 	camera->currentY = perso->centerY;
 
-	int distanceX = camera->currentX - camera->formerX;
-	int distanceY = camera->currentY - camera->formerY;
-	float epsilon = 0.001;
-	float temp = distanceX;
-	//scrolling(camera);
+	camera->Dx = camera->currentX - camera->formerX;
+	camera->Dy = camera->currentY - camera->formerY;
+	camera->is_transition = true;
 
-	//FIXME Smooth scroll
-	while(temp > epsilon || temp < -epsilon){
-		temp *=0.2;
-		printf("temp = %f\n",temp);
-		glTranslatef(-temp,0,0);
-	}
+}
+
+void smoothTransition(Camera *camera){
+	camera->Dx *=0.5;
+	printf("Dx = %f\n",camera->Dx );
+	glTranslatef(-camera->Dx,0,0);
 }
