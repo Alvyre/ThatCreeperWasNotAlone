@@ -36,13 +36,14 @@ void dessinPerso(Personnage *perso){
 }
 
 void dessinActiveCursor(Personnage *perso){
+  float i = 2*sin(perso->cursorTimer/2.0);
   glBegin(GL_TRIANGLES);
-    // Haut gauche
-    glVertex2f((perso->centerX - (TAILLE_CASE/4)) -4*perso->sens , perso->centerY - (2 * TAILLE_CASE));
-    // Haut droite
-    glVertex2f((perso->centerX + (TAILLE_CASE/4)) -4*perso->sens , perso->centerY - (2 * TAILLE_CASE));
-    // Bas millieu
-    glVertex2f((perso->centerX) -4*perso->sens , perso->centerY - (1.5 * TAILLE_CASE));
-
+  printf("cursorTimer : %f\n",i );
+      // Haut gauche
+      glVertex2f((perso->centerX - (TAILLE_CASE/4)) -4*perso->sens , perso->centerY - (2 * TAILLE_CASE) +i);
+      // Haut droite
+      glVertex2f((perso->centerX + (TAILLE_CASE/4)) -4*perso->sens , perso->centerY - (2 * TAILLE_CASE)+i);
+      // Bas millieu
+      glVertex2f((perso->centerX) -4*perso->sens , perso->centerY - (1.5 * TAILLE_CASE)+i);
   glEnd();
 }

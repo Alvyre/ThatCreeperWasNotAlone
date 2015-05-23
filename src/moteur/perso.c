@@ -21,6 +21,7 @@ void initPerso(Personnage *personnage, int width, int height, int posCaseX, int 
 	personnage->saute = false;
 	personnage->repos = true;
 	personnage->active = false;
+	personnage->cursorTimer = 0;
 }
 
 void gestionJoueur(Personnage *perso,int** map, Camera *camera){
@@ -40,6 +41,7 @@ void changeFocus(Personnage *perso1, Personnage *perso2, Personnage *perso3, Cam
 		perso1->active = false;
 		perso1->droite = false; // évite que le perso continue son mvmt quand on le reprend
 		perso1->gauche = false;
+		perso2->cursorTimer = 0;
 		perso2->active = true;
 		centerCam(perso2, camera);
 		return;
@@ -49,6 +51,7 @@ void changeFocus(Personnage *perso1, Personnage *perso2, Personnage *perso3, Cam
 		perso2->active = false;
 		perso2->droite = false;
 		perso2->gauche = false;
+		perso3->cursorTimer = 0;
 		perso3->active = true;
 		centerCam(perso3, camera);
 		return;
@@ -58,6 +61,7 @@ void changeFocus(Personnage *perso1, Personnage *perso2, Personnage *perso3, Cam
 		perso3->active = false;
 		perso3->droite = false;
 		perso3->gauche = false;
+		perso1->cursorTimer = 0;
 		perso1->active = true;
 		centerCam(perso1, camera);
 		return;

@@ -29,6 +29,7 @@ typedef struct Personnage
 	bool repos;
 
 	bool active; // perso actif (controlable) ou pas
+	int cursorTimer;
 
 
 }Personnage;

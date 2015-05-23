@@ -98,7 +98,7 @@ int main(int argc, char** argv) {
     glClear(GL_COLOR_BUFFER_BIT);
 
     /* AFFICHAGE */
-    
+
     creeDecor(level);                                           // Affichage décor
 
     glColor3f(perso1.color.r, perso1.color.g, perso1.color.b);  // Affichage du joueur
@@ -118,17 +118,26 @@ int main(int argc, char** argv) {
     if (perso1.active)
     {
       gestionJoueur(&perso1, level, &camera);
-      dessinActiveCursor(&perso1);
+      if(perso1.cursorTimer<180) {
+        dessinActiveCursor(&perso1);
+        perso1.cursorTimer++;
+      }
     }
     if (perso2.active)
     {
       gestionJoueur(&perso2, level, &camera);
-      dessinActiveCursor(&perso2);
+      if(perso2.cursorTimer<180) {
+        dessinActiveCursor(&perso2);
+        perso2.cursorTimer++;
+      }
     }
     if (perso3.active)
     {
       gestionJoueur(&perso3, level, &camera);
-      dessinActiveCursor(&perso3);
+      if(perso3.cursorTimer<180) {
+        dessinActiveCursor(&perso3);
+        perso3.cursorTimer++;
+      }
     }
     
     // camera

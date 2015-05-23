@@ -39,6 +39,5 @@ void centerCam(Personnage *perso, Camera *camera){
 
 void smoothTransition(Camera *camera){
 	camera->Dx *=0.5;
-	printf("Dx = %f\n",camera->Dx );
 	glTranslatef(-camera->Dx,0,0);
 }
