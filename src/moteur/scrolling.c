@@ -9,12 +9,15 @@ void initCam(Personnage *perso, Camera *camera){
 }
 
 void scrolling(Camera *camera){
-	int mouvementX = camera->currentX - camera->formerX;
-	int mouvementY = camera->currentY - camera->formerY;
-	printf("mouvementX = %d\n", mouvementX);
-	printf("mouvementY = %d\n", mouvementY);
+	int distanceX = camera->currentX - camera->formerX;
+	int distanceY = camera->currentY - camera->formerY;
 
-	glTranslatef(-mouvementX,0,0);
+	if(camera->currentX < WINDOW_WIDTH/2){
+		glPopMatrix();
+		glTranslatef(0,0,0);			// retour au début
+		glPushMatrix();
+	} 
+	else glTranslatef(-distanceX,0,0);
 }
 
 void centerCam(Personnage *perso, Camera *camera){
@@ -25,5 +28,16 @@ void centerCam(Personnage *perso, Camera *camera){
 	camera->currentX = perso->centerX;
 	camera->currentY = perso->centerY;
 
-	scrolling(camera);
+	int distanceX = camera->currentX - camera->formerX;
+	int distanceY = camera->currentY - camera->formerY;
+	float epsilon = 0.001;
+	float temp = distanceX;
+	//scrolling(camera);
+
+	//FIXME Smooth scroll
+	while(temp > epsilon || temp < -epsilon){
+		temp *=0.2;
+		printf("temp = %f\n",temp);
+		glTranslatef(-temp,0,0);
+	}
 }

@@ -17,8 +17,11 @@ typedef struct camera
 	int currentY;
 } Camera;
 #include "moteur/perso.h"
+
+
 void initCam(Personnage *perso, Camera *camera);
 void scrolling(Camera *camera);
 void centerCam(Personnage *perso, Camera *camera);
+
 
 #endif /* SCROLLING_H */

@@ -84,10 +84,11 @@ int main(int argc, char** argv) {
 
   // Par défaut perso 1 actif
   initCam(&perso1, &camera);
+  glPushMatrix();
   perso1.active = true;
 
   //glScalef(1.2,1.2,0);
-  glTranslatef(-perso1.centerX + WINDOW_WIDTH/2, 0 ,0);
+  centerCam(&perso1, &camera);
   
 
   while(loop) {
