@@ -54,7 +54,7 @@
     return false;
 }
 
-int collisionLateral(Personnage *perso, int** level){
+void collisionLateral(Personnage *perso, int** level){
 
     int Y = perso->centerY;
     int X = perso->centerX;
@@ -99,7 +99,8 @@ bool CollisionRoof(Personnage *perso, int** level){
 
         if(level[L][C] == 1){
             perso->centerY = (L+2)*TAILLE_CASE - halfHeight;
+            return true;
         }
     }
-
+    return false;
 }

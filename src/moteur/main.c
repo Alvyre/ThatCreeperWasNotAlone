@@ -98,7 +98,7 @@ int main(int argc, char** argv) {
     glClear(GL_COLOR_BUFFER_BIT);
 
     /* AFFICHAGE */
-
+    
     creeDecor(level);                                           // Affichage décor
 
     glColor3f(perso1.color.r, perso1.color.g, perso1.color.b);  // Affichage du joueur
