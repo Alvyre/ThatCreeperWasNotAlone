@@ -12,8 +12,6 @@ void deplacementJoueur(Personnage *perso, int** level, Camera *camera){
 	camera->formerX = perso->centerX;
 	camera->formerY = perso->centerY;
 
-	//glTranslatef(-perso->vitesse * perso->sens,0,0);
-
     perso->centerX += perso->vitesse * perso->sens;
     collisionLateral(perso, level);
     camera->currentX = perso->centerX;

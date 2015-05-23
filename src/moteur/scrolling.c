@@ -14,7 +14,7 @@ void scrolling(Camera *camera){
 	printf("mouvementX = %d\n", mouvementX);
 	printf("mouvementY = %d\n", mouvementY);
 
-	glTranslatef(-mouvementX,-mouvementY,0);
+	glTranslatef(-mouvementX,0,0);
 }
 
 void centerCam(Personnage *perso, Camera *camera){
