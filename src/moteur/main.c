@@ -129,8 +129,14 @@ int main(int argc, char** argv) {
     }
     
     // camera
-    scrolling(&camera);
 
+    if(camera.is_transition == false) scrolling(&camera);
+    else if(camera.is_transition == true){
+      if(camera.Dx < -0.001 || camera.Dx > 0.001){
+        smoothTransition(&camera);
+      }
+      else camera.is_transition = false;
+    }
 
     SDL_GL_SwapBuffers();
         SDL_Event e;
