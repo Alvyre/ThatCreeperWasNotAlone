@@ -19,7 +19,7 @@ static const Uint32 FRAMERATE_MILLISECONDS = 1000 / 60;
 
 void reshape(int winWidth, int winHeight) {
   glViewport(0, 0, winWidth, winHeight);
-  glMatrixMode(GL_PROJECTION);
+  glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
   //gluOrtho2D(left,right,top,bot);
   gluOrtho2D(0, WINDOW_WIDTH, WINDOW_HEIGHT, 0);
@@ -52,7 +52,7 @@ int main(int argc, char** argv) {
   // Création du level
   initLevel(level);
   //FIXME : Choose level in menu 
-  char const *path = "./levels/level-1.csv";
+  char const *path = "./levels/level-2.csv";
   loadLevelFromFile(level, path);
 
 

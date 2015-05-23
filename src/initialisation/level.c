@@ -4,7 +4,7 @@
 #include <string.h>
 
 #define LINES WINDOW_HEIGHT/TAILLE_CASE //30
-#define COLUMNS WINDOW_WIDTH/TAILLE_CASE //40
+#define COLUMNS 80//WINDOW_WIDTH/TAILLE_CASE //40 /**********************FIXME*************
 #define MAX_CHAR_FILE 10000
 
 
@@ -37,7 +37,6 @@ void loadLevelFromFile(int** level, char const * path){
 
 		// Parcours les lignes
 		while ((read = getline(&buffer, &length, file)) != -1) {
-			
 	        // Parcours les colonnes
 	        for (j = 0, ptr = buffer; j < COLUMNS; j++, ptr++){
 	            level[i][j] = (int)strtol(ptr, &ptr, 10);
