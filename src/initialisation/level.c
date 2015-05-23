@@ -63,6 +63,11 @@ void freeLevel(int** level){
 
 void creeDecor(int **level){
 	int i,j;
+	Color3f color;
+	// Par défaut carrés noirs
+	color.r = 0;
+	color.g = 0;
+	color.b = 0;
 
 	for (i = 0; i < LINES; i++) // height
 	{
@@ -72,7 +77,18 @@ void creeDecor(int **level){
 			//dessinCarre(0,j*32,i*32);
 			if (level[i][j] == 1)
 			{
-				dessinCarre(1,j*32,i*32);
+				color.r = 1;
+				color.g = 1;
+				color.b = 1;
+				dessinCarre(j*32,i*32, &color);
+			}
+
+			if (level[i][j] == 2)
+			{
+				color.r = 0.5;
+				color.g = 1;
+				color.b = 0.5;
+				dessinCarre(j*32,i*32, &color);
 			}
 		}
 	}
