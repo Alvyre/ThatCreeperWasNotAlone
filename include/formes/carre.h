@@ -2,6 +2,7 @@
 #define CARRE_H
 #include "moteur/perso.h"
 
-void dessinCarre(int i, int j, Color3f *color);
+void dessinCarre(int filled, int i, int j);
 void dessinPerso(Personnage *perso);
+void dessinActiveCursor(Personnage *perso);
 #endif

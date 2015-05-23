@@ -118,14 +118,17 @@ int main(int argc, char** argv) {
     if (perso1.active)
     {
       gestionJoueur(&perso1, level, &camera);
+      dessinActiveCursor(&perso1);
     }
     if (perso2.active)
     {
       gestionJoueur(&perso2, level, &camera);
+      dessinActiveCursor(&perso2);
     }
     if (perso3.active)
     {
       gestionJoueur(&perso3, level, &camera);
+      dessinActiveCursor(&perso3);
     }
     
     // camera
