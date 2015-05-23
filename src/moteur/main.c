@@ -13,6 +13,7 @@
 #include "moteur/perso.h"
 #include "moteur/touche.h"
 #include "moteur/deplacements.h"
+#include "moteur/scrolling.h"
 
 static const unsigned int BIT_PER_PIXEL = 32;
 static const Uint32 FRAMERATE_MILLISECONDS = 1000 / 60;
@@ -30,20 +31,18 @@ void setVideoMode(int winWidth, int winHeight) {
     fprintf(stderr, "Impossible d'ouvrir la fenetre. Fin du programme.\n");
     exit(EXIT_FAILURE);
   }
-  reshape(winWidth, winHeight);
+  reshape(WINDOW_WIDTH, WINDOW_HEIGHT);
 }
 
 int main(int argc, char** argv) {
 
-  unsigned int windowWidth  = WINDOW_WIDTH;
-  unsigned int windowHeight = WINDOW_HEIGHT;
 
   if(-1 == SDL_Init(SDL_INIT_VIDEO)) {
     fprintf(stderr, "Impossible d'initialiser la SDL. Fin du programme.\n");
     return EXIT_FAILURE;
   }
 
-  setVideoMode(windowWidth, windowHeight);
+  setVideoMode(WINDOW_WIDTH, WINDOW_HEIGHT);
 
   SDL_WM_SetCaption("Thomas Was Alone", NULL);
 
@@ -55,7 +54,8 @@ int main(int argc, char** argv) {
   char const *path = "./levels/level-2.csv";
   loadLevelFromFile(level, path);
 
-
+  //creation camera
+  Camera camera;
 
   //creation perso;
   Personnage perso1;
@@ -76,14 +76,19 @@ int main(int argc, char** argv) {
   GREEN.r = 0;
   GREEN.g = 1;
   GREEN.b = 0;
+
   // perso, width, height, caseX, caseY, color
-  initPerso(&perso1, 2, 2, 4, 10, RED);
+  initPerso(&perso1, 2, 2, 4, 26, RED);
   initPerso(&perso2, 2, 2, 10, 5, BLUE);
   initPerso(&perso3,  2, 2, 2, 5, GREEN);
+
   // Par défaut perso 1 actif
+  initCam(&perso1, &camera);
   perso1.active = true;
 
-  //int gravite = 2;
+  //glScalef(1.2,1.2,0);
+  glTranslatef(-perso1.centerX + WINDOW_WIDTH/2, 0 ,0);
+  
 
   while(loop) {
     /* temps au début de la boucle */
@@ -111,17 +116,20 @@ int main(int argc, char** argv) {
 
     if (perso1.active)
     {
-      gestionJoueur(&perso1, level);
+      gestionJoueur(&perso1, level, &camera);
     }
     if (perso2.active)
     {
-      gestionJoueur(&perso2, level);
+      gestionJoueur(&perso2, level, &camera);
     }
     if (perso3.active)
     {
-      gestionJoueur(&perso3, level);
+      gestionJoueur(&perso3, level, &camera);
     }
     
+    // camera
+    scrolling(&camera);
+
 
     SDL_GL_SwapBuffers();
         SDL_Event e;
@@ -151,9 +159,9 @@ int main(int argc, char** argv) {
 
       switch(e.type) {                 
         case SDL_VIDEORESIZE:
-        windowWidth  = e.resize.w;
-        windowHeight = e.resize.h;
-        setVideoMode(windowWidth, windowHeight);
+        WINDOW_WIDTH  = e.resize.w;
+        WINDOW_HEIGHT = e.resize.h;
+        setVideoMode(WINDOW_WIDTH, WINDOW_HEIGHT);
         break;
 
         case SDL_KEYDOWN:
@@ -164,7 +172,7 @@ int main(int argc, char** argv) {
               loop = 0;
               break;
             case SDLK_TAB:
-              changeFocus(&perso1, &perso2, &perso3);
+              changeFocus(&perso1, &perso2, &perso3, &camera);
               break;
               default : break;
           }

@@ -5,6 +5,7 @@
 #include "moteur/main.h"
 #include <stdbool.h>
 
+
 typedef struct Personnage
 {
 	int centerX;
@@ -31,10 +32,10 @@ typedef struct Personnage
 
 
 }Personnage;
-
+#include "moteur/scrolling.h"
 
 void initPerso(Personnage *personnage, int width, int height, int posCaseX, int posCaseY, Color3f color);
-void gestionJoueur(Personnage *perso, int** map);
-void changeFocus(Personnage *perso1, Personnage *perso2, Personnage *perso3);
+void gestionJoueur(Personnage *perso, int** map, Camera *camera);
+void changeFocus(Personnage *perso1, Personnage *perso2, Personnage *perso3, Camera *camera);
 
 #endif /* PERSO_H */

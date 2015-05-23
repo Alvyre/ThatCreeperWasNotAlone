@@ -23,7 +23,7 @@ void initPerso(Personnage *personnage, int width, int height, int posCaseX, int 
 	personnage->active = false;
 }
 
-void gestionJoueur(Personnage *perso,int** map){
+void gestionJoueur(Personnage *perso,int** map, Camera *camera){
 	perso->sens = 0;
 	perso->sens = (int)perso->droite - (int)perso->gauche;
 	if (perso->sens != 0)
@@ -35,26 +35,29 @@ void gestionJoueur(Personnage *perso,int** map){
 	perso->lateral = perso->droite || perso->gauche;
 
 
-	deplacementJoueur(perso, map);
+	deplacementJoueur(perso, map, camera);
 }
 
-void changeFocus(Personnage *perso1, Personnage *perso2, Personnage *perso3){
+void changeFocus(Personnage *perso1, Personnage *perso2, Personnage *perso3, Camera *camera){
 	if (perso1->active)
 	{
 		perso1->active = false;
 		perso2->active = true;
+		centerCam(perso2, camera);
 		return;
 	}
 	if (perso2->active)
 	{
 		perso2->active = false;
 		perso3->active = true;
+		centerCam(perso3, camera);
 		return;
 	}
 	if (perso3->active)
 	{
 		perso3->active = false;
 		perso1->active = true;
+		centerCam(perso1, camera);
 		return;
 	}
 }

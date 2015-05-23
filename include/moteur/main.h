@@ -14,8 +14,8 @@ typedef struct Color3f
 
 
 
-static unsigned int WINDOW_WIDTH = 1280;
-static unsigned int WINDOW_HEIGHT = 960;
+static unsigned int WINDOW_WIDTH = 1280; // 40
+static unsigned int WINDOW_HEIGHT = 960; // 30
 
 
 #endif /* MAIN_H */
