@@ -118,6 +118,8 @@ int main(int argc, char** argv) {
     if (perso1.active)
     {
       gestionJoueur(&perso1, level, &camera);
+      collisionsJoueur(&perso1, &perso2);
+      collisionsJoueur(&perso1, &perso3);
       if(perso1.cursorTimer<180) {
         dessinActiveCursor(&perso1);
         perso1.cursorTimer++;
@@ -125,7 +127,10 @@ int main(int argc, char** argv) {
     }
     if (perso2.active)
     {
+      
       gestionJoueur(&perso2, level, &camera);
+      collisionsJoueur(&perso2, &perso1);
+      collisionsJoueur(&perso2, &perso3);
       if(perso2.cursorTimer<180) {
         dessinActiveCursor(&perso2);
         perso2.cursorTimer++;
@@ -133,7 +138,10 @@ int main(int argc, char** argv) {
     }
     if (perso3.active)
     {
+
       gestionJoueur(&perso3, level, &camera);
+      collisionsJoueur(&perso3, &perso2);
+      collisionsJoueur(&perso3, &perso1);
       if(perso3.cursorTimer<180) {
         dessinActiveCursor(&perso3);
         perso3.cursorTimer++;

@@ -14,6 +14,7 @@ void deplacementJoueur(Personnage *perso, int** level, Camera *camera){
 
     perso->centerX += perso->vitesse * perso->sens;
     collisionLateral(perso, level);
+    
     camera->currentX = perso->centerX;
    
  	perso->centerY += perso->gravite++;

@@ -80,6 +80,7 @@ void collisionLateral(Personnage *perso, int** level){
                perso->centerX = C * TAILLE_CASE - floor(halfWidth) - (perso->width/2.0)*TAILLE_CASE * perso->sens +1*TAILLE_CASE +1 ;
             }                 
         }
+
     }
 }
 
@@ -103,4 +104,36 @@ bool CollisionRoof(Personnage *perso, int** level){
         }
     }
     return false;
+}
+
+
+void collisionsJoueur(Personnage *perso1, Personnage *perso2){
+
+    float X1 = perso1->centerX;
+    float Y1 = perso1->centerY;
+
+
+    float X2 = perso2->centerX;
+    float Y2 = perso2->centerY;
+
+    int i;
+    //collisions J1 / J2 latérales
+    for ( i = Y1 - perso1->height*TAILLE_CASE/2 ; i < Y1 + perso1->height*TAILLE_CASE/2 ; ++i)
+    {
+        if(i > (Y2 - perso2->height*TAILLE_CASE/2) && i < (Y2 + perso2->height*TAILLE_CASE/2) ){
+
+            if( perso1->sens == 1 ){
+                if( ((X1 + perso1->width*TAILLE_CASE/2 * perso1->sens) > (X2 - perso2->width*TAILLE_CASE/2)) && ((X1 + perso1->width*TAILLE_CASE/2 * perso1->sens) < (X2 + perso2->width*TAILLE_CASE/2)) ){
+
+                    perso1->centerX = perso2->centerX - (perso2->width*TAILLE_CASE/2) - (perso1->width*TAILLE_CASE/2);
+                }
+            }
+            else if( perso1->sens == -1 ){
+                if( ((X1 + perso1->width*TAILLE_CASE/2 * perso1->sens) < (X2 + perso2->width*TAILLE_CASE/2)) && ((X1 + perso1->width*TAILLE_CASE/2 * perso1->sens) > (X2 - perso2->width*TAILLE_CASE/2))  ){
+                    perso1->centerX = perso2->centerX + (perso2->width*TAILLE_CASE/2) + (perso1->width*TAILLE_CASE/2);
+                }
+            }
+        }
+    }
+
 }
