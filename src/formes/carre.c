@@ -38,11 +38,11 @@ void dessinPerso(Personnage *perso){
 void dessinActiveCursor(Personnage *perso){
   glBegin(GL_TRIANGLES);
     // Haut gauche
-    glVertex2f(perso->centerX - (TAILLE_CASE/2), perso->centerY - (2 * TAILLE_CASE));
+    glVertex2f((perso->centerX - (TAILLE_CASE/4)) -4*perso->sens , perso->centerY - (2 * TAILLE_CASE));
     // Haut droite
-    glVertex2f(perso->centerX + (TAILLE_CASE/2), perso->centerY - (2 * TAILLE_CASE));
+    glVertex2f((perso->centerX + (TAILLE_CASE/4)) -4*perso->sens , perso->centerY - (2 * TAILLE_CASE));
     // Bas millieu
-    glVertex2f(perso->centerX, perso->centerY - (1.5 * TAILLE_CASE));
+    glVertex2f((perso->centerX) -4*perso->sens , perso->centerY - (1.5 * TAILLE_CASE));
 
   glEnd();
 }
