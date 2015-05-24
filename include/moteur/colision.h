@@ -10,6 +10,6 @@
 bool collisionTop(Personnage *perso, int** level);
 bool collisionGround(Personnage *perso, int** level);
 void collisionLateral(Personnage *perso, int** level);
-bool CollisionRoof(Personnage *perso, int** level);
+bool collisionRoof(Personnage *perso, int** level);
 void collisionsJoueur(Personnage *perso1, Personnage *perso2);
 #endif /* COLISION_H */
