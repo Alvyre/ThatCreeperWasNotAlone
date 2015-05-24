@@ -119,7 +119,7 @@ void collisionsJoueur(Personnage *perso1, Personnage *perso2){
 
     int i,j;
     //collisions J1 / J2 latérales
-    for ( i = Y1 - perso1->height*TAILLE_CASE/2 ; i < Y1 + perso1->height*TAILLE_CASE/2 ; i++)
+    for ( i = Y1 - perso1->height*TAILLE_CASE/2+10 ; i < Y1 + perso1->height*TAILLE_CASE/2-10 ; i++)
     {
         if(i > (Y2 - perso2->height*TAILLE_CASE/2) && i < (Y2 + perso2->height*TAILLE_CASE/2) ){
 
