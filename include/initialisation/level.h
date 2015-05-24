@@ -10,7 +10,7 @@ void creeDecor(int** level);
 bool isPixelGround(int pixelX, int pixelY, int **level);
 int convertPixelToCase(int pixel);
 int convertCaseToPixel(float Case);
-void loadLevelFromFile(int** level, char const * path);
+void loadLevelFromFile(int** level, char const * path, int persoInfos[3][7],int *nbrPerso);
 
 
 #endif /* LEVEL_H */

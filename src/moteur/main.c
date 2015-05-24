@@ -36,7 +36,9 @@ void setVideoMode(int winWidth, int winHeight) {
 }
 
 int main(int argc, char** argv) {
-
+  int loop = 1;
+  int nbrPerso = 0;
+  int j = 0;
 
   if(-1 == SDL_Init(SDL_INIT_VIDEO)) {
     fprintf(stderr, "Impossible d'initialiser la SDL. Fin du programme.\n");
@@ -47,13 +49,15 @@ int main(int argc, char** argv) {
 
   SDL_WM_SetCaption("Thomas Was Alone", NULL);
 
-  int loop = 1;
+
   int **level = calloc(LINES + COLUMNS, sizeof(int*));
   // Création du level
   initLevel(level);
+  int persoInfos[3][7];
+
   //FIXME : Choose level in menu 
   char const *path = "./levels/level-2.csv";
-  loadLevelFromFile(level, path);
+  loadLevelFromFile(level, path, persoInfos, &nbrPerso);
 
   //creation camera
   Camera camera;
@@ -62,31 +66,15 @@ int main(int argc, char** argv) {
   Personnage *persoHandler;
   persoHandler = calloc(3,sizeof(Personnage));
 
-
-  //creation perso;
-
-  Color3f RED;
-  RED.r = 1;
-  RED.g = 0;
-  RED.b = 0;
-
-
-  Color3f BLUE;
-  BLUE.r = 0;
-  BLUE.g = 0;
-  BLUE.b = 1;
-
-
-
-  Color3f GREEN;
-  GREEN.r = 0;
-  GREEN.g = 1;
-  GREEN.b = 0;
-
-  // perso, width, height, caseX, caseY, color
-  initPerso(&persoHandler[0], 2, 2, 4, 26, RED);
-  initPerso(&persoHandler[1], 2, 2, 10, 5, BLUE);
-  initPerso(&persoHandler[2],  2, 2, 2, 5, GREEN);
+  for (j = 0; j < nbrPerso; j++)
+  {
+    Color3f persoColor;
+    persoColor.r = persoInfos[j][4];
+    persoColor.g = persoInfos[j][5];
+    persoColor.b = persoInfos[j][6];
+    // perso, width, height, caseX, caseY, color
+    initPerso(&persoHandler[j], persoInfos[j][2], persoInfos[j][3], persoInfos[j][0], persoInfos[j][1], persoColor);
+  }
 
   // Par défaut perso 1 actif
   initCam(&persoHandler[0], &camera);
@@ -104,20 +92,14 @@ int main(int argc, char** argv) {
     glClear(GL_COLOR_BUFFER_BIT);
 
     /* AFFICHAGE */
+    creeDecor(level);
 
-    creeDecor(level);                                           // Affichage décor
-
-    glColor3f(persoHandler[0].color.r, persoHandler[0].color.g, persoHandler[0].color.b);  // Affichage du joueur
-    dessinPerso(&persoHandler[0]);
-    glColor3f(1, 1, 1);
-
-    glColor3f(persoHandler[1].color.r, persoHandler[1].color.g, persoHandler[1].color.b);  // Affichage du joueur
-    dessinPerso(&persoHandler[1]);
-    glColor3f(1, 1, 1);
-
-    glColor3f(persoHandler[2].color.r, persoHandler[2].color.g, persoHandler[2].color.b);  // Affichage du joueur
-    dessinPerso(&persoHandler[2]);
-    glColor3f(1, 1, 1);
+    for (j = 0; j < nbrPerso; j++)
+    {
+      glColor3f(persoHandler[j].color.r, persoHandler[j].color.g, persoHandler[j].color.b);  // Affichage du joueur
+      dessinPerso(&persoHandler[j]);
+      glColor3f(1, 1, 1);
+    }
 
     /* GESTION JOUEUR */
 
@@ -125,25 +107,14 @@ int main(int argc, char** argv) {
     deplacementJoueur(persoHandler, level, &camera);
 
     // cursor
-    if (persoHandler[0].active)
+    for (j = 0; j < nbrPerso; j++)
     {
-      if(persoHandler[0].cursorTimer<180) {
-        dessinActiveCursor(&persoHandler[0]);
-        persoHandler[0].cursorTimer++;
-      }
-    }
-    if (persoHandler[1].active)
-    {
-      if(persoHandler[1].cursorTimer<180) {
-        dessinActiveCursor(&persoHandler[1]);
-        persoHandler[1].cursorTimer++;
-      }
-    }
-    if (persoHandler[2].active)
-    {
-      if(persoHandler[2].cursorTimer<180) {
-        dessinActiveCursor(&persoHandler[2]);
-        persoHandler[2].cursorTimer++;
+       if (persoHandler[j].active)
+      {
+        if(persoHandler[j].cursorTimer<180) {
+          dessinActiveCursor(&persoHandler[j]);
+          persoHandler[j].cursorTimer++;
+        }
       }
     }
     
@@ -166,20 +137,13 @@ int main(int argc, char** argv) {
       }
 
       /* GESTION TOUCHE */
-    if (persoHandler[0].active)
+    for (j = 0; j < nbrPerso; j++)
     {
-      appuyer(&persoHandler[0],e);
-      relacher(&persoHandler[0],e);
-    }
-    if (persoHandler[1].active)
-    {
-      appuyer(&persoHandler[1],e);
-      relacher(&persoHandler[1],e);
-    }
-    if (persoHandler[2].active)
-    {
-      appuyer(&persoHandler[2],e);
-      relacher(&persoHandler[2],e);
+      if (persoHandler[j].active)
+      {
+        appuyer(&persoHandler[j],e);
+        relacher(&persoHandler[j],e);
+      }
     }
       
 
