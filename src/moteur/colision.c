@@ -112,7 +112,6 @@ bool collisionRoof(Personnage *perso, int** level){
 
 void collisionsJoueur(Personnage *perso1, Personnage *perso2){
 
-
     float X1 = perso1->centerX;
     float Y1 = perso1->centerY;
 
@@ -141,21 +140,24 @@ void collisionsJoueur(Personnage *perso1, Personnage *perso2){
 
 
     //collisions sol + plafond
+    perso2->freeze = false;
     for ( j = X1 - perso1->width*TAILLE_CASE/2 ; j < X1 + perso1->width*TAILLE_CASE/2 ; j++){ // parcours la largeur    
         if(j > (X2 - perso2->width*TAILLE_CASE/2+5) && j < (X2 + perso2->width*TAILLE_CASE/2-5) ){ // si c'est bien dans la largeur du perso
 
-             
-             if( (Y1 - perso1->height*TAILLE_CASE/2 ) <= (Y2 + perso2->height*TAILLE_CASE/2) && (Y1 - perso1->height*TAILLE_CASE/2 ) >= (Y2 - perso2->height*TAILLE_CASE/2) ){
+            //j1 sous j2
+            if( (Y1 - perso1->height*TAILLE_CASE/2 ) <= (Y2 + perso2->height*TAILLE_CASE/2) && (Y1 - perso1->height*TAILLE_CASE/2 ) >= (Y2 - perso2->height*TAILLE_CASE/2) ){
                 // FIXME erreur ici
                 //perso1->centerY = perso2->centerY + perso2->height*TAILLE_CASE/2 + perso1->height*TAILLE_CASE/2 ;
                 perso1->saute = false;
                 perso1->gravite = 9;
               }
-
+            //j1 sur j2
             if( (Y1 + perso1->height*TAILLE_CASE/2) > (Y2 - perso2->height*TAILLE_CASE/2) && (Y1 + perso1->height*TAILLE_CASE/2) < (Y2 + perso2->height*TAILLE_CASE/2) ){
                  perso1->centerY = perso2->centerY - (perso2->height*TAILLE_CASE/2) - (perso1->height*TAILLE_CASE/2) ;
                  perso1->saute = false;
                  perso1->gravite = 9;
+                 perso2->freeze = true;
+                 perso1->freeze = true;
             }
 
          }

@@ -41,9 +41,9 @@ void deplacementJoueur(Personnage *persoHandler, int** level, Camera *camera){
     collisionLateral(perso, level);
     camera->currentX = perso->centerX;
    
- 	persoHandler[0].centerY += persoHandler[0].gravite++;
-    persoHandler[1].centerY += persoHandler[1].gravite++;
-    persoHandler[2].centerY += persoHandler[2].gravite++;
+ 	if(persoHandler[0].freeze == false) persoHandler[0].centerY += persoHandler[0].gravite++;
+    if(persoHandler[1].freeze == false) persoHandler[1].centerY += persoHandler[1].gravite++;
+    if(persoHandler[2].freeze == false) persoHandler[2].centerY += persoHandler[2].gravite++;
 
 
  	camera->currentY = perso->centerY;

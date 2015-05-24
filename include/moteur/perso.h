@@ -30,7 +30,7 @@ typedef struct Personnage
 
 	bool active; // perso actif (controlable) ou pas
 	int cursorTimer;
-
+	bool freeze;
 
 
 }Personnage;

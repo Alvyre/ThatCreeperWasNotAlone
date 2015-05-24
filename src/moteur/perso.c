@@ -22,6 +22,7 @@ void initPerso(Personnage *personnage, int width, int height, int posCaseX, int 
 	personnage->repos = true;
 	personnage->active = false;
 	personnage->cursorTimer = 0;
+	personnage->freeze = false;
 }
 
 void gestionJoueur(Personnage *persoHandler){
@@ -35,7 +36,7 @@ void gestionJoueur(Personnage *persoHandler){
 	// Booleen ou int ?
 	perso->repos = (bool)(!perso->droite && !perso->gauche && !perso->haut && !perso->bas);
 	perso->lateral = perso->droite || perso->gauche;
-	
+	printf("freeze = %d\n",(int)perso->freeze );
 }
 
 void changeFocus(Personnage *perso1, Personnage *perso2, Personnage *perso3, Camera *camera){
