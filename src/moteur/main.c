@@ -14,6 +14,7 @@
 #include "moteur/touche.h"
 #include "moteur/deplacements.h"
 #include "moteur/scrolling.h"
+#include "moteur/colision.h"
 
 static const unsigned int BIT_PER_PIXEL = 32;
 static const Uint32 FRAMERATE_MILLISECONDS = 1000 / 60;
@@ -57,38 +58,42 @@ int main(int argc, char** argv) {
   //creation camera
   Camera camera;
 
+  //test
+  Personnage persoHandler[3];
+
+
   //creation perso;
-  Personnage perso1;
+  //Personnage persoHandler[0];
   Color3f RED;
   RED.r = 1;
   RED.g = 0;
   RED.b = 0;
 
-  Personnage perso2;
+  //Personnage persoHandler[1];
   Color3f BLUE;
   BLUE.r = 0;
   BLUE.g = 0;
   BLUE.b = 1;
 
 
-  Personnage perso3;
+  //Personnage persoHandler[2];
   Color3f GREEN;
   GREEN.r = 0;
   GREEN.g = 1;
   GREEN.b = 0;
 
   // perso, width, height, caseX, caseY, color
-  initPerso(&perso1, 2, 2, 4, 26, RED);
-  initPerso(&perso2, 2, 2, 10, 5, BLUE);
-  initPerso(&perso3,  2, 2, 2, 5, GREEN);
+  initPerso(&persoHandler[0], 2, 2, 4, 26, RED);
+  initPerso(&persoHandler[1], 2, 2, 10, 5, BLUE);
+  initPerso(&persoHandler[2],  2, 2, 2, 5, GREEN);
 
   // Par défaut perso 1 actif
-  initCam(&perso1, &camera);
+  initCam(&persoHandler[0], &camera);
   glPushMatrix();
-  perso1.active = true;
+  persoHandler[0].active = true;
 
   //glScalef(1.2,1.2,0);
-  centerCam(&perso1, &camera);
+  centerCam(&persoHandler[0], &camera);
   
 
   while(loop) {
@@ -101,50 +106,50 @@ int main(int argc, char** argv) {
 
     creeDecor(level);                                           // Affichage décor
 
-    glColor3f(perso1.color.r, perso1.color.g, perso1.color.b);  // Affichage du joueur
-    dessinPerso(&perso1);
+    glColor3f(persoHandler[0].color.r, persoHandler[0].color.g, persoHandler[0].color.b);  // Affichage du joueur
+    dessinPerso(&persoHandler[0]);
     glColor3f(1, 1, 1);
 
-    glColor3f(perso2.color.r, perso2.color.g, perso2.color.b);  // Affichage du joueur
-    dessinPerso(&perso2);
+    glColor3f(persoHandler[1].color.r, persoHandler[1].color.g, persoHandler[1].color.b);  // Affichage du joueur
+    dessinPerso(&persoHandler[1]);
     glColor3f(1, 1, 1);
 
-    glColor3f(perso3.color.r, perso3.color.g, perso3.color.b);  // Affichage du joueur
-    dessinPerso(&perso3);
+    glColor3f(persoHandler[2].color.r, persoHandler[2].color.g, persoHandler[2].color.b);  // Affichage du joueur
+    dessinPerso(&persoHandler[2]);
     glColor3f(1, 1, 1);
 
     /* GESTION JOUEUR */
 
-    if (perso1.active)
+    if (persoHandler[0].active)
     {
-      gestionJoueur(&perso1, level, &camera);
-      collisionsJoueur(&perso1, &perso2);
-      collisionsJoueur(&perso1, &perso3);
-      if(perso1.cursorTimer<180) {
-        dessinActiveCursor(&perso1);
-        perso1.cursorTimer++;
+      gestionJoueur(&persoHandler[0], level, &camera);
+      collisionsJoueur(&persoHandler[0], &persoHandler[1]);
+      collisionsJoueur(&persoHandler[0], &persoHandler[2]);
+      if(persoHandler[0].cursorTimer<180) {
+        dessinActiveCursor(&persoHandler[0]);
+        persoHandler[0].cursorTimer++;
       }
     }
-    if (perso2.active)
+    if (persoHandler[1].active)
     {
       
-      gestionJoueur(&perso2, level, &camera);
-      collisionsJoueur(&perso2, &perso1);
-      collisionsJoueur(&perso2, &perso3);
-      if(perso2.cursorTimer<180) {
-        dessinActiveCursor(&perso2);
-        perso2.cursorTimer++;
+      gestionJoueur(&persoHandler[1], level, &camera);
+      collisionsJoueur(&persoHandler[1], &persoHandler[0]);
+      collisionsJoueur(&persoHandler[1], &persoHandler[2]);
+      if(persoHandler[1].cursorTimer<180) {
+        dessinActiveCursor(&persoHandler[1]);
+        persoHandler[1].cursorTimer++;
       }
     }
-    if (perso3.active)
+    if (persoHandler[2].active)
     {
 
-      gestionJoueur(&perso3, level, &camera);
-      collisionsJoueur(&perso3, &perso2);
-      collisionsJoueur(&perso3, &perso1);
-      if(perso3.cursorTimer<180) {
-        dessinActiveCursor(&perso3);
-        perso3.cursorTimer++;
+      gestionJoueur(&persoHandler[2], level, &camera);
+      collisionsJoueur(&persoHandler[2], &persoHandler[1]);
+      collisionsJoueur(&persoHandler[2], &persoHandler[0]);
+      if(persoHandler[2].cursorTimer<180) {
+        dessinActiveCursor(&persoHandler[2]);
+        persoHandler[2].cursorTimer++;
       }
     }
     
@@ -167,20 +172,20 @@ int main(int argc, char** argv) {
       }
 
       /* GESTION TOUCHE */
-    if (perso1.active)
+    if (persoHandler[0].active)
     {
-      appuyer(&perso1,e);
-      relacher(&perso1,e);
+      appuyer(&persoHandler[0],e);
+      relacher(&persoHandler[0],e);
     }
-    if (perso2.active)
+    if (persoHandler[1].active)
     {
-      appuyer(&perso2,e);
-      relacher(&perso2,e);
+      appuyer(&persoHandler[1],e);
+      relacher(&persoHandler[1],e);
     }
-    if (perso3.active)
+    if (persoHandler[2].active)
     {
-      appuyer(&perso3,e);
-      relacher(&perso3,e);
+      appuyer(&persoHandler[2],e);
+      relacher(&persoHandler[2],e);
     }
       
 
@@ -199,7 +204,7 @@ int main(int argc, char** argv) {
               loop = 0;
               break;
             case SDLK_TAB:
-              changeFocus(&perso1, &perso2, &perso3, &camera);
+              changeFocus(&persoHandler[0], &persoHandler[1], &persoHandler[2], &camera);
               break;
               default : break;
           }
