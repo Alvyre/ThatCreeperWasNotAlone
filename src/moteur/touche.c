@@ -25,7 +25,7 @@ void appuyer(Personnage *perso, SDL_Event e){
                 if (perso->haut == false && perso->saute == false)
                 {
                     perso->haut = true;
-                    perso->gravite = -10;
+                    perso->gravite = -15;
                     perso->saute = true;
 
                 }

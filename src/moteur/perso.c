@@ -15,7 +15,7 @@ void initPerso(Personnage *personnage, int width, int height, int posCaseX, int 
 	personnage->haut = false;
 	personnage->bas = false;
 	personnage->gravite = 15;
-	personnage->vitesse = 5;
+	personnage->vitesse = 6;
 	personnage->sens = 0;
 	personnage->lateral = false;
 	personnage->saute = false;
@@ -35,6 +35,7 @@ void gestionJoueur(Personnage *persoHandler){
 	// Booleen ou int ?
 	perso->repos = (bool)(!perso->droite && !perso->gauche && !perso->haut && !perso->bas);
 	perso->lateral = perso->droite || perso->gauche;
+	printf("gravite = %d\n",perso->gravite );
 
 
 	

@@ -117,7 +117,7 @@ void collisionsJoueur(Personnage *perso1, Personnage *perso2){
     float X2 = perso2->centerX;
     float Y2 = perso2->centerY;
 
-    int i;
+    int i,j;
     //collisions J1 / J2 latérales
     for ( i = Y1 - perso1->height*TAILLE_CASE/2 ; i < Y1 + perso1->height*TAILLE_CASE/2 ; ++i)
     {
@@ -133,6 +133,21 @@ void collisionsJoueur(Personnage *perso1, Personnage *perso2){
                 if( ((X1 + perso1->width*TAILLE_CASE/2 * perso1->sens - perso1->vitesse) < (X2 + perso2->width*TAILLE_CASE/2)) && ((X1 + perso1->width*TAILLE_CASE/2 * perso1->sens) > (X2 - perso2->width*TAILLE_CASE/2))  ){
                     perso1->centerX = perso2->centerX + (perso2->width*TAILLE_CASE/2) + (perso1->width*TAILLE_CASE/2) + perso1->vitesse;
                 }
+            }
+        }
+    }
+
+
+    //collisions sol
+    for ( j = X1 - perso1->width*TAILLE_CASE/2 ; j < X1 + perso1->width*TAILLE_CASE/2 ; ++j){
+        if(j > (X2 - perso2->width*TAILLE_CASE/2) && j < (X2 + perso2->width*TAILLE_CASE/2) ){
+            if( (Y1 + perso1->height*TAILLE_CASE/2 + perso1->gravite) > (Y2 - perso2->height*TAILLE_CASE/2) && (Y1 + perso1->height*TAILLE_CASE/2 + perso1->gravite) < (Y2 + perso2->height*TAILLE_CASE/2) ){
+                perso1->centerY = perso2->centerY - (perso2->height*TAILLE_CASE/2) - (perso1->height*TAILLE_CASE/2) -perso1->gravite;
+                
+                perso1->saute = false;
+                perso1->gravite = 10;
+                break;
+                
             }
         }
     }
