@@ -3,8 +3,6 @@
 #include "formes/carre.h"
 #include <string.h>
 
-#define LINES WINDOW_HEIGHT/TAILLE_CASE //30
-#define COLUMNS 80//WINDOW_WIDTH/TAILLE_CASE //40 /**********************FIXME*************
 #define MAX_CHAR_FILE 10000
 
 
