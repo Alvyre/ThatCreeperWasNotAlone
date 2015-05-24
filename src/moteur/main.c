@@ -195,7 +195,7 @@ int main(int argc, char** argv) {
           switch(e.key.keysym.sym){
             case 'q' : 
             case SDLK_ESCAPE :
-              //freeLevel(level);
+              freeLevel(level);
               loop = 0;
               break;
             case SDLK_TAB:
