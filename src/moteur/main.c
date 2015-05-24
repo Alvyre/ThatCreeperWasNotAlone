@@ -53,19 +53,12 @@ int main(int argc, char** argv) {
   int **level = calloc(LINES + COLUMNS, sizeof(int*));
   // Création du level
   initLevel(level);
-  int persoInfos[3][2];
-  // Par défaut, coordoonnées des perso à -1 
-  // afin de savoir si le perso est utilisé ou pas
-  persoInfos[0][1] = -1;
-  persoInfos[0][1] = -1;
-  persoInfos[1][0] = -1;
-  persoInfos[1][1] = -1;
-  persoInfos[2][0] = -1;
-  persoInfos[2][1] = -1;
+  int persoInfos[3][7];
 
   //FIXME : Choose level in menu 
   char const *path = "./levels/level-2.csv";
-  loadLevelFromFile(level, path, persoInfos);
+  loadLevelFromFile(level, path, persoInfos, &nbrPerso);
+
   //creation camera
   Camera camera;
 
@@ -73,18 +66,15 @@ int main(int argc, char** argv) {
   Personnage *persoHandler;
   persoHandler = calloc(3,sizeof(Personnage));
 
-  Color3f RED;
-  RED.r = 1;
-  RED.g = 0;
-  RED.b = 0;
-
-  while(persoInfos[nbrPerso][0] != -1 && persoInfos[nbrPerso][1] != -1 && nbrPerso <3){
-    // FIXME : gérer la couleur
+  for (j = 0; j < nbrPerso; j++)
+  {
+    Color3f persoColor;
+    persoColor.r = persoInfos[j][4];
+    persoColor.g = persoInfos[j][5];
+    persoColor.b = persoInfos[j][6];
     // perso, width, height, caseX, caseY, color
-    initPerso(&persoHandler[nbrPerso], 2, 2, persoInfos[nbrPerso][0], persoInfos[nbrPerso][1], RED);
-    nbrPerso++;
+    initPerso(&persoHandler[j], persoInfos[j][2], persoInfos[j][3], persoInfos[j][0], persoInfos[j][1], persoColor);
   }
-
 
   // Par défaut perso 1 actif
   initCam(&persoHandler[0], &camera);
@@ -102,8 +92,7 @@ int main(int argc, char** argv) {
     glClear(GL_COLOR_BUFFER_BIT);
 
     /* AFFICHAGE */
-
-    creeDecor(level);                                           // Affichage décor
+    creeDecor(level);
 
     for (j = 0; j < nbrPerso; j++)
     {

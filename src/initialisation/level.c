@@ -16,17 +16,16 @@ void initLevel(int** level){
   	}
 }
 
-void loadLevelFromFile(int** level, char const * path, int persoInfos[3][2]){
+void loadLevelFromFile(int** level, char const * path, int persoInfos[3][7], int *nbrPerso){
 	
 	int i = 0;
 	int j = 0;
 	bool firstline = true;
-	int value = 0;
 	char *buffer = NULL;
 	size_t length = 0;
 	char *ptr = NULL;
 	ssize_t read;
-	int nbrPerso = 0;
+	int currentPerso = 0;
 
 	FILE *file = fopen(path, "r");
 
@@ -40,33 +39,32 @@ void loadLevelFromFile(int** level, char const * path, int persoInfos[3][2]){
 		while ((read = getline(&buffer, &length, file)) != -1) {
 	        if (firstline)
 	        {
-	        	// Parcours les colonnes
-	        	for (j = 0, ptr = buffer; j < COLUMNS; j++, ptr++){
-	        		value = (int)strtol(ptr, &ptr, 10);
-	        		if (value != -1)
-	        		{
-	        			if (j % 2 == 0)
-	        			{
-	        				// Coord X
-	        				persoInfos[nbrPerso/2][0] = value;
-	        			} else {
-	        				// Coord Y
-	        				persoInfos[nbrPerso/2][1] = value;
-	        			}
-	        		}else{
-	        			nbrPerso++;
-	        		}
+				// Première ligne, on récupère le nombre de perso du level
+				for (j = 0, ptr = buffer; j < 1; j++, ptr++){
+	        		*nbrPerso = (int)strtol(ptr, &ptr, 10);
 	        	}
+
 	        	firstline = false;
 	        } else {
-	        	// Parcours les colonnes
-	        	for (j = 0, ptr = buffer; j < COLUMNS; j++, ptr++){
-	            	level[i][j] = (int)strtol(ptr, &ptr, 10);
-	        	}
-	        }
-	        
 
-	        i++;
+	        	// On récupère les infos sur les différents perso
+	        	// et les place dans le tableau persoInfos
+	        	if(currentPerso < *nbrPerso){
+	        		for (j = 0, ptr = buffer; j < 7; j++, ptr++){
+	        			persoInfos[currentPerso][j] = (int)strtol(ptr, &ptr, 10);
+	        		}
+	        		currentPerso++;
+
+	        	} else {
+	        		// Si on a récupéré toutes les infos sur les persos,
+	        		// on passe au level
+	        		for (j = 0, ptr = buffer; j < COLUMNS; j++, ptr++){
+	            		level[i][j] = (int)strtol(ptr, &ptr, 10);
+	        		}
+	        		i++;
+	        	}
+
+	        }
     	}
 		fclose(file);
 		
