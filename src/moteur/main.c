@@ -51,10 +51,16 @@ int main(int argc, char** argv) {
   int **level = calloc(LINES + COLUMNS, sizeof(int*));
   // Création du level
   initLevel(level);
+  int persoInfos[3][2];
+  persoInfos[0][1] = -1;
+  persoInfos[0][1] = -1;
+  persoInfos[1][0] = -1;
+  persoInfos[1][1] = -1;
+  persoInfos[2][0] = -1;
+  persoInfos[2][1] = -1;
   //FIXME : Choose level in menu 
   char const *path = "./levels/level-2.csv";
-  loadLevelFromFile(level, path);
-
+  loadLevelFromFile(level, path, persoInfos);
   //creation camera
   Camera camera;
 
@@ -63,6 +69,11 @@ int main(int argc, char** argv) {
   persoHandler = calloc(3,sizeof(Personnage));
 
 
+  while(persoInfos[i][0] != -1 && persoInfos[i][1] != -1){
+  // FIXME : gérer la couleur, le nbr de perso pour les boucles
+    initPerso(&perso1, 2, 2, persoInfos[i][0], persoInfos[i][1], RED);
+    i++;
+  }
   //creation perso;
 
   Color3f RED;
