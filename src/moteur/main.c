@@ -121,11 +121,12 @@ int main(int argc, char** argv) {
 
     /* GESTION JOUEUR */
 
+    gestionJoueur(persoHandler);
+    deplacementJoueur(persoHandler, level, &camera);
+
+    // cursor
     if (persoHandler[0].active)
     {
-      gestionJoueur(persoHandler, level, &camera);
-      collisionsJoueur(&persoHandler[0], &persoHandler[1]);
-      collisionsJoueur(&persoHandler[0], &persoHandler[2]);
       if(persoHandler[0].cursorTimer<180) {
         dessinActiveCursor(&persoHandler[0]);
         persoHandler[0].cursorTimer++;
@@ -133,10 +134,6 @@ int main(int argc, char** argv) {
     }
     if (persoHandler[1].active)
     {
-      
-      gestionJoueur(persoHandler, level, &camera);
-      collisionsJoueur(&persoHandler[1], &persoHandler[0]);
-      collisionsJoueur(&persoHandler[1], &persoHandler[2]);
       if(persoHandler[1].cursorTimer<180) {
         dessinActiveCursor(&persoHandler[1]);
         persoHandler[1].cursorTimer++;
@@ -144,10 +141,6 @@ int main(int argc, char** argv) {
     }
     if (persoHandler[2].active)
     {
-
-      gestionJoueur(persoHandler, level, &camera);
-      collisionsJoueur(&persoHandler[2], &persoHandler[1]);
-      collisionsJoueur(&persoHandler[2], &persoHandler[0]);
       if(persoHandler[2].cursorTimer<180) {
         dessinActiveCursor(&persoHandler[2]);
         persoHandler[2].cursorTimer++;

@@ -15,11 +15,11 @@ void scrolling(Camera *camera){
 	camera->Dx = camera->currentX - camera->formerX;
 	camera->Dy = camera->currentY - camera->formerY;
 
-	if(camera->currentX < WINDOW_WIDTH/2){
-		glPopMatrix();
-		glTranslatef(0,0,0);			// retour au début  // FIXME C'EST DEGUEULASSE
-		glPushMatrix();
-	} 
+	// if(camera->currentX < WINDOW_WIDTH/2){
+	// 	glPopMatrix();
+	// 	glTranslatef(0,0,0);			// retour au début  // FIXME C'EST DEGUEULASSE
+	// 	glPushMatrix();
+	// } 
 	glTranslatef(-camera->Dx,0,0);
 }
 

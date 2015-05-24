@@ -36,7 +36,7 @@ typedef struct Personnage
 #include "moteur/scrolling.h"
 
 void initPerso(Personnage *personnage, int width, int height, int posCaseX, int posCaseY, Color3f color);
-void gestionJoueur(Personnage *persoHandler, int** map, Camera *camera);
+void gestionJoueur(Personnage *persoHandler);
 void changeFocus(Personnage *perso1, Personnage *perso2, Personnage *perso3, Camera *camera);
 
 #endif /* PERSO_H */

@@ -24,7 +24,7 @@ void initPerso(Personnage *personnage, int width, int height, int posCaseX, int 
 	personnage->cursorTimer = 0;
 }
 
-void gestionJoueur(Personnage *persoHandler,int** map, Camera *camera){
+void gestionJoueur(Personnage *persoHandler){
 	Personnage *perso;
 	if(persoHandler[0].active) perso = &(persoHandler[0]);
 	else if(persoHandler[1].active) perso = &(persoHandler[1]);
@@ -37,7 +37,7 @@ void gestionJoueur(Personnage *persoHandler,int** map, Camera *camera){
 	perso->lateral = perso->droite || perso->gauche;
 
 
-	deplacementJoueur(perso, map, camera);
+	
 }
 
 void changeFocus(Personnage *perso1, Personnage *perso2, Personnage *perso3, Camera *camera){

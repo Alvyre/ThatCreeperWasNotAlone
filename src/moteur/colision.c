@@ -109,6 +109,7 @@ bool CollisionRoof(Personnage *perso, int** level){
 
 void collisionsJoueur(Personnage *perso1, Personnage *perso2){
 
+
     float X1 = perso1->centerX;
     float Y1 = perso1->centerY;
 
@@ -123,14 +124,14 @@ void collisionsJoueur(Personnage *perso1, Personnage *perso2){
         if(i > (Y2 - perso2->height*TAILLE_CASE/2) && i < (Y2 + perso2->height*TAILLE_CASE/2) ){
 
             if( perso1->sens == 1 ){
-                if( ((X1 + perso1->width*TAILLE_CASE/2 * perso1->sens) > (X2 - perso2->width*TAILLE_CASE/2)) && ((X1 + perso1->width*TAILLE_CASE/2 * perso1->sens) < (X2 + perso2->width*TAILLE_CASE/2)) ){
+                if( ((X1 + perso1->width*TAILLE_CASE/2 * perso1->sens + perso1->vitesse) > (X2 - perso2->width*TAILLE_CASE/2)) && ((X1 + perso1->width*TAILLE_CASE/2 * perso1->sens) < (X2 + perso2->width*TAILLE_CASE/2)) ){
 
-                    perso1->centerX = perso2->centerX - (perso2->width*TAILLE_CASE/2) - (perso1->width*TAILLE_CASE/2);
+                    perso1->centerX = perso2->centerX - (perso2->width*TAILLE_CASE/2) - (perso1->width*TAILLE_CASE/2) - perso1->vitesse;
                 }
             }
             else if( perso1->sens == -1 ){
-                if( ((X1 + perso1->width*TAILLE_CASE/2 * perso1->sens) < (X2 + perso2->width*TAILLE_CASE/2)) && ((X1 + perso1->width*TAILLE_CASE/2 * perso1->sens) > (X2 - perso2->width*TAILLE_CASE/2))  ){
-                    perso1->centerX = perso2->centerX + (perso2->width*TAILLE_CASE/2) + (perso1->width*TAILLE_CASE/2);
+                if( ((X1 + perso1->width*TAILLE_CASE/2 * perso1->sens - perso1->vitesse) < (X2 + perso2->width*TAILLE_CASE/2)) && ((X1 + perso1->width*TAILLE_CASE/2 * perso1->sens) > (X2 - perso2->width*TAILLE_CASE/2))  ){
+                    perso1->centerX = perso2->centerX + (perso2->width*TAILLE_CASE/2) + (perso1->width*TAILLE_CASE/2) + perso1->vitesse;
                 }
             }
         }
