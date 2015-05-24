@@ -119,7 +119,7 @@ void collisionsJoueur(Personnage *perso1, Personnage *perso2){
 
     int i,j;
     //collisions J1 / J2 latérales
-    for ( i = Y1 - perso1->height*TAILLE_CASE/2 ; i < Y1 + perso1->height*TAILLE_CASE/2 ; ++i)
+    for ( i = Y1 - perso1->height*TAILLE_CASE/2 ; i < Y1 + perso1->height*TAILLE_CASE/2 ; i++)
     {
         if(i > (Y2 - perso2->height*TAILLE_CASE/2) && i < (Y2 + perso2->height*TAILLE_CASE/2) ){
 
@@ -139,19 +139,22 @@ void collisionsJoueur(Personnage *perso1, Personnage *perso2){
 
 
     //collisions sol + plafond
-    for ( j = X1 - perso1->width*TAILLE_CASE/2 ; j < X1 + perso1->width*TAILLE_CASE/2 ; ++j){
+    for ( j = X1 - perso1->width*TAILLE_CASE/2 ; j < X1 + perso1->width*TAILLE_CASE/2 ; j++){
         if(j > (X2 - perso2->width*TAILLE_CASE/2) && j < (X2 + perso2->width*TAILLE_CASE/2) ){
-            if( (Y1 + perso1->height*TAILLE_CASE/2 + perso1->gravite) > (Y2 - perso2->height*TAILLE_CASE/2) && (Y1 + perso1->height*TAILLE_CASE/2 + perso1->gravite) < (Y2 + perso2->height*TAILLE_CASE/2) ){
-                perso1->centerY = perso2->centerY - (perso2->height*TAILLE_CASE/2) - (perso1->height*TAILLE_CASE/2) -perso1->gravite;
-                
-                perso1->saute = false;
-                perso1->gravite = 10;
-            }
-            if( (Y1 - perso1->height*TAILLE_CASE/2 -10) < (Y2 + perso2->height*TAILLE_CASE/2) && (Y1 - perso1->height*TAILLE_CASE/2 -10) > (Y2 - perso2->height*TAILLE_CASE/2) ){
+            // FIXME erreur ici
+            if( (Y1 - perso1->height*TAILLE_CASE/2 ) < (Y2 + perso2->height*TAILLE_CASE/2 -perso1->gravite) && (Y1 - perso1->height*TAILLE_CASE/2 ) > (Y2 - perso2->height*TAILLE_CASE/2 -perso1->gravite) ){
                 perso1->centerY = perso2->centerY + perso2->height*TAILLE_CASE/2 + perso1->height*TAILLE_CASE/2 ;
                 perso1->saute = false;
-                perso1->gravite = 10;
+                perso1->gravite = 9;
             }
+
+            if( (Y1 + perso1->height*TAILLE_CASE/2 + perso1->gravite) > (Y2 - perso2->height*TAILLE_CASE/2) && (Y1 + perso1->height*TAILLE_CASE/2 + perso1->gravite) < (Y2 + perso2->height*TAILLE_CASE/2) ){
+                perso1->centerY = perso2->centerY - (perso2->height*TAILLE_CASE/2) - (perso1->height*TAILLE_CASE/2) -perso1->gravite  ;
+                
+                perso1->saute = false;
+                perso1->gravite = 9;
+            }
+
         }
 
     }

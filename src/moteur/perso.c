@@ -35,8 +35,7 @@ void gestionJoueur(Personnage *persoHandler){
 	// Booleen ou int ?
 	perso->repos = (bool)(!perso->droite && !perso->gauche && !perso->haut && !perso->bas);
 	perso->lateral = perso->droite || perso->gauche;
-
-
+	printf("gravite = %d\n", perso->gravite);
 
 	
 }
