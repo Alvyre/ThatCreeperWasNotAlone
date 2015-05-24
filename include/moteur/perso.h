@@ -30,13 +30,13 @@ typedef struct Personnage
 
 	bool active; // perso actif (controlable) ou pas
 	int cursorTimer;
-	int number; // numéro du perso
+
 
 
 }Personnage;
 #include "moteur/scrolling.h"
 
-void initPerso(Personnage *personnage, int width, int height, int posCaseX, int posCaseY, Color3f color, int number);
+void initPerso(Personnage *personnage, int width, int height, int posCaseX, int posCaseY, Color3f color);
 void gestionJoueur(Personnage *persoHandler);
 void changeFocus(Personnage *perso1, Personnage *perso2, Personnage *perso3, Camera *camera);
 

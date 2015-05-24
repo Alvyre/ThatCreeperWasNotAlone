@@ -1,9 +1,8 @@
 #include "moteur/perso.h"
 #include "moteur/deplacements.h"
 
-void initPerso(Personnage *personnage, int width, int height, int posCaseX, int posCaseY, Color3f color, int number){
+void initPerso(Personnage *personnage, int width, int height, int posCaseX, int posCaseY, Color3f color){
 
-	personnage->number = number;
 	personnage->centerX = (posCaseX * TAILLE_CASE) + (width * TAILLE_CASE)/2 ;
 	personnage->centerY = (posCaseY * TAILLE_CASE) + (height * TAILLE_CASE)/2 ;
 	personnage->width = width;
