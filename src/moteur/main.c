@@ -47,7 +47,7 @@ int main(int argc, char** argv) {
   SDL_WM_SetCaption("Thomas Was Alone", NULL);
 
   int loop = 1;
-  int **level = calloc(WINDOW_HEIGHT/TAILLE_CASE, sizeof(int*));
+  int **level = calloc(WINDOW_HEIGHT/TAILLE_CASE * WINDOW_WIDTH/TAILLE_CASE, sizeof(int*));
   // Création du level
   initLevel(level);
   //FIXME : Choose level in menu 
@@ -195,7 +195,7 @@ int main(int argc, char** argv) {
           switch(e.key.keysym.sym){
             case 'q' : 
             case SDLK_ESCAPE :
-              freeLevel(level);
+              //freeLevel(level);
               loop = 0;
               break;
             case SDLK_TAB:
