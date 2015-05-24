@@ -140,7 +140,7 @@ void collisionsJoueur(Personnage *perso1, Personnage *perso2){
 
 
     //collisions sol + plafond
-    perso2->freeze = false;
+    //perso2->freeze = false;
     for ( j = X1 - perso1->width*TAILLE_CASE/2 ; j < X1 + perso1->width*TAILLE_CASE/2 ; j++){ // parcours la largeur    
         if(j > (X2 - perso2->width*TAILLE_CASE/2+5) && j < (X2 + perso2->width*TAILLE_CASE/2-5) ){ // si c'est bien dans la largeur du perso
 
@@ -157,11 +157,11 @@ void collisionsJoueur(Personnage *perso1, Personnage *perso2){
                  perso1->saute = false;
                  perso1->gravite = 9;
                  perso2->freeze = true;
-                 perso1->freeze = true;
             }
 
          }
 
      }
-
+     // defreeze
+     if( ((Y1 - perso1->height*TAILLE_CASE/2 -10) > Y2 + perso2->height*TAILLE_CASE/2) || ((Y1 - perso1->height*TAILLE_CASE/2 -10) <  Y2 - perso2->height*TAILLE_CASE/2) ) perso1->freeze = false;
 }
