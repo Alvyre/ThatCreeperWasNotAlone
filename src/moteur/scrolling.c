@@ -15,6 +15,9 @@ void scrolling(Camera *camera){
 	camera->Dx = camera->currentX - camera->formerX;
 	camera->Dy = camera->currentY - camera->formerY;
 
+	//si début ou fin du level pas de translation
+
+
 	// if(camera->currentX < WINDOW_WIDTH/2){
 	// 	glPopMatrix();
 	// 	glTranslatef(0,0,0);			// retour au début  // FIXME C'EST DEGUEULASSE

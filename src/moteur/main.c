@@ -195,6 +195,8 @@ int main(int argc, char** argv) {
             case 'q' : 
             case SDLK_ESCAPE :
               freeLevel(level);
+              free(persoHandler);
+              persoHandler = NULL;
               loop = 0;
               break;
             case SDLK_TAB:
