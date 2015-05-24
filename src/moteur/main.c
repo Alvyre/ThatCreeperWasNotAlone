@@ -59,24 +59,25 @@ int main(int argc, char** argv) {
   Camera camera;
 
   //test
-  Personnage persoHandler[3];
+  Personnage *persoHandler;
+  persoHandler = calloc(3,sizeof(Personnage));
 
 
   //creation perso;
-  //Personnage persoHandler[0];
+
   Color3f RED;
   RED.r = 1;
   RED.g = 0;
   RED.b = 0;
 
-  //Personnage persoHandler[1];
+
   Color3f BLUE;
   BLUE.r = 0;
   BLUE.g = 0;
   BLUE.b = 1;
 
 
-  //Personnage persoHandler[2];
+
   Color3f GREEN;
   GREEN.r = 0;
   GREEN.g = 1;
@@ -122,7 +123,7 @@ int main(int argc, char** argv) {
 
     if (persoHandler[0].active)
     {
-      gestionJoueur(&persoHandler[0], level, &camera);
+      gestionJoueur(persoHandler, level, &camera);
       collisionsJoueur(&persoHandler[0], &persoHandler[1]);
       collisionsJoueur(&persoHandler[0], &persoHandler[2]);
       if(persoHandler[0].cursorTimer<180) {
@@ -133,7 +134,7 @@ int main(int argc, char** argv) {
     if (persoHandler[1].active)
     {
       
-      gestionJoueur(&persoHandler[1], level, &camera);
+      gestionJoueur(persoHandler, level, &camera);
       collisionsJoueur(&persoHandler[1], &persoHandler[0]);
       collisionsJoueur(&persoHandler[1], &persoHandler[2]);
       if(persoHandler[1].cursorTimer<180) {
@@ -144,7 +145,7 @@ int main(int argc, char** argv) {
     if (persoHandler[2].active)
     {
 
-      gestionJoueur(&persoHandler[2], level, &camera);
+      gestionJoueur(persoHandler, level, &camera);
       collisionsJoueur(&persoHandler[2], &persoHandler[1]);
       collisionsJoueur(&persoHandler[2], &persoHandler[0]);
       if(persoHandler[2].cursorTimer<180) {

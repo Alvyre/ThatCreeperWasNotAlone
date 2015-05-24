@@ -24,7 +24,12 @@ void initPerso(Personnage *personnage, int width, int height, int posCaseX, int 
 	personnage->cursorTimer = 0;
 }
 
-void gestionJoueur(Personnage *perso,int** map, Camera *camera){
+void gestionJoueur(Personnage *persoHandler,int** map, Camera *camera){
+	Personnage *perso;
+	if(persoHandler[0].active) perso = &(persoHandler[0]);
+	else if(persoHandler[1].active) perso = &(persoHandler[1]);
+	else if(persoHandler[2].active) perso = &(persoHandler[2]);
+
 	perso->sens = 0;
 	perso->sens = (int)perso->droite - (int)perso->gauche;
 	// Booleen ou int ?

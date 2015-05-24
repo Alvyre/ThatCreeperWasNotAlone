@@ -1,7 +1,5 @@
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include "moteur/main.h"
-#include "moteur/perso.h"
+#include "formes/carre.h"
+
 
 // TODO : taille
 void dessinCarre(int posX, int posY, Color3f *color){
