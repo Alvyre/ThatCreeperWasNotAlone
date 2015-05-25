@@ -116,7 +116,7 @@ void collisionsJoueurs(Personnage* persos, int nbJoueurs){
     for (i = 0; i < nbJoueurs; ++i){
 
         AABB box = persos[i].box;
-        box.pos.x += persos[i].dir.x;
+        box.pos.x += persos[i].dir.x * persos[i].vitesse;
         box.pos.y += persos[i].dir.y;
         bool canMove = true;
 
@@ -137,11 +137,11 @@ void collisionsJoueurs(Personnage* persos, int nbJoueurs){
 
 
 bool collide(AABB a, AABB b){
-    if (a.pos.x >= b.pos.x + b.size.x
-     && a.pos.x <  b.pos.x + b.size.x
-     && a.pos.y >= b.pos.y
-     && a.pos.y <  b.pos.y + b.size.y)
-        return true;
-
-    return false;
+   if((b.pos.x >= a.pos.x + a.size.x)      // trop à droite
+    || (b.pos.x + b.size.x <= a.pos.x)     // trop à gauche
+    || (b.pos.y >= a.pos.y + a.size.y)     // trop en bas
+    || (b.pos.y + b.size.y <= a.pos.y))    // trop en haut
+          return false; 
+   else
+          return true; 
 }
