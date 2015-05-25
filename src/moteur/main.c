@@ -149,7 +149,11 @@ int main(int argc, char** argv) {
         }
       }      
 
-      switch(e.type) {                 
+      switch(e.type) {
+        case SDL_QUIT:
+          loop = 0;
+          break;
+          
         case SDL_VIDEORESIZE:
         WINDOW_WIDTH  = e.resize.w;
         WINDOW_HEIGHT = e.resize.h;
@@ -159,7 +163,6 @@ int main(int argc, char** argv) {
         case SDL_KEYDOWN:
           switch(e.key.keysym.sym){
             case 'q' : 
-            case SDL_QUIT:
             case SDLK_ESCAPE :
               freeLevel(level);
               free(persoHandler);
