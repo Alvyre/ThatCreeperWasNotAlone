@@ -38,38 +38,33 @@ void gestionJoueur(Personnage *persoHandler){
 	// Booleen ou int ?
 	perso->repos = (bool)(!perso->droite && !perso->gauche && !perso->haut && !perso->bas);
 	perso->lateral = perso->droite || perso->gauche;
-	printf("freeze = %d\n",(int)perso->freeze );
+	//printf("freeze = %d\n",(int)perso->freeze );
 }
 
-void changeFocus(Personnage *perso1, Personnage *perso2, Personnage *perso3, Camera *camera){
-	if (perso1->active)
+void changeFocus(Personnage *persoHandler, int nbrPerso, Camera *camera){
+	int i = 0;
+
+	for (i = 0; i < nbrPerso; ++i)
 	{
-		perso1->active = false;
-		perso1->droite = false; // évite que le perso continue son mvmt quand on le reprend
-		perso1->gauche = false;
-		perso2->cursorTimer = 0;
-		perso2->active = true;
-		centerCam(perso2, camera);
-		return;
+		
+		if (persoHandler[i].active){
+			persoHandler[i].active = false;
+			persoHandler[i].droite = false; // évite que le perso continue son mvmt quand on le reprend
+			persoHandler[i].gauche = false;
+			
+			if (i + 1 < nbrPerso)
+			{
+				persoHandler[i+1].cursorTimer = 0;
+				persoHandler[i+1].active = true;
+				centerCam(&persoHandler[i+1], camera);
+			} else {
+				persoHandler[0].cursorTimer = 0;
+				persoHandler[0].active = true;
+				centerCam(&persoHandler[0], camera);
+			}
+			return;
+		}
 	}
-	if (perso2->active)
-	{
-		perso2->active = false;
-		perso2->droite = false;
-		perso2->gauche = false;
-		perso3->cursorTimer = 0;
-		perso3->active = true;
-		centerCam(perso3, camera);
-		return;
-	}
-	if (perso3->active)
-	{
-		perso3->active = false;
-		perso3->droite = false;
-		perso3->gauche = false;
-		perso1->cursorTimer = 0;
-		perso1->active = true;
-		centerCam(perso1, camera);
-		return;
-	}
+
+
 }

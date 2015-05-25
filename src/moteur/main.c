@@ -168,7 +168,7 @@ int main(int argc, char** argv) {
               break;
 
             case SDLK_TAB:
-              changeFocus(&persoHandler[0], &persoHandler[1], &persoHandler[2], &camera);
+              changeFocus(persoHandler, nbrPerso, &camera);
               break;
               default : break;
           }
