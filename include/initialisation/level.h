@@ -3,6 +3,7 @@
 #include <stdbool.h> //FIXME
 #include <stdio.h> // FIXME
 #include <stdlib.h> //FIXME
+#include "moteur/main.h"
 
 void initLevel(int** level);
 void freeLevel(int** level);
