@@ -70,9 +70,9 @@ int main(int argc, char** argv) {
   for (j = 0; j < nbrPerso; j++)
   {
     Color3f persoColor;
-    persoColor.r = persoInfos[j][4];
-    persoColor.g = persoInfos[j][5];
-    persoColor.b = persoInfos[j][6];
+    persoColor.r = (float)persoInfos[j][4]; // cast en float car color
+    persoColor.g = (float)persoInfos[j][5]; // cast en float car color
+    persoColor.b = (float)persoInfos[j][6]; // cast en float car color
     // perso, width, height, caseX, caseY, color
     initPerso(&persoHandler[j], j, persoInfos[j][2], persoInfos[j][3], persoInfos[j][0], persoInfos[j][1], persoColor, persoInfos[j][7]);
   }
@@ -133,8 +133,8 @@ int main(int argc, char** argv) {
 
       /* GESTION JOUEUR */
 
-      gestionJoueur(persoHandler);
-      deplacementJoueur(persoHandler, level, &camera);
+      gestionJoueur(persoHandler, nbrPerso);
+      deplacementJoueur(persoHandler, nbrPerso, level, &camera);
 
       // cursor
       for (j = 0; j < nbrPerso; j++)
