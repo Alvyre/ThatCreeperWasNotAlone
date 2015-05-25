@@ -35,8 +35,8 @@ void deplacementJoueur(Personnage *persoHandler, int** level, Camera *camera){
         //camera->currentX = perso->centerX;
     } 
 
-
-
+    // Si perso bouge, il n'est plus sur sa case de fin
+    perso->end = false;
     perso->centerX += perso->vitesse * perso->sens;
     collisionLateral(perso, level);
     camera->currentX = perso->centerX;

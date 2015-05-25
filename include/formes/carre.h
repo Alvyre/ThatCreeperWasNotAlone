@@ -7,6 +7,7 @@
 #include <math.h>
 
 void dessinCarre(int i, int j, Color3f *color);
+void dessinEmptyCarre(int posX, int posY, Color3f *color);
 void dessinPerso(Personnage *perso);
 void dessinActiveCursor(Personnage *perso);
 #endif

@@ -104,12 +104,12 @@ void creeDecor(int **level){
 				dessinCarre(j*32,i*32, &color);
 			}
 
-			if (level[i][j] == 2)
+			if (level[i][j] == 2 || level[i][j] == 3 || level[i][j] == 4)
 			{
-				color.r = 0.5;
+				color.r = 1;
 				color.g = 1;
-				color.b = 0.5;
-				dessinCarre(j*32,i*32, &color);
+				color.b = 1;
+				dessinEmptyCarre(j*32,i*32, &color);
 			}
 		}
 	}

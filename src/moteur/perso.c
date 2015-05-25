@@ -1,8 +1,8 @@
 #include "moteur/perso.h"
 #include "moteur/deplacements.h"
 
-void initPerso(Personnage *personnage, int width, int height, int posCaseX, int posCaseY, Color3f color, int gravite){
-
+void initPerso(Personnage *personnage, int id, int width, int height, int posCaseX, int posCaseY, Color3f color, int gravite){
+	personnage->id = id;
 	personnage->centerX = (posCaseX * TAILLE_CASE) + (width * TAILLE_CASE)/2 ;
 	personnage->centerY = (posCaseY * TAILLE_CASE) + (height * TAILLE_CASE)/2 ;
 	personnage->width = width;
@@ -24,6 +24,7 @@ void initPerso(Personnage *personnage, int width, int height, int posCaseX, int 
 	personnage->active = false;
 	personnage->cursorTimer = 0;
 	personnage->freeze = false;
+	personnage->end = false;
 }
 
 void gestionJoueur(Personnage *persoHandler){

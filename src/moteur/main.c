@@ -73,7 +73,7 @@ int main(int argc, char** argv) {
     persoColor.g = persoInfos[j][5];
     persoColor.b = persoInfos[j][6];
     // perso, width, height, caseX, caseY, color
-    initPerso(&persoHandler[j], persoInfos[j][2], persoInfos[j][3], persoInfos[j][0], persoInfos[j][1], persoColor, persoInfos[j][7]);
+    initPerso(&persoHandler[j], j, persoInfos[j][2], persoInfos[j][3], persoInfos[j][0], persoInfos[j][1], persoColor, persoInfos[j][7]);
   }
 
   // Par défaut perso 1 actif
@@ -83,7 +83,6 @@ int main(int argc, char** argv) {
 
   //glScalef(1.2,1.2,0);
   centerCam(&persoHandler[0], &camera);
-  
 
   while(loop) {
     /* temps au début de la boucle */
@@ -96,7 +95,11 @@ int main(int argc, char** argv) {
     } else {
       /* AFFICHAGE */
       creeDecor(level);
-     
+      // FIXME : faire ça de façon plus propre avec un boucle sur les perso
+     if (persoHandler[0].end && persoHandler[1].end && persoHandler[2].end) 
+     {
+       printf("END\n");
+     }
       for (j = 0; j < nbrPerso; j++)
       {
         glColor3f(persoHandler[j].color.r, persoHandler[j].color.g, persoHandler[j].color.b);  // Affichage du joueur
@@ -112,7 +115,7 @@ int main(int argc, char** argv) {
       // cursor
       for (j = 0; j < nbrPerso; j++)
       {
-         if (persoHandler[j].active)
+        if (persoHandler[j].active)
         {
           if(persoHandler[j].cursorTimer<180) {
             dessinActiveCursor(&persoHandler[j]);

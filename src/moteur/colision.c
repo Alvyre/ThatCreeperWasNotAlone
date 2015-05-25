@@ -67,9 +67,9 @@ void collisionLateral(Personnage *perso, int** level){
  
                          
     for (; L < (Y/TAILLE_CASE) +floor(halfHeight); L++) {
-        if (level[L][C]==2)
+        if ((level[L][C]==2 && perso->id == 0) || (level[L][C]==3 && perso->id == 1) || (level[L][C]==4 && perso->id == 2))
         {
-            printf("FIN DU NIVEAU\n");
+            perso->end = true;   
         }
         if (level[L][C]==1 && perso->sens == 1) {
             perso->centerX = C * TAILLE_CASE + floor(halfWidth) - halfWidth*TAILLE_CASE * perso->sens -2;

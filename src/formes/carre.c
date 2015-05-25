@@ -1,7 +1,5 @@
 #include "formes/carre.h"
 
-
-// TODO : taille
 void dessinCarre(int posX, int posY, Color3f *color){
   glColor3f(color->r,color->g,color->b);
 
@@ -16,6 +14,19 @@ void dessinCarre(int posX, int posY, Color3f *color){
     glVertex2f(posX,posY+TAILLE_CASE);
   glEnd();
 
+}
+
+void dessinEmptyCarre(int posX, int posY, Color3f *color){
+  glBegin(GL_LINE_LOOP);
+    // Haut gauche
+    glVertex2f(posX,posY);
+    // Haut droite
+    glVertex2f(posX+TAILLE_CASE,posY);
+    // BAs droite
+    glVertex2f(posX+TAILLE_CASE,posY+TAILLE_CASE);
+    // Bas gauche
+    glVertex2f(posX,posY+TAILLE_CASE);
+  glEnd();
 }
 
 void dessinPerso(Personnage *perso){
