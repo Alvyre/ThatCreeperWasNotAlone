@@ -10,49 +10,49 @@
  * 
  * @param *perso
  */
-//  bool collisionGround(Personnage *perso, int** level){
+ bool collisionGround(Personnage *perso, int** level){
 
 
-//     int Y = perso->centerY;
-//     int X = perso->centerX;
+    int Y = perso->box.pos.y + perso->box.size.y/2;
+    int X = perso->box.pos.x + perso->box.size.x/2;
 
-//     float halfHeight = perso->height/2.0;
-//     float halfWidth = perso->width/2.0;
+    float halfWidth = perso->box.size.x/(2*TAILLE_CASE);
+    float halfHeight = perso->box.size.y/(2*TAILLE_CASE);
 
-//     int C = (X - (halfWidth * TAILLE_CASE)) / TAILLE_CASE;
-//     int L = (Y + (halfHeight * TAILLE_CASE)) / TAILLE_CASE;
+    int C = (X - (halfWidth * TAILLE_CASE)) / TAILLE_CASE;
+    int L = (Y + (halfHeight * TAILLE_CASE)) / TAILLE_CASE;
 
 
-//     for ( ; C <= floor((X + (halfWidth * TAILLE_CASE)) / TAILLE_CASE)  ; C++){
+    for ( ; C <= floor((X + (halfWidth * TAILLE_CASE)) / TAILLE_CASE)  ; C++){
 
-//         if(level[L][C] == 1 &&  Y >=(L - halfHeight)*TAILLE_CASE){
+        if(level[L][C] == 1 &&  Y >=(L - halfHeight)*TAILLE_CASE){
 
-//             switch(perso->height){                                                      // SWITCH pour corriger la position selon la hauteur du perso (1-6)
-//                 case 1:
-//                 case 2:
-//                     perso->centerY = (L - halfHeight)*TAILLE_CASE - halfHeight +1 ;
-//                     break;
-//                 case 3:
-//                 case 4:
-//                     perso->centerY = (L - halfHeight)*TAILLE_CASE - halfHeight +2 ;
-//                     break;
-//                 case 5:
-//                 case 6:
-//                     perso->centerY = (L - halfHeight)*TAILLE_CASE - halfHeight +3 ;
-//                     break;
+            switch((int)(halfHeight*2)){                                                      // SWITCH pour corriger la position selon la hauteur du perso (1-6)
+                case 1:
+                case 2:
+                    perso->box.pos.y = (L - halfHeight)*TAILLE_CASE - halfHeight +1 - perso->box.size.y/2.0 ;
+                    break;
+                case 3:
+                case 4:
+                    perso->box.pos.y = (L - halfHeight)*TAILLE_CASE - halfHeight +2 - perso->box.size.y/2.0 ;
+                    break;
+                case 5:
+                case 6:
+                    perso->box.pos.y = (L - halfHeight)*TAILLE_CASE - halfHeight +3 - perso->box.size.y/2.0 ;
+                    break;
 
-//                 default:
-//                     perso->centerY = (L - halfHeight)*TAILLE_CASE - halfHeight +1 ;
-//                     break;
-//             }
+                default:
+                    perso->box.pos.y = (L - halfHeight)*TAILLE_CASE - halfHeight +1 - perso->box.size.y/2.0 ;
+                    break;
+            }
 
-//             perso->gravite = perso->defaultGravite;
-//             perso->saute = false;
-//             return true;
-//         }
-//     }
-//     return false;
-// }
+            perso->gravite = perso->defaultGravite;
+            perso->saute = false;
+            return true;
+        }
+    }
+    return false;
+}
 
 void collisionLateral(Personnage *perso, int** level){
 
@@ -66,8 +66,9 @@ void collisionLateral(Personnage *perso, int** level){
     int L = floor((Y - (halfHeight*TAILLE_CASE)) / TAILLE_CASE);
  
                          
-    for (; L < (Y/TAILLE_CASE) +floor(halfHeight); L++) {
-        if ((level[L][C]==2 && perso->id == 0) || (level[L][C]==3 && perso->id == 1) || (level[L][C]==4 && perso->id == 2))
+
+    for (; L < (Y/TAILLE_CASE) +floor(halfHeight)-1; L++) {
+        if (level[L][C]==2)
         {
             perso->end = true;   
         }
@@ -75,7 +76,7 @@ void collisionLateral(Personnage *perso, int** level){
             perso->box.pos.x = C * TAILLE_CASE + floor(halfWidth) - halfWidth*TAILLE_CASE * perso->sens -2 - perso->box.size.x/2;
         }
         else if (level[L][C]==1 && perso->sens == -1) {
-            if(perso->box.size.x %2==0) perso->box.pos.x = C * TAILLE_CASE - floor(halfWidth) - (perso->box.size.x/TAILLE_CASE)*TAILLE_CASE * perso->sens +1 - perso->box.size.x/2;
+            if((int)(perso->box.size.x/TAILLE_CASE) %2==0) perso->box.pos.x = C * TAILLE_CASE - floor(halfWidth) - (perso->box.size.x/TAILLE_CASE)*TAILLE_CASE * perso->sens +1 - perso->box.size.x/2;
             else {
                perso->box.pos.x = C * TAILLE_CASE - floor(halfWidth) - halfWidth*TAILLE_CASE * perso->sens +1*TAILLE_CASE +1 - perso->box.size.x/2 ;
             }                 
