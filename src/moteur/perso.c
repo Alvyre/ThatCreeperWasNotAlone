@@ -18,9 +18,7 @@ void initPerso(Personnage *personnage, int id, int width, int height, int posCas
 	personnage->gravite = gravite;
 	personnage->vitesse = 6;
 	personnage->sens = 0;
-	personnage->lateral = false;
 	personnage->saute = false;
-	personnage->repos = true;
 	personnage->active = false;
 	personnage->cursorTimer = 0;
 	personnage->end = false;
@@ -34,15 +32,18 @@ void initPerso(Personnage *personnage, int id, int width, int height, int posCas
 	personnage->dir.y = 0;
 }
 
-void gestionJoueur(Personnage *persoHandler){
+void gestionJoueur(Personnage *persoHandler, int nbrPerso){
 	Personnage *perso;
-	if(persoHandler[0].active) perso = &(persoHandler[0]);
-	else if(persoHandler[1].active) perso = &(persoHandler[1]);
-	else if(persoHandler[2].active) perso = &(persoHandler[2]);
+	int i;
+	for(i = 0; i<nbrPerso;++i){
+		if(persoHandler[i].active) perso = &persoHandler[i];
+	}
 
 	perso->sens = 0;
 	perso->sens = (int)perso->droite - (int)perso->gauche;
 
+	//test
+	perso->dir.x = perso->sens;
 
 }
 

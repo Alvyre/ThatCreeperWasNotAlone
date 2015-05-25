@@ -16,11 +16,8 @@ typedef struct AABB {
 
 typedef struct Personnage
 {
+
 	int id;
-	int centerX;
-	int centerY;
-	int width;
-	int height;
 	Color3f color;
 	// variables touches
 	bool gauche;
@@ -49,7 +46,8 @@ typedef struct Personnage
 #include "moteur/scrolling.h"
 
 void initPerso(Personnage *personnage, int id, int width, int height, int posCaseX, int posCaseY, Color3f color, int gravite);
-void gestionJoueur(Personnage *persoHandler);
+void gestionJoueur(Personnage *persoHandler, int nbrPerso);
 void changeFocus(Personnage *persoHandler, int nbrPerso, Camera *camera);
+
 
 #endif /* PERSO_H */

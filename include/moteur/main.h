@@ -19,5 +19,4 @@ static unsigned int WINDOW_HEIGHT = 960; // 30
 
 #define LINES WINDOW_HEIGHT/TAILLE_CASE //30
 #define COLUMNS 80//WINDOW_WIDTH/TAILLE_CASE //40 /**********************FIXME*************
-#define NBR_PERSO 3
 #endif /* MAIN_H */

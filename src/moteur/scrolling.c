@@ -4,8 +4,8 @@ void initCam(Personnage *perso, Camera *camera){
 
 	camera->formerX = 0;
 	camera->formerY = 0;
-	camera->currentX = perso->centerX;
-	camera->currentY = perso->centerY;
+	camera->currentX = perso->box.pos.x + perso->box.size.x/2;
+	camera->currentY = perso->box.pos.y + perso->box.size.y/2;
 	camera->Dx = 0;
 	camera->Dy = 0;
 	camera->is_transition = false;
@@ -31,8 +31,8 @@ void centerCam(Personnage *perso, Camera *camera){
 	camera->formerX = camera->currentX;
 	camera->formerY = camera->currentY;
 
-	camera->currentX = perso->centerX;
-	camera->currentY = perso->centerY;
+	camera->currentX = perso->box.pos.x + perso->box.size.x/2;
+	camera->currentY = perso->box.pos.y + perso->box.size.y/2;
 
 	camera->Dx = camera->currentX - camera->formerX;
 	camera->Dy = camera->currentY - camera->formerY;

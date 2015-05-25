@@ -7,47 +7,38 @@
 /*   Gestion des déplacements       */
 /************************************/
 
-void deplacementJoueur(Personnage *persoHandler, int** level, Camera *camera){
+void deplacementJoueur(Personnage *persoHandler, int nbrPerso, int** level, Camera *camera){
 
     Personnage *perso;
-    if(persoHandler[0].active){
-        perso = &(persoHandler[0]);
-        camera->formerX = perso->centerX;
-        camera->formerY = perso->centerY;
+    int i;
+    for(i = 0; i<nbrPerso;++i){
+        if(persoHandler[i].active) perso = &persoHandler[i];
+    }
 
-    } 
-    else if(persoHandler[1].active){
-        perso = &(persoHandler[1]);
-        camera->formerX = perso->centerX;
-        camera->formerY = perso->centerY;
+    camera->formerX = perso->box.pos.x + perso->box.size.x/2;
+    camera->formerY = perso->box.pos.y + perso->box.size.y/2;
 
-    } 
-    else if(persoHandler[2].active){
-        perso = &(persoHandler[2]);
-        camera->formerX = perso->centerX;
-        camera->formerY = perso->centerY;
-
-    } 
 
     // Si perso bouge, il n'est plus sur sa case de fin
     perso->end = false;
-    perso->centerX += perso->vitesse * perso->sens;
+
+    perso->box.pos.x += perso->vitesse * perso->sens;
     collisionLateral(perso, level);
-    camera->currentX = perso->centerX;
+    camera->currentX = perso->box.pos.x + perso->box.size.x/2;
 
-    if(collisionRoof(perso, level) == 1){
-         perso->saute = false;
-         perso->gravite = 10;
-        perso->centerY += perso->gravite++;
-        camera->currentY = perso->centerY;
-    }
+    // if(collisionRoof(perso, level) == 1){
+    //      perso->saute = false;
+    //      perso->gravite = 10;
+    //     perso->centerY += perso->gravite++;
+    //     camera->currentY = perso->centerY;
+    // }
 
-    collisionGround(&persoHandler[0], level);
-    collisionGround(&persoHandler[1], level);
-    collisionGround(&persoHandler[2], level);
-    camera->currentY = perso->centerY;
+    // collisionGround(&persoHandler[0], level);
+    // collisionGround(&persoHandler[1], level);
+    // collisionGround(&persoHandler[2], level);
+    // camera->currentY = perso->centerY;
 
-    //collisionsJoueur(&persoHandler, NBR_PERSO);
+    collisionsJoueurs(persoHandler, nbrPerso);
 
-    camera->currentX = perso->centerX;
+    camera->currentX = perso->box.pos.x + perso->box.size.x/2;
 }

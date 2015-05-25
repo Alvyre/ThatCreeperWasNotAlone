@@ -11,5 +11,6 @@ bool collisionTop(Personnage *perso, int** level);
 bool collisionGround(Personnage *perso, int** level);
 void collisionLateral(Personnage *perso, int** level);
 bool collisionRoof(Personnage *perso, int** level);
-void collisionsJoueur(Personnage *perso1, Personnage *perso2);
+bool collide(AABB a, AABB b);
+void collisionsJoueurs(Personnage* persos, int nbJoueurs);
 #endif /* COLISION_H */

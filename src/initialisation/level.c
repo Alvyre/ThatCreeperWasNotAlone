@@ -16,8 +16,7 @@ void initLevel(int** level){
   	}
 }
 
-void loadLevelFromFile(int** level, char const * path, int persoInfos[3][8]){
-	
+void loadLevelFromFile(int** level, char const * path, int persoInfos[3][8], int *nbrPerso){	
 	int i = 0;
 	int j = 0;
 	bool firstline = true;
@@ -49,7 +48,7 @@ void loadLevelFromFile(int** level, char const * path, int persoInfos[3][8]){
 
 	        	// On récupère les infos sur les différents perso
 	        	// et les place dans le tableau persoInfos
-	        	if(currentPerso < NBR_PERSO){
+	        	if(currentPerso < *nbrPerso){
 	        		for (j = 0, ptr = buffer; j < 8; j++, ptr++){
 	        			persoInfos[currentPerso][j] = (int)strtol(ptr, &ptr, 10);
 	        		}
