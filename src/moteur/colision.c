@@ -129,7 +129,7 @@ void collisionsJoueurs(Personnage* persos, int nbJoueurs){
                 printf("collisions !!\n");
             }
         }
-        if (canMove) persos[i].box = box;
+        if (canMove && persos[i].active) persos[i].box = box;
     }
 }
 

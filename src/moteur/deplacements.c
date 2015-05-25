@@ -23,7 +23,7 @@ void deplacementJoueur(Personnage *persoHandler, int nbrPerso, int** level, Came
     perso->end = false;
     perso->box.pos.y += perso->gravite++;
 
-    perso->box.pos.x += perso->vitesse * perso->sens;
+    //perso->box.pos.x += perso->vitesse * perso->sens;
      collisionLateral(perso, level);
     camera->currentX = perso->box.pos.x + perso->box.size.x/2;
 
@@ -39,7 +39,7 @@ void deplacementJoueur(Personnage *persoHandler, int nbrPerso, int** level, Came
     collisionGround(&persoHandler[2], level);
     // camera->currentY = perso->centerY;
 
-    //collisionsJoueurs(persoHandler, nbrPerso);
+    collisionsJoueurs(persoHandler, nbrPerso);
 
     camera->currentX = perso->box.pos.x + perso->box.size.x/2;
 }
