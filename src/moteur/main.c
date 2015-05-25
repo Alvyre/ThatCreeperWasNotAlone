@@ -39,6 +39,7 @@ int main(int argc, char** argv) {
   int loop = 1;
   int nbrPerso = 0;
   int j = 0;
+  bool menu = false;
 
   if(-1 == SDL_Init(SDL_INIT_VIDEO)) {
     fprintf(stderr, "Impossible d'initialiser la SDL. Fin du programme.\n");
@@ -54,7 +55,6 @@ int main(int argc, char** argv) {
   // Création du level
   initLevel(level);
   int persoInfos[3][7];
-
   //FIXME : Choose level in menu 
   char const *path = "./levels/level-2.csv";
   loadLevelFromFile(level, path, persoInfos, &nbrPerso);
@@ -90,62 +90,61 @@ int main(int argc, char** argv) {
     Uint32 startTime = SDL_GetTicks();
 
     glClear(GL_COLOR_BUFFER_BIT);
-
-    /* AFFICHAGE */
-    creeDecor(level);
-
-    for (j = 0; j < nbrPerso; j++)
+    if (menu)
     {
-      glColor3f(persoHandler[j].color.r, persoHandler[j].color.g, persoHandler[j].color.b);  // Affichage du joueur
-      dessinPerso(&persoHandler[j]);
-      glColor3f(1, 1, 1);
-    }
-
-    /* GESTION JOUEUR */
-
-    gestionJoueur(persoHandler);
-    deplacementJoueur(persoHandler, level, &camera);
-
-    // cursor
-    for (j = 0; j < nbrPerso; j++)
-    {
-       if (persoHandler[j].active)
+      // TODO : Faire le menu...
+    } else {
+      /* AFFICHAGE */
+      creeDecor(level);
+     
+      for (j = 0; j < nbrPerso; j++)
       {
-        if(persoHandler[j].cursorTimer<180) {
-          dessinActiveCursor(&persoHandler[j]);
-          persoHandler[j].cursorTimer++;
+        glColor3f(persoHandler[j].color.r, persoHandler[j].color.g, persoHandler[j].color.b);  // Affichage du joueur
+        dessinPerso(&persoHandler[j]);
+        glColor3f(1, 1, 1);
+      }
+
+      /* GESTION JOUEUR */
+
+      gestionJoueur(persoHandler);
+      deplacementJoueur(persoHandler, level, &camera);
+
+      // cursor
+      for (j = 0; j < nbrPerso; j++)
+      {
+         if (persoHandler[j].active)
+        {
+          if(persoHandler[j].cursorTimer<180) {
+            dessinActiveCursor(&persoHandler[j]);
+            persoHandler[j].cursorTimer++;
+          }
         }
       }
+      
+      // camera
+
+      if(camera.is_transition == false) scrolling(&camera);
+      else if(camera.is_transition == true){
+        if(camera.Dx < -0.001 || camera.Dx > 0.001){
+          smoothTransition(&camera);
+        }
+        else camera.is_transition = false;
+      }
+
     }
     
-    // camera
-
-    if(camera.is_transition == false) scrolling(&camera);
-    else if(camera.is_transition == true){
-      if(camera.Dx < -0.001 || camera.Dx > 0.001){
-        smoothTransition(&camera);
-      }
-      else camera.is_transition = false;
-    }
-
     SDL_GL_SwapBuffers();
-        SDL_Event e;
+    SDL_Event e;
     while(SDL_PollEvent(&e)) {
-      if(e.type == SDL_QUIT) {
-        loop = 0;
-        break;
-      }
-
       /* GESTION TOUCHE */
-    for (j = 0; j < nbrPerso; j++)
-    {
-      if (persoHandler[j].active)
+      for (j = 0; j < nbrPerso; j++)
       {
-        appuyer(&persoHandler[j],e);
-        relacher(&persoHandler[j],e);
-      }
-    }
-      
+        if (persoHandler[j].active)
+        {
+          appuyer(&persoHandler[j],e);
+          relacher(&persoHandler[j],e);
+        }
+      }      
 
       switch(e.type) {                 
         case SDL_VIDEORESIZE:
@@ -157,12 +156,14 @@ int main(int argc, char** argv) {
         case SDL_KEYDOWN:
           switch(e.key.keysym.sym){
             case 'q' : 
+            case SDL_QUIT:
             case SDLK_ESCAPE :
               freeLevel(level);
               free(persoHandler);
               persoHandler = NULL;
               loop = 0;
               break;
+
             case SDLK_TAB:
               changeFocus(&persoHandler[0], &persoHandler[1], &persoHandler[2], &camera);
               break;
