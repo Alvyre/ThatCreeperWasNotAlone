@@ -54,7 +54,7 @@ int main(int argc, char** argv) {
   int **level = calloc(LINES + COLUMNS, sizeof(int*));
   // Création du level
   initLevel(level);
-  int persoInfos[3][7];
+  int persoInfos[3][8];
   //FIXME : Choose level in menu 
   char const *path = "./levels/level-2.csv";
   loadLevelFromFile(level, path, persoInfos, &nbrPerso);
@@ -73,7 +73,7 @@ int main(int argc, char** argv) {
     persoColor.g = persoInfos[j][5];
     persoColor.b = persoInfos[j][6];
     // perso, width, height, caseX, caseY, color
-    initPerso(&persoHandler[j], persoInfos[j][2], persoInfos[j][3], persoInfos[j][0], persoInfos[j][1], persoColor);
+    initPerso(&persoHandler[j], persoInfos[j][2], persoInfos[j][3], persoInfos[j][0], persoInfos[j][1], persoColor, persoInfos[j][7]);
   }
 
   // Par défaut perso 1 actif

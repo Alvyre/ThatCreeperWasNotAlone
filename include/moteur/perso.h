@@ -20,6 +20,7 @@ typedef struct Personnage
 	bool haut;
 	bool bas;
 	// variables déplacements
+	int defaultGravite;
 	int gravite;
 	int vitesse;
 	int sens;
@@ -36,7 +37,7 @@ typedef struct Personnage
 }Personnage;
 #include "moteur/scrolling.h"
 
-void initPerso(Personnage *personnage, int width, int height, int posCaseX, int posCaseY, Color3f color);
+void initPerso(Personnage *personnage, int width, int height, int posCaseX, int posCaseY, Color3f color, int gravite);
 void gestionJoueur(Personnage *persoHandler);
 void changeFocus(Personnage *perso1, Personnage *perso2, Personnage *perso3, Camera *camera);
 

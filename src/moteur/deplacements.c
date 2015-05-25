@@ -50,7 +50,7 @@ void deplacementJoueur(Personnage *persoHandler, int** level, Camera *camera){
 
     if(collisionRoof(perso, level) == 1){
          perso->saute = false;
-         perso->gravite = 10;
+         perso->gravite = perso->defaultGravite;
         perso->centerY += perso->gravite++;
         camera->currentY = perso->centerY;
     }

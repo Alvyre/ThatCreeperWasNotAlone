@@ -1,7 +1,7 @@
 #include "moteur/perso.h"
 #include "moteur/deplacements.h"
 
-void initPerso(Personnage *personnage, int width, int height, int posCaseX, int posCaseY, Color3f color){
+void initPerso(Personnage *personnage, int width, int height, int posCaseX, int posCaseY, Color3f color, int gravite){
 
 	personnage->centerX = (posCaseX * TAILLE_CASE) + (width * TAILLE_CASE)/2 ;
 	personnage->centerY = (posCaseY * TAILLE_CASE) + (height * TAILLE_CASE)/2 ;
@@ -14,7 +14,8 @@ void initPerso(Personnage *personnage, int width, int height, int posCaseX, int 
 	personnage->droite = false;
 	personnage->haut = false;
 	personnage->bas = false;
-	personnage->gravite = 15;
+	personnage->defaultGravite = gravite;
+	personnage->gravite = gravite;
 	personnage->vitesse = 6;
 	personnage->sens = 0;
 	personnage->lateral = false;

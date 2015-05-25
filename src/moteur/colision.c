@@ -46,7 +46,7 @@
                     break;
             }
 
-            perso->gravite = 10;
+            perso->gravite = perso->defaultGravite;
             perso->saute = false;
             return true;
         }
@@ -101,7 +101,7 @@ bool collisionRoof(Personnage *perso, int** level){
         if(level[L][C] == 1){
             perso->centerY = (L+2)*TAILLE_CASE - halfHeight;
             perso->saute = false;
-            perso->gravite = 10;
+            perso->gravite = perso->defaultGravite;
             perso->centerY += perso->gravite++;
             return true;
         }
@@ -149,13 +149,13 @@ void collisionsJoueur(Personnage *perso1, Personnage *perso2){
                 // FIXME erreur ici
                 //perso1->centerY = perso2->centerY + perso2->height*TAILLE_CASE/2 + perso1->height*TAILLE_CASE/2 ;
                 perso1->saute = false;
-                perso1->gravite = 9;
+                perso1->gravite = perso1->defaultGravite;
               }
             //j1 sur j2
             if( (Y1 + perso1->height*TAILLE_CASE/2) > (Y2 - perso2->height*TAILLE_CASE/2) && (Y1 + perso1->height*TAILLE_CASE/2) < (Y2 + perso2->height*TAILLE_CASE/2) ){
                  perso1->centerY = perso2->centerY - (perso2->height*TAILLE_CASE/2) - (perso1->height*TAILLE_CASE/2) ;
                  perso1->saute = false;
-                 perso1->gravite = 9;
+                 perso1->gravite = perso1->defaultGravite;
                  perso2->freeze = true;
             }
 
