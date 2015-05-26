@@ -24,25 +24,23 @@ bool collideWithPlayer(Personnage* persos, int nbJoueurs, AABB boxPerso,  int nu
 
 void collisions(Personnage* persos, int nbJoueurs, int **level){
     //separation movement x & y 
-    int k,j;
+    int i,k,j;
     for ( k = 0; k < nbJoueurs; ++k){
         AABB boxPerso = persos[k].box;
-
+        bool canMove;
         //collisions latérales
-        boxPerso.pos.x += persos[k].dir.x * persos[k].vitesse ; // faire pareil que la gravité
-        
-        bool canMove = true;
+        for(i=0; i< persos[k].vitesse; i++){
+            boxPerso.pos.x += persos[k].dir.x *i; // faire pareil que la gravité
+            
+            canMove = true;
 
-        if(collideWithMap(boxPerso, level, 40, 30)){
+            if(collideWithMap(boxPerso, level, 40, 30)) canMove = false;
+            if(collideWithPlayer(persos, nbJoueurs, boxPerso, k)) canMove = false; 
 
-            canMove = false;
+            if (canMove) persos[k].box = boxPerso;
+            else boxPerso = persos[k].box;
         }
-        if(collideWithPlayer(persos, nbJoueurs, boxPerso, k)){
-            canMove = false;
 
-        } 
-        if (canMove) persos[k].box = boxPerso;
-        else boxPerso = persos[k].box;
         
 
 

@@ -16,7 +16,7 @@ void initPerso(Personnage *personnage, int id, int width, int height, int posCas
 	personnage->bas = false;
 	personnage->defaultGravite = gravite;
 	personnage->gravite = gravite;
-	personnage->vitesse = 6;
+	personnage->vitesse = 4;
 	personnage->sens = 0;
 	personnage->saute = false;
 	personnage->active = false;
