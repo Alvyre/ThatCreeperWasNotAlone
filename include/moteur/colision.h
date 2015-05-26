@@ -7,11 +7,12 @@
 #include "initialisation/level.h"
 
 
-bool collisionTop(Personnage *perso, int** level);
+//bool collisionTop(Personnage *perso, int** level);
 bool collisionGround(Personnage *perso, int** level);
-void collisionLateral(Personnage *perso, int** level);
-bool collisionRoof(Personnage *perso, int** level);
+//void collisionLateral(Personnage *perso, int** level);
+//bool collisionRoof(Personnage *perso, int** level);
 bool collide(AABB a, AABB b);
+bool collideWithMap(AABB boxPerso, int** level, int widthLevel, int heightLevel);
 void collisionsJoueurs(Personnage* persos, int nbJoueurs);
-void collisionsDecor(Personnage* persos, int nbJoueurs, int **level);
+void collisions(Personnage* persos, int nbJoueurs, int **level);
 #endif /* COLISION_H */

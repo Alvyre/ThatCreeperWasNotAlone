@@ -4,134 +4,110 @@
 
 #include "moteur/colision.h"
 
-/**
- * Parcours les cases devant et derière selon la largeur du solide et teste les collisions
- * 
- * 
- * @param *perso
- */
- bool collisionGround(Personnage *perso, int** level){
 
+bool collideWithPlayer(Personnage* persos, int nbJoueurs, AABB boxPerso,  int numeroJoueur){
+    int j;
 
-    int Y = perso->box.pos.y + perso->box.size.y/2;
-    int X = perso->box.pos.x + perso->box.size.x/2;
+        //bool canMove = true;
 
-    float halfWidth = perso->box.size.x/(2*TAILLE_CASE);
-    float halfHeight = perso->box.size.y/(2*TAILLE_CASE);
+    for (j = 0; j < nbJoueurs; ++j){
+        if (numeroJoueur == j)
+            continue;
 
-    int C = (X - (halfWidth * TAILLE_CASE)) / TAILLE_CASE;
-    int L = (Y + (halfHeight * TAILLE_CASE)) / TAILLE_CASE;
-
-
-    for ( ; C <= floor((X + (halfWidth * TAILLE_CASE)) / TAILLE_CASE)  ; C++){
-
-        if(level[L][C] == 1 &&  Y >=(L - halfHeight)*TAILLE_CASE){
-
-            switch((int)(halfHeight*2)){                                                      // SWITCH pour corriger la position selon la hauteur du perso (1-6)
-                case 1:
-                case 2:
-                    perso->box.pos.y = (L - halfHeight)*TAILLE_CASE - halfHeight +1 - perso->box.size.y/2.0 ;
-                    break;
-                case 3:
-                case 4:
-                    perso->box.pos.y = (L - halfHeight)*TAILLE_CASE - halfHeight +2 - perso->box.size.y/2.0 ;
-                    break;
-                case 5:
-                case 6:
-                    perso->box.pos.y = (L - halfHeight)*TAILLE_CASE - halfHeight +3 - perso->box.size.y/2.0 ;
-                    break;
-
-                default:
-                    perso->box.pos.y = (L - halfHeight)*TAILLE_CASE - halfHeight +1 - perso->box.size.y/2.0 ;
-                    break;
-            }
-
-            perso->gravite = perso->defaultGravite;
-            perso->saute = false;
+        if (collide(boxPerso, persos[j].box)){
             return true;
+
         }
     }
     return false;
 }
 
-void collisionLateral(Personnage *perso, int** level){
-    
-    int Y = perso->box.pos.y + perso->box.size.y/2;
-    int X = perso->box.pos.x + perso->box.size.x/2;
+void collisions(Personnage* persos, int nbJoueurs, int **level){
+    //separation movement x & y 
+    int k,j;
+    for ( k = 0; k < nbJoueurs; ++k){
+        AABB boxPerso = persos[k].box;
 
-    float halfWidth = perso->box.size.x/(2*TAILLE_CASE);
-    float halfHeight = perso->box.size.y/(2*TAILLE_CASE);
-
-    int C = floor((X + (halfWidth*TAILLE_CASE) * perso->sens) / TAILLE_CASE);    
-    int L = floor((Y - (halfHeight*TAILLE_CASE)) / TAILLE_CASE);
- 
-                         
-
-    for (; L < (Y/TAILLE_CASE) +floor(halfHeight)-1; L++) {
-        if (level[L][C]==2)
-        {
-            perso->end = true;   
-        }
-        if (level[L][C]==1 && perso->sens == 1) {
-            perso->box.pos.x = C * TAILLE_CASE + floor(halfWidth) - halfWidth*TAILLE_CASE * perso->sens -2 - perso->box.size.x/2;
-        }
-        else if (level[L][C]==1 && perso->sens == -1) {
-            if((int)(perso->box.size.x/TAILLE_CASE) %2==0) perso->box.pos.x = C * TAILLE_CASE - floor(halfWidth) - (perso->box.size.x/TAILLE_CASE)*TAILLE_CASE * perso->sens +1 - perso->box.size.x/2;
-            else {
-               perso->box.pos.x = C * TAILLE_CASE - floor(halfWidth) - halfWidth*TAILLE_CASE * perso->sens +1*TAILLE_CASE +1 - perso->box.size.x/2 ;
-            }                 
-        }
-
-    }
-}
-
-
-// bool collisionRoof(Personnage *perso, int** level){
-
-//     int Y = perso->centerY;
-//     int X = perso->centerX;
-
-//     float halfHeight = perso->height/2.0;
-//     float halfWidth = perso->width/2.0;
-
-//     int C = (X - (halfWidth * TAILLE_CASE)) / TAILLE_CASE;
-//     int L = (Y - (halfHeight * TAILLE_CASE)) / TAILLE_CASE;
-
-//     for ( ; C <= floor((X + (halfWidth * TAILLE_CASE)) / TAILLE_CASE)  ; C++){
-
-//         if(level[L][C] == 1){
-//             perso->centerY = (L+2)*TAILLE_CASE - halfHeight;
-//             perso->saute = false;
-//             perso->gravite = perso->defaultGravite;
-//             perso->centerY += perso->gravite++;
-//             return true;
-//         }
-//     }
-//     return false;
-// }
-
-
-void collisionsJoueurs(Personnage* persos, int nbJoueurs){
-    int i,j;
-    for (i = 0; i < nbJoueurs; ++i){
-
-        AABB box = persos[i].box;
-        box.pos.x += persos[i].dir.x * persos[i].vitesse;
-        box.pos.y += persos[i].dir.y + persos[i].gravite++;
+        //collisions latérales
+        boxPerso.pos.x += persos[k].dir.x * persos[k].vitesse ; // faire pareil que la gravité
+        
         bool canMove = true;
 
-        for (j = 0; j < nbJoueurs; ++j){
-            if (i == j)
-                continue;
+        if(collideWithMap(boxPerso, level, 40, 30)){
 
-            if (collide(box, persos[j].box)){
+            canMove = false;
+        }
+        if(collideWithPlayer(persos, nbJoueurs, boxPerso, k)){
+            canMove = false;
+
+        } 
+        if (canMove) persos[k].box = boxPerso;
+        else boxPerso = persos[k].box;
+        
+
+
+        // collisions sol roof
+        boxPerso.pos.y += persos[k].dir.y; // faire pareil que la gravité
+        canMove = true;
+        if(collideWithMap(boxPerso, level, 40, 30)){
+
+            canMove = false;
+        }
+        if(collideWithPlayer(persos, nbJoueurs, boxPerso, k)){
+            canMove = false;
+        } 
+        if (canMove) persos[k].box = boxPerso;
+        else boxPerso = persos[k].box;
+
+
+
+        for(j = 0; j< persos[k].gravite; ++j ){
+            boxPerso.pos.y += 1;
+            canMove = true;
+
+            if(collideWithMap(boxPerso, level, 40, 30)){
                 canMove = false;
             }
+            if(collideWithPlayer(persos, nbJoueurs, boxPerso, k)){
+                canMove = false;
+            } 
+            if (canMove) persos[k].box = boxPerso;
+            else{
+                persos[k].gravite = persos[k].defaultGravite;
+                persos[k].saute = false;
+                persos[k].dir.y = 0;
+                break;
+            }
         }
-        if (canMove && persos[i].active) persos[i].box = box;
-    }
+        persos[k].gravite++;
+
+    } 
+
 }
 
+
+
+bool collideWithMap(AABB boxPerso, int** level, int widthLevel, int heightLevel)
+{
+    int x,y;
+    AABB boxCase;
+    boxCase.size.x = TAILLE_CASE;
+    boxCase.size.y = TAILLE_CASE;
+    for (x = 0; x < widthLevel; ++x)
+  {                                              // a optimiser avec pos perso
+     for (y = 0; y < heightLevel; ++y)
+     {
+    if (level[y][x] == 1)                       // define bloquant = 1
+    {
+       boxCase.pos.x = x*TAILLE_CASE;
+       boxCase.pos.y = y*TAILLE_CASE;
+       if (collide(boxPerso, boxCase))
+          return true;
+  }
+}
+}
+return false;
+}
 
 
 
@@ -140,73 +116,9 @@ bool collide(AABB a, AABB b){
     || (b.pos.x + b.size.x <= a.pos.x)     // trop à gauche
     || (b.pos.y >= a.pos.y + a.size.y)     // trop en bas
     || (b.pos.y + b.size.y <= a.pos.y))    // trop en haut
-          return false; 
-   else
-          return true; 
+      return false; 
+  else
+      return true; 
 }
 
-void collisionsDecor(Personnage* persos, int nbJoueurs, int **level){
-    int i,j,k;
-    for ( k = 0; k < nbJoueurs; ++k){
-        AABB boxPerso = persos[k].box;
-        boxPerso.pos.x += persos[k].dir.x * persos[k].vitesse ;
-        boxPerso.pos.y += persos[k].dir.y + persos[k].gravite++;
 
-        //collisions latérales
-        bool canMove = true;
-        j = boxPerso.pos.x;
-        if(persos[k].dir.x <0) j = boxPerso.pos.x; // détermination de la case latérale à vérifier
-        else j = boxPerso.pos.x + boxPerso.size.x;
-        for ( i = persos[k].box.pos.y; i < (persos[k].box.pos.y+persos[k].box.size.y); ++i){ // parcourt la hauteur du perso
-
-                    if(level[i/32][j/32] == 1){ // si case pleine
-                        //printf("collisions en [%d][%d]\n",i/32,j/32 );
-                        boxPerso.pos.x = j;
-                        AABB boxDecor;
-                        boxDecor.size.x = 32;
-                        boxDecor.size.y = 32;
-                        boxDecor.pos.x = j;
-                        boxDecor.pos.y = i;
-                        if(collide(boxPerso, boxDecor)){ // on verifie si le mouvement est en collision
-                            canMove = false;
-                            //printf("collisions decor !\n");
-                        }
-                    }
-    
-            }
-        
-        if (canMove && persos[k].active) persos[k].box = boxPerso;
-        //persos[k].box.pos.y = boxPerso.pos.y;
-
-
-
-        // collision sol
-        bool canFall = true;
-        i = boxPerso.pos.y+boxPerso.size.y+1;
-        for( j = persos[k].box.pos.x; j < (persos[k].box.pos.x+persos[k].box.size.x); ++j){ // parcourt la largeur du perso
-            //printf("[%d][%d]\n",i/32,j/32 );
-            if(level[i/32][j/32] == 1){ //si case pleine
-                //printf("collisions en [%d][%d]\n",i/32,j/32 );
-                AABB boxDecor;
-                boxDecor.size.x = 32;
-                boxDecor.size.y = 32;
-                boxDecor.pos.x = j;
-                boxDecor.pos.y = i;
-                canFall = false;
-                if(collide(boxPerso, boxDecor)){ // on regarde si collision avec le sol
-                    printf("collide !\n");
-                    canFall = false;
-                    persos[k].gravite = persos[k].defaultGravite;
-                    persos[k].saute = false;
-                }
-
-            }
-
-
-
-        }
-    if (canFall) persos[k].box.pos.y = boxPerso.pos.y;
-
-    }
-
-}

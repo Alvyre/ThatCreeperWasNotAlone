@@ -25,7 +25,8 @@ void appuyer(Personnage *perso, SDL_Event e){
                 if (perso->haut == false && perso->saute == false)
                 {
                     perso->haut = true;
-                    perso->gravite = -perso->defaultGravite;
+                    perso->gravite = perso->defaultGravite;
+                    perso->dir.y -= perso->defaultGravite *2;
                     perso->saute = true;
 
                 }
@@ -58,7 +59,8 @@ void relacher(Personnage *perso, SDL_Event e){
             case SDLK_UP : 
             case SDLK_SPACE :
                 perso->haut = false;
-                perso->gravite = perso->defaultGravite;
+                //perso->gravite = perso->defaultGravite;
+                //perso->dir.y =0;
             break;
 
             default : break;

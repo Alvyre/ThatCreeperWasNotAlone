@@ -36,14 +36,11 @@ void gestionJoueur(Personnage *persoHandler, int nbrPerso){
 	Personnage *perso;
 	int i;
 	for(i = 0; i<nbrPerso;++i){
+		persoHandler[i].dir.x = 0;
 		if(persoHandler[i].active) perso = &persoHandler[i];
 	}
 
-	perso->sens = 0;
-	perso->sens = (int)perso->droite - (int)perso->gauche;
-
-	//test
-	perso->dir.x = perso->sens;
+	perso->dir.x = (int)perso->droite - (int)perso->gauche;
 
 }
 
