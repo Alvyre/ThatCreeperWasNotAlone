@@ -71,6 +71,25 @@ void loadLevelFromFile(int** level, char const * path, int persoInfos[3][8], int
 	}
 }
 
+char const *selectLevelFromNumber(int levelNumber){
+	char const *path;
+	switch(levelNumber){
+		case 1:
+			path = "./levels/level-1.csv";
+			break;
+		case 2:
+		  	path = "./levels/level-2.csv";
+			break;
+		case 3:
+		  	path = "./levels/level-3.csv";
+			break;
+		default:
+		  	path = "./levels/level-1.csv";
+			break;
+	}
+	return path;
+}
+
 void freeLevel(int** level){
 	int i = 0;
 	for(i = 0; i < COLUMNS; i++) {

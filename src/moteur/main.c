@@ -40,6 +40,8 @@ int main(int argc, char** argv) {
   int nbrPerso = 0;
   int j = 0;
   bool menu = false;
+  bool end = false;
+  int levelNumber = 1;
 
   if(-1 == SDL_Init(SDL_INIT_VIDEO)) {
     fprintf(stderr, "Impossible d'initialiser la SDL. Fin du programme.\n");
@@ -50,14 +52,13 @@ int main(int argc, char** argv) {
 
   SDL_WM_SetCaption("Thomas Was Alone", NULL);
 
-
-  int **level = calloc(LINES + COLUMNS, sizeof(int*));
   // Création du level
+  int **level = calloc(LINES + COLUMNS, sizeof(int*));
   initLevel(level);
   int persoInfos[3][8];
   //FIXME : Choose level in menu 
-  char const *path = "./levels/level-2.csv";
-  loadLevelFromFile(level, path, persoInfos, &nbrPerso);
+  levelStart:
+  loadLevelFromFile(level, selectLevelFromNumber(levelNumber), persoInfos, &nbrPerso);
 
   //creation camera
   Camera camera;
@@ -95,11 +96,34 @@ int main(int argc, char** argv) {
     } else {
       /* AFFICHAGE */
       creeDecor(level);
-      // FIXME : faire ça de façon plus propre avec un boucle sur les perso
-     if (persoHandler[0].end && persoHandler[1].end && persoHandler[2].end) 
+
+      // Gestion des fins de niveaux
+      // Vérifie que chaque perso est sur sa case de fin,
+      // dans le cas échéant, passe au niveau suivant
+      for (j = 0; j < nbrPerso; j++){
+        if (persoHandler[j].end)
+        {
+          end = true;
+        } else {
+          end = false;
+        }
+      }
+     if (end) 
      {
-       printf("END\n");
+        // Il n'y a que trois niveaux si on est au 3ème et qu'on le fini, retour au menu
+        if (levelNumber < 3)
+        {
+          levelNumber++;
+          goto levelStart;
+          end = true;
+        } else {
+          // FIXME : When menu is done
+          menu = true;
+          break;
+        }
      }
+     /**** FIN GESTION NIVEAUX ******/
+
       for (j = 0; j < nbrPerso; j++)
       {
         glColor3f(persoHandler[j].color.r, persoHandler[j].color.g, persoHandler[j].color.b);  // Affichage du joueur
@@ -125,7 +149,6 @@ int main(int argc, char** argv) {
       }
       
       // camera
-
       if(camera.is_transition == false) scrolling(&camera);
       else if(camera.is_transition == true){
         if(camera.Dx < -0.001 || camera.Dx > 0.001){

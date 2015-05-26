@@ -44,7 +44,7 @@ void gestionJoueur(Personnage *persoHandler){
 void changeFocus(Personnage *persoHandler, int nbrPerso, Camera *camera){
 	int i = 0;
 
-	for (i = 0; i < nbrPerso; ++i)
+	for (i = 0; i < nbrPerso; i++)
 	{
 		
 		if (persoHandler[i].active){
