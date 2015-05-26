@@ -151,13 +151,15 @@ void collisionsDecor(Personnage* persos, int nbJoueurs, int **level){
         AABB boxPerso = persos[k].box;
         boxPerso.pos.x += persos[k].dir.x * persos[k].vitesse ;
         boxPerso.pos.y += persos[k].dir.y + persos[k].gravite++;
+
+        //collisions latérales
         bool canMove = true;
         j = boxPerso.pos.x;
-        if(persos[k].dir.x <0) j = boxPerso.pos.x;
+        if(persos[k].dir.x <0) j = boxPerso.pos.x; // détermination de la case latérale à vérifier
         else j = boxPerso.pos.x + boxPerso.size.x;
-        for ( i = persos[k].box.pos.y; i < (persos[k].box.pos.y+persos[k].box.size.y); ++i){
+        for ( i = persos[k].box.pos.y; i < (persos[k].box.pos.y+persos[k].box.size.y); ++i){ // parcourt la hauteur du perso
 
-                    if(level[i/32][j/32] == 1){
+                    if(level[i/32][j/32] == 1){ // si case pleine
                         //printf("collisions en [%d][%d]\n",i/32,j/32 );
                         boxPerso.pos.x = j;
                         AABB boxDecor;
@@ -165,7 +167,7 @@ void collisionsDecor(Personnage* persos, int nbJoueurs, int **level){
                         boxDecor.size.y = 32;
                         boxDecor.pos.x = j;
                         boxDecor.pos.y = i;
-                        if(collide(boxPerso, boxDecor)){
+                        if(collide(boxPerso, boxDecor)){ // on verifie si le mouvement est en collision
                             canMove = false;
                             //printf("collisions decor !\n");
                         }
@@ -173,10 +175,38 @@ void collisionsDecor(Personnage* persos, int nbJoueurs, int **level){
     
             }
         
-        if (canMove) persos[k].box = boxPerso;
-        persos[k].box.pos.y = boxPerso.pos.y;
-    }
-    
+        if (canMove && persos[k].active) persos[k].box = boxPerso;
+        //persos[k].box.pos.y = boxPerso.pos.y;
 
+
+
+        // collision sol
+        bool canFall = true;
+        i = boxPerso.pos.y+boxPerso.size.y+1;
+        for( j = persos[k].box.pos.x; j < (persos[k].box.pos.x+persos[k].box.size.x); ++j){ // parcourt la largeur du perso
+            //printf("[%d][%d]\n",i/32,j/32 );
+            if(level[i/32][j/32] == 1){ //si case pleine
+                //printf("collisions en [%d][%d]\n",i/32,j/32 );
+                AABB boxDecor;
+                boxDecor.size.x = 32;
+                boxDecor.size.y = 32;
+                boxDecor.pos.x = j;
+                boxDecor.pos.y = i;
+                canFall = false;
+                if(collide(boxPerso, boxDecor)){ // on regarde si collision avec le sol
+                    printf("collide !\n");
+                    canFall = false;
+                    persos[k].gravite = persos[k].defaultGravite;
+                    persos[k].saute = false;
+                }
+
+            }
+
+
+
+        }
+    if (canFall) persos[k].box.pos.y = boxPerso.pos.y;
+
+    }
 
 }
