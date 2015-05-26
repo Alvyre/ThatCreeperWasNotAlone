@@ -9,7 +9,7 @@
 
 #include "moteur/main.h"
 #include "initialisation/level.h"
-#include "formes/carre.h"
+#include "formes/draw.h"
 #include "moteur/perso.h"
 #include "moteur/touche.h"
 #include "moteur/deplacements.h"

@@ -1,6 +1,6 @@
 #include "moteur/main.h"
 #include "initialisation/level.h"
-#include "formes/carre.h"
+#include "formes/draw.h"
 #include <string.h>
 
 #define MAX_CHAR_FILE 10000

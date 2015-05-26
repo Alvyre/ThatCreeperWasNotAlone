@@ -1,4 +1,4 @@
-#include "formes/carre.h"
+#include "formes/draw.h"
 
 void dessinCarre(int posX, int posY, Color3f *color){
   glColor3f(color->r,color->g,color->b);
