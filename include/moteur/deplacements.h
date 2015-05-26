@@ -8,5 +8,4 @@
 
 void deplacementJoueur(Personnage *persoHandler, int nbrPerso, int** level, Camera *camera);
 
-
 #endif /* DEPLACEMENTS_H */

@@ -12,7 +12,8 @@ void deplacementJoueur(Personnage *persoHandler, int nbrPerso, int** level, Came
     Personnage *perso;
     int i;
     for(i = 0; i<nbrPerso;++i){
-        if(persoHandler[i].active) perso = &persoHandler[i];
+        if(persoHandler[i].active)
+        	perso = &persoHandler[i];
     }
 
     camera->formerX = perso->box.pos.x + perso->box.size.x/2;
@@ -20,10 +21,8 @@ void deplacementJoueur(Personnage *persoHandler, int nbrPerso, int** level, Came
 
     // Si perso bouge, il n'est plus sur sa case de fin
     perso->end = false;
-   
+
     collisions(persoHandler, nbrPerso, level);
-    
-    
     camera->currentX = perso->box.pos.x + perso->box.size.x/2;
 
 

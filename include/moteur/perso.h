@@ -16,8 +16,11 @@ typedef struct AABB {
 
 typedef struct Personnage
 {
-
 	int id;
+	//position et direction
+	AABB box;
+	Vector2i dir;
+	//couleur
 	Color3f color;
 	// variables touches
 	bool gauche;
@@ -37,8 +40,7 @@ typedef struct Personnage
 	bool end;
 
 	//test
-	AABB box;
-	Vector2i dir;
+
 
 }Personnage;
 
