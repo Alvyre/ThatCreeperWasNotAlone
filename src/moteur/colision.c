@@ -68,21 +68,25 @@ void collisions(Personnage* persos, int nbJoueurs, int **level){
 
 /************* Fonction de collisions map *************/
 
-/** On parcourt les cases pour trouver si le personnage est en collisions avec un bloc non vide (!=0) **/
+/** On parcourt les cases pour trouver si le personnage est en collisions avec un bloc non vide (!=0)     **/
+/** On réduit l'espace à parcourir à 100 cases (10 avant le perso et 10 après dans toutes les directions) **/
 
 bool collisionsAvecMap(AABB boxPerso, int** level, int widthLevel, int heightLevel){
     int x,y;
+    int casePersoX = boxPerso.pos.x/TAILLE_CASE;
+    int casePersoY = boxPerso.pos.y/TAILLE_CASE;
     AABB boxCase;
     boxCase.size.x = TAILLE_CASE;
     boxCase.size.y = TAILLE_CASE;
-
-    for (x = 0; x < widthLevel; ++x){           // a optimiser avec pos perso
-        for (y = 0; y < heightLevel; ++y){
-            if (level[y][x] == SOLIDE){
-                boxCase.pos.x = x*TAILLE_CASE;
-                boxCase.pos.y = y*TAILLE_CASE;
-                if (collide(boxPerso, boxCase))
-                    return true;
+    for (x = casePersoX-10; x < casePersoX+10; ++x){           
+        for (y = casePersoY-10; y < casePersoY+10; ++y){
+            if(x>=0 && x<widthLevel && y>=0 && y<heightLevel){
+                if (level[y][x] == SOLIDE){
+                    boxCase.pos.x = x*TAILLE_CASE;
+                    boxCase.pos.y = y*TAILLE_CASE;
+                    if (collide(boxPerso, boxCase))
+                        return true;
+                }
             }
         }
     }
