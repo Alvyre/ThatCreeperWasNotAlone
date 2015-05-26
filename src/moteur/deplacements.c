@@ -18,13 +18,12 @@ void deplacementJoueur(Personnage *persoHandler, int nbrPerso, int** level, Came
     camera->formerX = perso->box.pos.x + perso->box.size.x/2;
     camera->formerY = perso->box.pos.y + perso->box.size.y/2;
 
-
     // Si perso bouge, il n'est plus sur sa case de fin
     perso->end = false;
-    perso->box.pos.y += perso->gravite++;
+    //perso->box.pos.y += perso->gravite++;
 
     //perso->box.pos.x += perso->vitesse * perso->sens;
-     collisionLateral(perso, level);
+    //collisionLateral(perso, level);
     camera->currentX = perso->box.pos.x + perso->box.size.x/2;
 
     // if(collisionRoof(perso, level) == 1){
@@ -36,9 +35,9 @@ void deplacementJoueur(Personnage *persoHandler, int nbrPerso, int** level, Came
 
 
     // camera->currentY = perso->centerY;
-
-    collisionsJoueurs(persoHandler, nbrPerso);
-    //collisionsDecor(persoHandler, nbrPerso, level);
+    collisionsDecor(persoHandler, nbrPerso, level);
+    //collisionsJoueurs(persoHandler, nbrPerso);
+    
     camera->currentX = perso->box.pos.x + perso->box.size.x/2;
 
     collisionGround(&persoHandler[0], level);
