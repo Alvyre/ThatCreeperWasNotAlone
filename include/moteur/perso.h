@@ -5,19 +5,26 @@
 #include "moteur/main.h"
 #include <stdbool.h>
 
+typedef struct Vector2i {
+ int x, y;
+}Vector2i;
+
+typedef struct AABB {
+ Vector2i pos, size;
+}AABB;
+
 
 typedef struct Personnage
 {
 	int id;
-	int centerX;
-	int centerY;
-	int width;
-	int height;
+	//position et direction
+	AABB box;
+	Vector2i dir;
+	//couleur
 	Color3f color;
 	// variables touches
 	bool gauche;
 	bool droite;
-	int lastDirection;
 	bool haut;
 	bool bas;
 	// variables déplacements
@@ -26,20 +33,23 @@ typedef struct Personnage
 	int vitesse;
 	int sens;
 	// variables mouvements
-	bool lateral;
 	bool saute;
-	bool repos;
 
 	bool active; // perso actif (controlable) ou pas
 	int cursorTimer;
-	bool freeze;
 	bool end;
 
+	//test
+
+
 }Personnage;
+
+
 #include "moteur/scrolling.h"
 
 void initPerso(Personnage *personnage, int id, int width, int height, int posCaseX, int posCaseY, Color3f color, int gravite);
-void gestionJoueur(Personnage *persoHandler);
+void gestionJoueur(Personnage *persoHandler, int nbrPerso);
 void changeFocus(Personnage *persoHandler, int nbrPerso, Camera *camera);
+
 
 #endif /* PERSO_H */

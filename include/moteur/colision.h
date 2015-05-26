@@ -7,9 +7,13 @@
 #include "initialisation/level.h"
 
 
-bool collisionTop(Personnage *perso, int** level);
-bool collisionGround(Personnage *perso, int** level);
-void collisionLateral(Personnage *perso, int** level);
-bool collisionRoof(Personnage *perso, int** level);
-void collisionsJoueur(Personnage *perso1, Personnage *perso2);
+void collisions(Personnage* persos, int nbJoueurs, int **level);
+bool collisionsAvecMap(AABB boxPerso, int** level, int widthLevel, int heightLevel);
+bool collisionAvecJoueur(Personnage* persos, int nbJoueurs, AABB boxPerso,  int numeroJoueur);
+bool collide(AABB a, AABB b);
+
+
+#define SOLIDE 1		//bloc de type solide
+#define END 2			//bloc de type fin du jeu
+
 #endif /* COLISION_H */

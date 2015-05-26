@@ -16,8 +16,7 @@ void initLevel(int** level){
   	}
 }
 
-void loadLevelFromFile(int** level, char const * path, int persoInfos[3][8], int *nbrPerso){
-	
+void loadLevelFromFile(int** level, char const * path, int persoInfos[3][8], int *nbrPerso){	
 	int i = 0;
 	int j = 0;
 	bool firstline = true;
@@ -113,8 +112,7 @@ void creeDecor(int **level){
 	{
 		for (j = 0; j < COLUMNS; j++) //width
 		{	
-			//affiche le grid
-			//dessinCarre(0,j*32,i*32);
+			
 			if (level[i][j] == 1)
 			{
 				color.r = 1;

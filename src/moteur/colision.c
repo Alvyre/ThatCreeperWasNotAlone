@@ -4,164 +4,122 @@
 
 #include "moteur/colision.h"
 
-/**
- * Parcours les cases devant et derière selon la largeur du solide et teste les collisions
- * 
- * 
- * @param *perso
- */
- bool collisionGround(Personnage *perso, int** level){
+/************* Fonction de collisions principale *************/
 
+void collisions(Personnage* persos, int nbJoueurs, int **level){
+    
+    /** Séparation des collisions selon les x & les y pour une meilleure gestion des mouvements **/
+    /** Un personnage peut effectuer un mouvement (x,y), mais aussi (x,0) ou (0,y)              **/
+    /** Utilisation de boucle for pour affiner les collisions par pixel                         **/
+    /** On teste d'abord avec la map et ensuite avec les autres personnages                     **/
 
-    int Y = perso->centerY;
-    int X = perso->centerX;
+    int i,j,k,l;
 
-    float halfHeight = perso->height/2.0;
-    float halfWidth = perso->width/2.0;
+    /* Pour chaque joueur on vérifie les collisions */
+    for ( k = 0; k < nbJoueurs; ++k){
+        AABB boxPerso = persos[k].box;
+        bool canMove;
+        
+    /* Collisions Latérales */
+        for(i=0; i< persos[k].vitesse; i++){
+            boxPerso.pos.x += persos[k].dir.x *i; 
+            canMove = true;
+            if(collisionsAvecMap(boxPerso, level, 40, 30)) canMove = false;
+            if(collisionAvecJoueur(persos, nbJoueurs, boxPerso, k)) canMove = false; 
+            if (canMove)
+                persos[k].box = boxPerso;
+            else 
+                boxPerso = persos[k].box;
+        }
 
-    int C = (X - (halfWidth * TAILLE_CASE)) / TAILLE_CASE;
-    int L = (Y + (halfHeight * TAILLE_CASE)) / TAILLE_CASE;
-
-
-    for ( ; C <= floor((X + (halfWidth * TAILLE_CASE)) / TAILLE_CASE)  ; C++){
-
-        if(level[L][C] == 1 &&  Y >=(L - halfHeight)*TAILLE_CASE){
-
-            switch(perso->height){                                                      // SWITCH pour corriger la position selon la hauteur du perso (1-6)
-                case 1:
-                case 2:
-                    perso->centerY = (L - halfHeight)*TAILLE_CASE - halfHeight +1 ;
-                    break;
-                case 3:
-                case 4:
-                    perso->centerY = (L - halfHeight)*TAILLE_CASE - halfHeight +2 ;
-                    break;
-                case 5:
-                case 6:
-                    perso->centerY = (L - halfHeight)*TAILLE_CASE - halfHeight +3 ;
-                    break;
-
-                default:
-                    perso->centerY = (L - halfHeight)*TAILLE_CASE - halfHeight +1 ;
-                    break;
+    /* Collisions toit */
+        for(l = 0; l>= persos[k].dir.y;l--){
+            boxPerso.pos.y -=1;
+            canMove = true;
+            if(collisionsAvecMap(boxPerso, level, 40, 30))
+                canMove = false;
+            if(collisionAvecJoueur(persos, nbJoueurs, boxPerso, k))
+                canMove = false;
+            if (canMove) 
+                persos[k].box = boxPerso;
+            else 
+                boxPerso = persos[k].box;
+        }
+        
+    /* Collisions sol */
+        for(j = 0; j< persos[k].gravite; ++j ){
+            boxPerso.pos.y += 1;
+            canMove = true;
+            if(collisionsAvecMap(boxPerso, level, 40, 30))
+                canMove = false;
+            if(collisionAvecJoueur(persos, nbJoueurs, boxPerso, k))
+                canMove = false;
+            if (canMove)
+                persos[k].box = boxPerso;
+            else{
+                persos[k].gravite = persos[k].defaultGravite;
+                persos[k].saute = false;
+                persos[k].dir.y = 0;
             }
+        }
+        persos[k].gravite++;
+    } 
+}
 
-            perso->gravite = perso->defaultGravite;
-            perso->saute = false;
-            return true;
+/************* Fonction de collisions map *************/
+
+/** On parcourt les cases pour trouver si le personnage est en collisions avec un bloc non vide (!=0)     **/
+/** On réduit l'espace à parcourir à 100 cases (10 avant le perso et 10 après dans toutes les directions) **/
+
+bool collisionsAvecMap(AABB boxPerso, int** level, int widthLevel, int heightLevel){
+    int x,y;
+    int casePersoX = boxPerso.pos.x/TAILLE_CASE;
+    int casePersoY = boxPerso.pos.y/TAILLE_CASE;
+    AABB boxCase;
+    boxCase.size.x = TAILLE_CASE;
+    boxCase.size.y = TAILLE_CASE;
+    for (x = casePersoX-10; x < casePersoX+10; ++x){           
+        for (y = casePersoY-10; y < casePersoY+10; ++y){
+            if(x>=0 && x<widthLevel && y>=0 && y<heightLevel){
+                if (level[y][x] == SOLIDE){
+                    boxCase.pos.x = x*TAILLE_CASE;
+                    boxCase.pos.y = y*TAILLE_CASE;
+                    if (collide(boxPerso, boxCase))
+                        return true;
+                }
+            }
         }
     }
     return false;
 }
 
-void collisionLateral(Personnage *perso, int** level){
+/************* Fonction de collisions joueurs *************/
 
-    int Y = perso->centerY;
-    int X = perso->centerX;
+/** On parcourt tous les personnages du jeu et on teste les collisions **/
+/** le continue; sert à exclure le personnage actif                    **/
 
-    float halfWidth = perso->width/2.0;
-    float halfHeight = perso->height/2.0;
+bool collisionAvecJoueur(Personnage* persos, int nbJoueurs, AABB boxPerso,  int numeroJoueur){
+    int j;
+    for (j = 0; j < nbJoueurs; ++j){
+        if (numeroJoueur == j)
+            continue;
 
-    int C = floor((X + (halfWidth*TAILLE_CASE) * perso->sens) / TAILLE_CASE);    
-    int L = floor((Y - (halfHeight*TAILLE_CASE)) / TAILLE_CASE);
- 
-                         
-    for (; L < (Y/TAILLE_CASE) +floor(halfHeight); L++) {
-        if ((level[L][C]==2 && perso->id == 0) || (level[L][C]==3 && perso->id == 1) || (level[L][C]==4 && perso->id == 2))
-        {
-            perso->end = true;   
-        }
-        if (level[L][C]==1 && perso->sens == 1) {
-            perso->centerX = C * TAILLE_CASE + floor(halfWidth) - halfWidth*TAILLE_CASE * perso->sens -2;
-        }
-        else if (level[L][C]==1 && perso->sens == -1) {
-            if(perso->width %2==0) perso->centerX = C * TAILLE_CASE - floor(halfWidth) - perso->width*TAILLE_CASE * perso->sens +1;
-            else {
-               perso->centerX = C * TAILLE_CASE - floor(halfWidth) - (perso->width/2.0)*TAILLE_CASE * perso->sens +1*TAILLE_CASE +1 ;
-            }                 
-        }
-
-    }
-}
-
-
-bool collisionRoof(Personnage *perso, int** level){
-
-    int Y = perso->centerY;
-    int X = perso->centerX;
-
-    float halfHeight = perso->height/2.0;
-    float halfWidth = perso->width/2.0;
-
-    int C = (X - (halfWidth * TAILLE_CASE)) / TAILLE_CASE;
-    int L = (Y - (halfHeight * TAILLE_CASE)) / TAILLE_CASE;
-
-    for ( ; C <= floor((X + (halfWidth * TAILLE_CASE)) / TAILLE_CASE)  ; C++){
-
-        if(level[L][C] == 1){
-            perso->centerY = (L+2)*TAILLE_CASE - halfHeight;
-            perso->saute = false;
-            perso->gravite = perso->defaultGravite;
-            perso->centerY += perso->gravite++;
+        if (collide(boxPerso, persos[j].box)) 
             return true;
-        }
     }
     return false;
 }
 
+/************* Fonction de collisions type AABB *************/
 
-void collisionsJoueur(Personnage *perso1, Personnage *perso2){
-
-    float X1 = perso1->centerX;
-    float Y1 = perso1->centerY;
-
-
-    float X2 = perso2->centerX;
-    float Y2 = perso2->centerY;
-
-    int i,j;
-    //collisions J1 / J2 latérales
-    for ( i = Y1 - perso1->height*TAILLE_CASE/2 ; i < Y1 + perso1->height*TAILLE_CASE/2 ; i++) // parcours la hauteur
-    {
-        if(i > (Y2 - perso2->height*TAILLE_CASE/2+10) && i < (Y2 + perso2->height*TAILLE_CASE/2-10) ){ // si c'est bien dans la hauteur du perso
-            if( perso1->sens == 1 ){ // collision droite
-                if( ((X1 + perso1->width*TAILLE_CASE/2 * perso1->sens) > (X2 - perso2->width*TAILLE_CASE/2)) && ((X1 + perso1->width*TAILLE_CASE/2 * perso1->sens) < (X2 + perso2->width*TAILLE_CASE/2)) ){
-
-                    perso1->centerX = perso2->centerX - (perso2->width*TAILLE_CASE/2) - (perso1->width*TAILLE_CASE/2) -1;
-                }
-            }
-            else if( perso1->sens == -1 ){ // collision gauche
-                if( ((X1 + perso1->width*TAILLE_CASE/2 * perso1->sens) < (X2 + perso2->width*TAILLE_CASE/2)) && ((X1 + perso1->width*TAILLE_CASE/2 * perso1->sens) > (X2 - perso2->width*TAILLE_CASE/2))  ){
-                    perso1->centerX = perso2->centerX + (perso2->width*TAILLE_CASE/2) + (perso1->width*TAILLE_CASE/2) +2;
-                }
-            }
-        }
-    }
-
-
-    //collisions sol + plafond
-    //perso2->freeze = false;
-    for ( j = X1 - perso1->width*TAILLE_CASE/2 ; j < X1 + perso1->width*TAILLE_CASE/2 ; j++){ // parcours la largeur    
-        if(j > (X2 - perso2->width*TAILLE_CASE/2+5) && j < (X2 + perso2->width*TAILLE_CASE/2-5) ){ // si c'est bien dans la largeur du perso
-
-            //j1 sous j2
-            if( (Y1 - perso1->height*TAILLE_CASE/2 ) <= (Y2 + perso2->height*TAILLE_CASE/2) && (Y1 - perso1->height*TAILLE_CASE/2 ) >= (Y2 - perso2->height*TAILLE_CASE/2) ){
-                // FIXME erreur ici
-                //perso1->centerY = perso2->centerY + perso2->height*TAILLE_CASE/2 + perso1->height*TAILLE_CASE/2 ;
-                perso1->saute = false;
-                perso1->gravite = perso1->defaultGravite;
-              }
-            //j1 sur j2
-            if( (Y1 + perso1->height*TAILLE_CASE/2) > (Y2 - perso2->height*TAILLE_CASE/2) && (Y1 + perso1->height*TAILLE_CASE/2) < (Y2 + perso2->height*TAILLE_CASE/2) ){
-                 perso1->centerY = perso2->centerY - (perso2->height*TAILLE_CASE/2) - (perso1->height*TAILLE_CASE/2) ;
-                 perso1->saute = false;
-                 perso1->gravite = perso1->defaultGravite;
-                 perso2->freeze = true;
-            }
-
-         }
-
-     }
-     // defreeze
-     if( ((Y1 - perso1->height*TAILLE_CASE/2 -10) > Y2 + perso2->height*TAILLE_CASE/2) || ((Y1 - perso1->height*TAILLE_CASE/2 -10) <  Y2 - perso2->height*TAILLE_CASE/2) ) perso1->freeze = false;
+bool collide(AABB a, AABB b){
+   if((b.pos.x >= a.pos.x + a.size.x)       // trop à droite
+    || (b.pos.x + b.size.x <= a.pos.x)      // trop à gauche
+    || (b.pos.y >= a.pos.y + a.size.y)      // trop en bas
+    || (b.pos.y + b.size.y <= a.pos.y))     // trop en haut
+      return false; 
+  else
+      return true; 
 }
+
+
