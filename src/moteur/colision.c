@@ -117,7 +117,7 @@ void collisionsJoueurs(Personnage* persos, int nbJoueurs){
 
         AABB box = persos[i].box;
         box.pos.x += persos[i].dir.x * persos[i].vitesse;
-        box.pos.y += persos[i].dir.y;
+        box.pos.y += persos[i].dir.y /*+ persos[i].gravite++*/;
         bool canMove = true;
 
         for (j = 0; j < nbJoueurs; ++j){
@@ -126,7 +126,6 @@ void collisionsJoueurs(Personnage* persos, int nbJoueurs){
 
             if (collide(box, persos[j].box)){
                 canMove = false;
-                printf("collisions !!\n");
             }
         }
         if (canMove && persos[i].active) persos[i].box = box;
@@ -144,4 +143,39 @@ bool collide(AABB a, AABB b){
           return false; 
    else
           return true; 
+}
+
+void collisionsDecor(Personnage* persos, int nbJoueurs, int **level){
+    int i,j,k;
+    for ( k = 0; k < nbJoueurs; ++k){
+        AABB boxPerso = persos[k].box;
+        boxPerso.pos.x += persos[k].dir.x * persos[k].vitesse;
+        boxPerso.pos.y += persos[k].dir.y + persos[k].gravite++;
+        bool canMove = true;
+
+        for ( i = persos[k].box.pos.y-10; i < (persos[k].box.pos.y+persos[k].box.size.y)+10 ; ++i){
+            for (j = persos[k].box.pos.x-10; j < (persos[k].box.pos.x+persos[k].box.size.x)+10; ++j){
+                if(i/32>=0 && j/32>=0 && i/32<=29 && j/32<=39){
+                    
+                    if(level[i/32][j/32] == 1){
+                        //if(persos[k].active) printf("i = %d j = %d\n",i,j );
+                        AABB boxDecor;
+                        boxDecor.size.x = TAILLE_CASE;
+                        boxDecor.size.y = TAILLE_CASE;
+                        boxDecor.pos.x = j;
+                        boxDecor.pos.y = i;
+                        if(collide(boxPerso, boxDecor)){
+                            canMove = false;
+                            persos[k].gravite = persos[k].defaultGravite;
+                            //printf("collisions decor !\n");
+                        }
+                    }
+                }
+            }
+        }
+        if (canMove && persos[k].active) persos[k].box = boxPerso;
+    }
+    
+
+
 }

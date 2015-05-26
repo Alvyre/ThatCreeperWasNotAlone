@@ -34,12 +34,14 @@ void deplacementJoueur(Personnage *persoHandler, int nbrPerso, int** level, Came
     //     camera->currentY = perso->centerY;
     // }
 
-    collisionGround(&persoHandler[0], level);
-    collisionGround(&persoHandler[1], level);
-    collisionGround(&persoHandler[2], level);
+
     // camera->currentY = perso->centerY;
 
     collisionsJoueurs(persoHandler, nbrPerso);
-
+    //collisionsDecor(persoHandler, nbrPerso, level);
     camera->currentX = perso->box.pos.x + perso->box.size.x/2;
+
+    collisionGround(&persoHandler[0], level);
+    collisionGround(&persoHandler[1], level);
+    collisionGround(&persoHandler[2], level);
 }
