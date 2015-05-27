@@ -2,8 +2,7 @@
 #include "formes/draw.h"
 
 void touchesMenu(SDL_Event e, Menu *menu){
-    if(e.type == SDL_KEYUP){
-
+    if(e.type == SDL_KEYDOWN){
         switch(e.key.keysym.sym){
             case SDLK_DOWN : 
                 menuHandler(menu, -1);
@@ -16,6 +15,11 @@ void touchesMenu(SDL_Event e, Menu *menu){
             case SDLK_RETURN :
             	menuHandler(menu, 0);
             break;
+
+            case 'q' : 
+            case SDLK_ESCAPE :
+              menu->active = false;
+              break;
 
             default : break;
         }
@@ -48,6 +52,8 @@ void menuHandler(Menu* menu, int sens){
 				dessinActiveMenu(menu->levelNumber);
 			}
 			break;
+
+		 default : break;
 	}
 	
 }
