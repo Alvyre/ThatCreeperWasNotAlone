@@ -3,22 +3,22 @@
 #include "formes/draw.h"
 #include <string.h>
 
-Level* initLevel(Level* Level, int width, int height){
+Level* initLevel(Level* level, int width, int height){
 	int i = 0;
 
-	Level = calloc(width + height + 2, sizeof(int*));
-	Level->map = calloc(width + height, sizeof(int*));
-	Level->width = width;
-	Level->height = height;
+	level = calloc(width + height + 2, sizeof(int*));
+	level->map = calloc(width + height, sizeof(int*));
+	level->width = width;
+	level->height = height;
 
 	// i nbre de lignes (height)
 	// j nbre colonnes (width)
   	for (i = 0; i < height; i++)
   	{
-    	Level->map[i] = calloc(width, sizeof(int));
+    	level->map[i] = calloc(width, sizeof(int));
   	}
-  	Level->map[29][39] = 1;
-  	return Level;
+  	level->map[29][39] = 1;
+  	return level;
 }
 
 Level* loadLevelFromFile(char const * path, int persoInfos[3][8], int *nbrPerso){	
@@ -33,7 +33,7 @@ Level* loadLevelFromFile(char const * path, int persoInfos[3][8], int *nbrPerso)
 	int currentPerso = 0;
 	int width = 0;
 	int height =0;
-	Level *Level;
+	Level *level;
 
 	FILE *file = fopen(path, "r");
 
@@ -57,7 +57,7 @@ Level* loadLevelFromFile(char const * path, int persoInfos[3][8], int *nbrPerso)
 					}
 	        	}
 
-	        	Level = initLevel(Level, width, height);
+	        	level = initLevel(level, width, height);
 
 	        	firstLine = false;
 	        } else if(secondLine) {
@@ -80,10 +80,10 @@ Level* loadLevelFromFile(char const * path, int persoInfos[3][8], int *nbrPerso)
 	        	} else {
 	        		// Si on a récupéré toutes les infos sur les persos,
 	        		// on passe au level
-	        		for (j = 0, ptr = buffer; j < Level->width; j++, ptr++){
+	        		for (j = 0, ptr = buffer; j < level->width; j++, ptr++){
 	        			// i nbre de lignes (height)
 						// j nbre colonnes (width)
-	            		Level->map[i][j] = (int)strtol(ptr, &ptr, 10);
+	            		level->map[i][j] = (int)strtol(ptr, &ptr, 10);
 	        		}
 	        		i++;
 	        	}
@@ -92,7 +92,7 @@ Level* loadLevelFromFile(char const * path, int persoInfos[3][8], int *nbrPerso)
 	        
     	}
 		fclose(file);
-		return Level;
+		return level;
 	}
 }
 
@@ -117,19 +117,21 @@ char const *selectLevelFromNumber(int levelNumber){
 
 // Passer Level
 // utiliser Level.width
-void freeLevel(Level* Level){
+void freeLevel(Level* level){
 	int i = 0;
-	for(i = 0; i < Level->height; i++) {
-		free(Level->map[i]);
-		Level->map[i] = NULL;
+	for(i = 0; i < level->height; i++) {
+		free(level->map[i]);
+		level->map[i] = NULL;
 	}
-	free(Level->map);
-	Level->map = NULL;
+	free(level->map);
+	level->map = NULL;
+
+	free(level);
 }
 
 // Passer Level 
 // utiliser Level.width
-void creeDecor(Level* Level){
+void creeDecor(Level* level){
 	int i,j;
 	Color3f color;
 	// Par défaut carrés noirs
@@ -137,12 +139,12 @@ void creeDecor(Level* Level){
 	color.g = 0;
 	color.b = 0;
 
-	for (i = 0; i < Level->height; i++) // height
+	for (i = 0; i < level->height; i++) // height
 	{
-		for (j = 0; j < Level->width; j++) //width
+		for (j = 0; j < level->width; j++) //width
 		{	
 			
-			if (Level->map[i][j] == 1)
+			if (level->map[i][j] == 1)
 			{
 				color.r = 1;
 				color.g = 1;
@@ -150,7 +152,7 @@ void creeDecor(Level* Level){
 				dessinCarre(j*32,i*32, &color);
 			}
 
-			if (Level->map[i][j] == 2 || Level->map[i][j] == 3 || Level->map[i][j] == 4)
+			if (level->map[i][j] == 2 || level->map[i][j] == 3 || level->map[i][j] == 4)
 			{
 				color.r = 1;
 				color.g = 1;
