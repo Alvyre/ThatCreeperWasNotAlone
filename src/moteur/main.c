@@ -140,8 +140,8 @@ int main(int argc, char** argv) {
           goto levelStart;
           end = true;
         } else {
-          // FIXME : When menu is done
           menu.active = true;
+          goto levelStart;
           break;
         }
      }
