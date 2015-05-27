@@ -82,7 +82,8 @@ bool collisionsAvecMap(AABB boxPerso, Personnage* perso, int** level, int widthL
         for (y = casePersoY-10; y < casePersoY+10; ++y){
             if(x>=0 && x<widthLevel && y>=0 && y<heightLevel){
                 // Test fin de niveau pour chaque perso
-                if ((level[y][x-(x-casePersoX)] == END_PERSO_1 && perso->id == 0) || (level[y][x-(x-casePersoX)] == END_PERSO_2 && perso->id == 1) || (level[y][x-(x-casePersoX)] == END_PERSO_3 && perso->id == 2))
+                // FIXME decalage surtout pour le perso 3
+                if ((level[y][x-8] == END_PERSO_1 && perso->id == 0) || (level[y][x-8] == END_PERSO_2 && perso->id == 1) || (level[y][x-5] == END_PERSO_3 && perso->id == 2))
                 {
                     perso->end = true;
                 }

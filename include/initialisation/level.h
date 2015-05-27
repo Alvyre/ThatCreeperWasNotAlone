@@ -5,13 +5,18 @@
 #include <stdlib.h> //FIXME
 #include "moteur/main.h"
 
-void initLevel(int** level);
-void freeLevel(int** level);
-void creeDecor(int** level);
+
+typedef struct Level {
+ int width;
+ int height;
+ int** map;
+}Level;
+
+Level* initLevel(Level* level, int width, int height);
+void freeLevel(Level* level);
+void creeDecor(Level* level);
 bool isPixelGround(int pixelX, int pixelY, int **level);
-int convertPixelToCase(int pixel);
-int convertCaseToPixel(float Case);
-void loadLevelFromFile(int** level, char const * path, int persoInfos[3][8],int *nbrPerso);
+Level* loadLevelFromFile(char const * path, int persoInfos[3][8], int *nbrPerso);
 char const *selectLevelFromNumber(int levelNumber);
 
 #endif /* LEVEL_H */

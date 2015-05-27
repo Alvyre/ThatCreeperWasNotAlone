@@ -40,7 +40,7 @@ int main(int argc, char** argv) {
   int nbrPerso = 0;
   int j = 0;
   bool menu = false;
-  int levelNumber = 2;
+  int levelNumber = 1;
 
   if(-1 == SDL_Init(SDL_INIT_VIDEO)) {
     fprintf(stderr, "Impossible d'initialiser la SDL. Fin du programme.\n");
@@ -52,12 +52,12 @@ int main(int argc, char** argv) {
   SDL_WM_SetCaption("Thomas Was Alone", NULL);
 
   // Création du level
-  int **level = calloc(LINES + COLUMNS, sizeof(int*));
-  initLevel(level);
+  Level* level;
+
   int persoInfos[3][8];
   //FIXME : Choose level in menu 
   levelStart:
-  loadLevelFromFile(level, selectLevelFromNumber(levelNumber), persoInfos, &nbrPerso);
+  level = loadLevelFromFile(selectLevelFromNumber(levelNumber), persoInfos, &nbrPerso);
   //creation camera
   Camera camera;
   
@@ -100,6 +100,7 @@ int main(int argc, char** argv) {
     {
       dessinMenu(textureID);
     } else {
+
       /* AFFICHAGE */
       creeDecor(level);
 
@@ -153,7 +154,7 @@ int main(int argc, char** argv) {
       /* GESTION JOUEUR */
 
       gestionJoueur(persoHandler, nbrPerso);
-      deplacementJoueur(persoHandler, nbrPerso, level, &camera);
+      deplacementJoueur(persoHandler, nbrPerso, level->map, &camera);
 
       // cursor
       for (j = 0; j < nbrPerso; j++)

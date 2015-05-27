@@ -3,28 +3,37 @@
 #include "formes/draw.h"
 #include <string.h>
 
-#define MAX_CHAR_FILE 10000
-
-
-void initLevel(int** level){
-
+Level* initLevel(Level* Level, int width, int height){
 	int i = 0;
 
-  	for (i = 0; i < COLUMNS; i++)
+	Level = calloc(width + height + 2, sizeof(int*));
+	Level->map = calloc(width + height, sizeof(int*));
+	Level->width = width;
+	Level->height = height;
+
+	// i nbre de lignes (height)
+	// j nbre colonnes (width)
+  	for (i = 0; i < height; i++)
   	{
-    	level[i] = calloc(COLUMNS, sizeof(int));
+    	Level->map[i] = calloc(width, sizeof(int));
   	}
+  	Level->map[29][39] = 1;
+  	return Level;
 }
 
-void loadLevelFromFile(int** level, char const * path, int persoInfos[3][8], int *nbrPerso){	
+Level* loadLevelFromFile(char const * path, int persoInfos[3][8], int *nbrPerso){	
 	int i = 0;
 	int j = 0;
-	bool firstline = true;
+	bool firstLine = true;
+	bool secondLine = true;
 	char *buffer = NULL;
 	size_t length = 0;
 	char *ptr = NULL;
 	ssize_t read;
 	int currentPerso = 0;
+	int width = 0;
+	int height =0;
+	Level *Level;
 
 	FILE *file = fopen(path, "r");
 
@@ -33,18 +42,32 @@ void loadLevelFromFile(int** level, char const * path, int persoInfos[3][8], int
 		printf("Error opening the file !\n");
 		exit (EXIT_FAILURE);
 	} else {
-
 		// Parcours les lignes
 		while ((read = getline(&buffer, &length, file)) != -1) {
-	        if (firstline)
+	        if (firstLine)
 	        {
-				// Première ligne, on récupère le nombre de perso du level
+				for (j = 0, ptr = buffer; j < 2; j++, ptr++){
+					if (j == 0)
+					{
+						width = (int)strtol(ptr, &ptr, 10);
+					}
+					if (j == 1)
+					{
+						height = (int)strtol(ptr, &ptr, 10);
+					}
+	        	}
+
+	        	Level = initLevel(Level, width, height);
+
+	        	firstLine = false;
+	        } else if(secondLine) {
+	        	// Première ligne, on récupère le nombre de perso du level
 				for (j = 0, ptr = buffer; j < 1; j++, ptr++){
 	        		*nbrPerso = (int)strtol(ptr, &ptr, 10);
 	        	}
 
-	        	firstline = false;
-	        } else {
+	        	secondLine = false;
+	    	} else {
 
 	        	// On récupère les infos sur les différents perso
 	        	// et les place dans le tableau persoInfos
@@ -57,16 +80,19 @@ void loadLevelFromFile(int** level, char const * path, int persoInfos[3][8], int
 	        	} else {
 	        		// Si on a récupéré toutes les infos sur les persos,
 	        		// on passe au level
-	        		for (j = 0, ptr = buffer; j < COLUMNS; j++, ptr++){
-	            		level[i][j] = (int)strtol(ptr, &ptr, 10);
+	        		for (j = 0, ptr = buffer; j < Level->width; j++, ptr++){
+	        			// i nbre de lignes (height)
+						// j nbre colonnes (width)
+	            		Level->map[i][j] = (int)strtol(ptr, &ptr, 10);
 	        		}
 	        		i++;
 	        	}
 
 	        }
+	        
     	}
 		fclose(file);
-		
+		return Level;
 	}
 }
 
@@ -89,18 +115,21 @@ char const *selectLevelFromNumber(int levelNumber){
 	return path;
 }
 
-void freeLevel(int** level){
+// Passer Level
+// utiliser Level.width
+void freeLevel(Level* Level){
 	int i = 0;
-	for(i = 0; i < COLUMNS; i++) {
-		free(level[i]);
-		level[i] = NULL;
+	for(i = 0; i < Level->height; i++) {
+		free(Level->map[i]);
+		Level->map[i] = NULL;
 	}
-	free(level);
-	level = NULL;
+	free(Level->map);
+	Level->map = NULL;
 }
 
-
-void creeDecor(int **level){
+// Passer Level 
+// utiliser Level.width
+void creeDecor(Level* Level){
 	int i,j;
 	Color3f color;
 	// Par défaut carrés noirs
@@ -108,12 +137,12 @@ void creeDecor(int **level){
 	color.g = 0;
 	color.b = 0;
 
-	for (i = 0; i < LINES; i++) // height
+	for (i = 0; i < Level->height; i++) // height
 	{
-		for (j = 0; j < COLUMNS; j++) //width
+		for (j = 0; j < Level->width; j++) //width
 		{	
 			
-			if (level[i][j] == 1)
+			if (Level->map[i][j] == 1)
 			{
 				color.r = 1;
 				color.g = 1;
@@ -121,7 +150,7 @@ void creeDecor(int **level){
 				dessinCarre(j*32,i*32, &color);
 			}
 
-			if (level[i][j] == 2 || level[i][j] == 3 || level[i][j] == 4)
+			if (Level->map[i][j] == 2 || Level->map[i][j] == 3 || Level->map[i][j] == 4)
 			{
 				color.r = 1;
 				color.g = 1;
@@ -131,13 +160,3 @@ void creeDecor(int **level){
 		}
 	}
 }
-
-int convertPixelToCase(int pixel){
-
-	return pixel/TAILLE_CASE;
-}
-
-int convertCaseToPixel(float Case){
-	return Case*TAILLE_CASE;
-}
-

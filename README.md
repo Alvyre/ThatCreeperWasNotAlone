@@ -10,6 +10,8 @@
 
 ##Organisation du CSV définissant un niveau ligne par ligne
 
+Largeur (nbre de colonnes), Hauteur (nbre de lignes)
+
 Nombre de perso (impact sur le nombre de lignes ci-dessous)  
 
 Caractéristiques perso 1 : posX, posY, width, height, color R, color G, color B, gravite  
