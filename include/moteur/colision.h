@@ -7,8 +7,8 @@
 #include "initialisation/level.h"
 
 
-void collisions(Personnage* persos, int nbJoueurs, int **level);
-bool collisionsAvecMap(AABB boxPerso, Personnage* perso, int** level, int widthLevel, int heightLevel);
+void collisions(Personnage* persos, int nbJoueurs, Level *level);
+bool collisionsAvecMap(AABB boxPerso, Personnage* perso, Level *level);
 bool collisionAvecJoueur(Personnage* persos, int nbJoueurs, AABB boxPerso,  int numeroJoueur);
 bool collide(AABB a, AABB b);
 

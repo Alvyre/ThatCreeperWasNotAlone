@@ -157,7 +157,7 @@ int main(int argc, char** argv) {
       /* GESTION JOUEUR */
 
       gestionJoueur(persoHandler, nbrPerso);
-      deplacementJoueur(persoHandler, nbrPerso, level->map, &camera);
+      deplacementJoueur(persoHandler, nbrPerso, level, &camera);
 
       // cursor
       for (j = 0; j < nbrPerso; j++)
