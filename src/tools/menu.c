@@ -16,11 +16,6 @@ void touchesMenu(SDL_Event e, Menu *menu){
             	menuHandler(menu, 0);
             break;
 
-            case 'q' : 
-            case SDLK_ESCAPE :
-              menu->active = false;
-              break;
-
             default : break;
         }
     }

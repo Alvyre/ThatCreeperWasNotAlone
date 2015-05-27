@@ -198,7 +198,11 @@ int main(int argc, char** argv) {
         }
       } else {
         touchesMenu(e, &menu);
-        goto levelStart;
+        if (!menu.active)
+        {
+          goto levelStart;
+        }
+        
       }  
 
       switch(e.type) {
