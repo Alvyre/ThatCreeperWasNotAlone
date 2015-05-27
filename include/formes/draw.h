@@ -13,4 +13,5 @@ void dessinPerso(Personnage *perso);
 void dessinActiveCursor(Personnage *perso);
 void dessinMenu(GLuint textureID[10]);
 void loadTexture(const char* filename, GLuint textureID[10], int numTexture);
+void dessinActiveMenu(int numMenu);
 #endif

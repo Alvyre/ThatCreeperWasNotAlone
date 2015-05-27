@@ -15,6 +15,7 @@
 #include "moteur/deplacements.h"
 #include "moteur/scrolling.h"
 #include "moteur/colision.h"
+#include "tools/menu.h" 
 
 static const unsigned int BIT_PER_PIXEL = 32;
 static const Uint32 FRAMERATE_MILLISECONDS = 1000 / 60;
@@ -39,8 +40,9 @@ int main(int argc, char** argv) {
   int loop = 1;
   int nbrPerso = 0;
   int j = 0;
-  bool menu = false;
-  int levelNumber = 1;
+  Menu menu;
+  menu.active = true;
+  menu.levelNumber = 1;
 
   if(-1 == SDL_Init(SDL_INIT_VIDEO)) {
     fprintf(stderr, "Impossible d'initialiser la SDL. Fin du programme.\n");
@@ -57,7 +59,7 @@ int main(int argc, char** argv) {
   int persoInfos[3][8];
   //FIXME : Choose level in menu 
   levelStart:
-  level = loadLevelFromFile(selectLevelFromNumber(levelNumber), persoInfos, &nbrPerso);
+  level = loadLevelFromFile(selectLevelFromNumber(menu.levelNumber), persoInfos, &nbrPerso);
   //creation camera
   Camera camera;
   
@@ -96,9 +98,10 @@ int main(int argc, char** argv) {
     Uint32 startTime = SDL_GetTicks();
 
     glClear(GL_COLOR_BUFFER_BIT);
-    if (menu)
+    if (menu.active)
     {
       dessinMenu(textureID);
+      dessinActiveMenu(menu.levelNumber);
     } else {
 
       /* AFFICHAGE */
@@ -131,14 +134,14 @@ int main(int argc, char** argv) {
      if (end) 
      {
         // Il n'y a que trois niveaux si on est au 3ème et qu'on le fini, retour au menu
-        if (levelNumber < 3)
+        if (menu.levelNumber < 3)
         {
-          levelNumber++;
+          menu.levelNumber++;
           goto levelStart;
           end = true;
         } else {
           // FIXME : When menu is done
-          menu = true;
+          menu.active = true;
           break;
         }
      }
@@ -183,14 +186,20 @@ int main(int argc, char** argv) {
     SDL_Event e;
     while(SDL_PollEvent(&e)) {
       /* GESTION TOUCHE */
-      for (j = 0; j < nbrPerso; j++)
+      if (!menu.active)
       {
-        if (persoHandler[j].active)
+        for (j = 0; j < nbrPerso; j++)
         {
-          appuyer(&persoHandler[j],e);
-          relacher(&persoHandler[j],e);
+          if (persoHandler[j].active)
+          {
+            appuyer(&persoHandler[j],e);
+            relacher(&persoHandler[j],e);
+          }
         }
-      }      
+      } else {
+        touchesMenu(e, &menu);
+        goto levelStart;
+      }  
 
       switch(e.type) {
         case SDL_QUIT:

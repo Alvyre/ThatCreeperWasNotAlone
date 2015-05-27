@@ -67,7 +67,7 @@ void dessinActiveCursor(Personnage *perso){
 void dessinMenu(GLuint textureID[10]){
   glEnable(GL_TEXTURE_2D);
   // FIXME : Bind texture
-  glBindTexture(GL_TEXTURE_2D, textureID[1]);
+  glBindTexture(GL_TEXTURE_2D, 1);
   /* Dessin du quad */
   glBegin(GL_QUADS);
     glColor3f(1,1,1);
@@ -82,7 +82,7 @@ void dessinMenu(GLuint textureID[10]){
   glEnd();
   glBindTexture(GL_TEXTURE_2D, 0);
 
-  glBindTexture(GL_TEXTURE_2D, textureID[2]);
+  glBindTexture(GL_TEXTURE_2D, 2);
   glBegin(GL_QUADS);
     glColor3f(1,1,1);
     glTexCoord2f(1, 1);
@@ -96,7 +96,7 @@ void dessinMenu(GLuint textureID[10]){
   glEnd();
   glBindTexture(GL_TEXTURE_2D, 0);
 
-  glBindTexture(GL_TEXTURE_2D, textureID[3]);
+  glBindTexture(GL_TEXTURE_2D, 3);
   glBegin(GL_QUADS);
     glColor3f(1,1,1);
     glTexCoord2f(1, 1);
@@ -120,13 +120,59 @@ void loadTexture(const char* filename, GLuint textureID[10], int numTexture){
       printf("Error : image not found : %s\n", filename);
    } 
       
-   glGenTextures(10, textureID);
+   glGenTextures(1, textureID);
 
-    glBindTexture(GL_TEXTURE_2D, textureID[numTexture]);
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glBindTexture(GL_TEXTURE_2D, numTexture);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image->w, image->h, 0, GL_RGB, GL_UNSIGNED_BYTE, image->pixels);
    // TODO : Supprimer les texture lors de la fermeture du prog
    //glDeleteTextures(10, &textureID);
    SDL_FreeSurface(image);
 }
 
+void dessinActiveMenu(int numMenu){
+
+  switch(numMenu){
+    case 1:
+      glBegin(GL_TRIANGLES);
+        glVertex2f(WINDOW_WIDTH/3 + 60 , WINDOW_HEIGHT/3 +10);
+        glVertex2f(WINDOW_WIDTH/3 + 60, WINDOW_HEIGHT/3 -10);
+        glVertex2f(WINDOW_WIDTH/3 + 80, WINDOW_HEIGHT/3);
+      glEnd();
+
+      glBegin(GL_TRIANGLES);
+        glVertex2f(2*WINDOW_WIDTH/3 - 80, WINDOW_HEIGHT/3);
+        glVertex2f(2*WINDOW_WIDTH/3 - 60 , WINDOW_HEIGHT/3 +10);
+        glVertex2f(2*WINDOW_WIDTH/3 - 60, WINDOW_HEIGHT/3 -10);          
+      glEnd();
+    break;
+
+    case 2:
+      glBegin(GL_TRIANGLES);        
+        glVertex2f(WINDOW_WIDTH/3 + 60 , WINDOW_HEIGHT/2 +10);
+        glVertex2f(WINDOW_WIDTH/3 + 60, WINDOW_HEIGHT/2 -10);
+        glVertex2f(WINDOW_WIDTH/3 + 80, WINDOW_HEIGHT/2);
+      glEnd();
+
+      glBegin(GL_TRIANGLES);
+        glVertex2f(2*WINDOW_WIDTH/3 - 80, WINDOW_HEIGHT/2);
+        glVertex2f(2*WINDOW_WIDTH/3 - 60 , WINDOW_HEIGHT/2 +10);
+        glVertex2f(2*WINDOW_WIDTH/3 - 60, WINDOW_HEIGHT/2 -10);
+      glEnd();
+      break;
+
+    case 3:
+      glBegin(GL_TRIANGLES);
+        glVertex2f(WINDOW_WIDTH/3 + 60 , 2*WINDOW_HEIGHT/3 +10);
+        glVertex2f(WINDOW_WIDTH/3 + 60, 2*WINDOW_HEIGHT/3 -10);
+        glVertex2f(WINDOW_WIDTH/3 + 80, 2*WINDOW_HEIGHT/3);
+      glEnd();
+
+      glBegin(GL_TRIANGLES);
+        glVertex2f(2*WINDOW_WIDTH/3 - 80, 2*WINDOW_HEIGHT/3);
+        glVertex2f(2*WINDOW_WIDTH/3 - 60 , 2*WINDOW_HEIGHT/3 +10);
+        glVertex2f(2*WINDOW_WIDTH/3 - 60, 2*WINDOW_HEIGHT/3 -10);
+      glEnd();
+      break;
+  }
+}

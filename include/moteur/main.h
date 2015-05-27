@@ -12,8 +12,6 @@ typedef struct Color3f
 	float b;
 } Color3f;
 
-
-
 static unsigned int WINDOW_WIDTH = 1280; // 40
 static unsigned int WINDOW_HEIGHT = 960; // 30
 
