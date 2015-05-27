@@ -40,8 +40,7 @@ int main(int argc, char** argv) {
   int nbrPerso = 0;
   int j = 0;
   bool menu = false;
-  bool end = false;
-  int levelNumber = 1;
+  int levelNumber = 2;
 
   if(-1 == SDL_Init(SDL_INIT_VIDEO)) {
     fprintf(stderr, "Impossible d'initialiser la SDL. Fin du programme.\n");
@@ -59,10 +58,11 @@ int main(int argc, char** argv) {
   //FIXME : Choose level in menu 
   levelStart:
   loadLevelFromFile(level, selectLevelFromNumber(levelNumber), persoInfos, &nbrPerso);
-
   //creation camera
   Camera camera;
-
+  
+  //Tous les perso sont ils à leur case de fin
+  bool end = false;
   //test
   Personnage *persoHandler;
   persoHandler = calloc(3,sizeof(Personnage));
@@ -106,13 +106,26 @@ int main(int argc, char** argv) {
       // Gestion des fins de niveaux
       // Vérifie que chaque perso est sur sa case de fin,
       // dans le cas échéant, passe au niveau suivant
-      for (j = 0; j < nbrPerso; j++){
-        if (persoHandler[j].end)
-        {
-          end = true;
-        } else {
-          end = false;
-        }
+      // FIXME : switch dégueux trouver autre chose (essayer avec un for sur le nombre de perso, marche pas)
+      switch(nbrPerso){
+        case 1:
+          if (persoHandler[0].end)
+          {
+            end = true;
+          }
+          break;
+        case 2:
+          if (persoHandler[0].end && persoHandler[1].end)
+          {
+            end = true;
+          }
+          break;
+        case 3:
+          if (persoHandler[0].end && persoHandler[1].end && persoHandler[2].end)
+          {
+            end = true;
+          }
+          break;
       }
      if (end) 
      {

@@ -24,7 +24,7 @@ void collisions(Personnage* persos, int nbJoueurs, int **level){
         for(i=0; i< persos[k].vitesse; i++){
             boxPerso.pos.x += persos[k].dir.x *i; 
             canMove = true;
-            if(collisionsAvecMap(boxPerso, level, 40, 30)) canMove = false;
+            if(collisionsAvecMap(boxPerso, &persos[k], level, 80, 30)) canMove = false;
             if(collisionAvecJoueur(persos, nbJoueurs, boxPerso, k)) canMove = false; 
             if (canMove)
                 persos[k].box = boxPerso;
@@ -36,7 +36,7 @@ void collisions(Personnage* persos, int nbJoueurs, int **level){
         for(l = 0; l>= persos[k].dir.y;l--){
             boxPerso.pos.y -=1;
             canMove = true;
-            if(collisionsAvecMap(boxPerso, level, 40, 30))
+            if(collisionsAvecMap(boxPerso, &persos[k], level, 80, 30))
                 canMove = false;
             if(collisionAvecJoueur(persos, nbJoueurs, boxPerso, k))
                 canMove = false;
@@ -50,7 +50,7 @@ void collisions(Personnage* persos, int nbJoueurs, int **level){
         for(j = 0; j< persos[k].gravite; ++j ){
             boxPerso.pos.y += 1;
             canMove = true;
-            if(collisionsAvecMap(boxPerso, level, 40, 30))
+            if(collisionsAvecMap(boxPerso, &persos[k], level, 80, 30))
                 canMove = false;
             if(collisionAvecJoueur(persos, nbJoueurs, boxPerso, k))
                 canMove = false;
@@ -71,7 +71,7 @@ void collisions(Personnage* persos, int nbJoueurs, int **level){
 /** On parcourt les cases pour trouver si le personnage est en collisions avec un bloc non vide (!=0)     **/
 /** On réduit l'espace à parcourir à 100 cases (10 avant le perso et 10 après dans toutes les directions) **/
 
-bool collisionsAvecMap(AABB boxPerso, int** level, int widthLevel, int heightLevel){
+bool collisionsAvecMap(AABB boxPerso, Personnage* perso, int** level, int widthLevel, int heightLevel){
     int x,y;
     int casePersoX = boxPerso.pos.x/TAILLE_CASE;
     int casePersoY = boxPerso.pos.y/TAILLE_CASE;
@@ -81,6 +81,11 @@ bool collisionsAvecMap(AABB boxPerso, int** level, int widthLevel, int heightLev
     for (x = casePersoX-10; x < casePersoX+10; ++x){           
         for (y = casePersoY-10; y < casePersoY+10; ++y){
             if(x>=0 && x<widthLevel && y>=0 && y<heightLevel){
+                // Test fin de niveau pour chaque perso
+                if ((level[y][x-(x-casePersoX)] == END_PERSO_1 && perso->id == 0) || (level[y][x-(x-casePersoX)] == END_PERSO_2 && perso->id == 1) || (level[y][x-(x-casePersoX)] == END_PERSO_3 && perso->id == 2))
+                {
+                    perso->end = true;
+                }
                 if (level[y][x] == SOLIDE){
                     boxCase.pos.x = x*TAILLE_CASE;
                     boxCase.pos.y = y*TAILLE_CASE;
