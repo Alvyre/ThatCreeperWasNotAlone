@@ -7,7 +7,7 @@
 /*   Gestion des déplacements       */
 /************************************/
 
-void deplacementJoueur(Personnage *persoHandler, int nbrPerso, int** level, Camera *camera){
+void deplacementJoueur(Personnage *persoHandler, int nbrPerso, Level *level, Camera *camera){
 
     Personnage *perso;
     int i;
