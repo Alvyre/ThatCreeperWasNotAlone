@@ -62,3 +62,71 @@ void dessinActiveCursor(Personnage *perso){
       // glVertex2f((perso->centerX) -4*perso->sens , perso->centerY - (perso->height*TAILLE_CASE/2) - (TAILLE_CASE/2) +i);
   glEnd();
 }
+
+// 
+void dessinMenu(GLuint textureID[10]){
+  glEnable(GL_TEXTURE_2D);
+  // FIXME : Bind texture
+  glBindTexture(GL_TEXTURE_2D, textureID[1]);
+  /* Dessin du quad */
+  glBegin(GL_QUADS);
+    glColor3f(1,1,1);
+    glTexCoord2f(1, 1);
+    glVertex2f(WINDOW_WIDTH/2 + 100, WINDOW_HEIGHT/3 +50);
+    glTexCoord2f(1, 0);
+    glVertex2f(WINDOW_WIDTH/2 + 100, WINDOW_HEIGHT/3 -50);
+    glTexCoord2f(0, 0);
+    glVertex2f(WINDOW_WIDTH/2 -100,WINDOW_HEIGHT/3 -50);
+    glTexCoord2f(0, 1);
+    glVertex2f(WINDOW_WIDTH/2 -100,WINDOW_HEIGHT/3 +50);
+  glEnd();
+  glBindTexture(GL_TEXTURE_2D, 0);
+
+  glBindTexture(GL_TEXTURE_2D, textureID[2]);
+  glBegin(GL_QUADS);
+    glColor3f(1,1,1);
+    glTexCoord2f(1, 1);
+    glVertex2f(WINDOW_WIDTH/2 + 100, WINDOW_HEIGHT/2 +50);
+    glTexCoord2f(1, 0);
+    glVertex2f(WINDOW_WIDTH/2 + 100, WINDOW_HEIGHT/2 -50);
+    glTexCoord2f(0, 0);
+    glVertex2f(WINDOW_WIDTH/2 -100,WINDOW_HEIGHT/2 -50);
+    glTexCoord2f(0, 1);
+    glVertex2f(WINDOW_WIDTH/2 -100,WINDOW_HEIGHT/2 +50);
+  glEnd();
+  glBindTexture(GL_TEXTURE_2D, 0);
+
+  glBindTexture(GL_TEXTURE_2D, textureID[3]);
+  glBegin(GL_QUADS);
+    glColor3f(1,1,1);
+    glTexCoord2f(1, 1);
+    glVertex2f(WINDOW_WIDTH/2 + 100, 2*WINDOW_HEIGHT/3 +50);
+    glTexCoord2f(1, 0);
+    glVertex2f(WINDOW_WIDTH/2 + 100, 2*WINDOW_HEIGHT/3 -50);
+    glTexCoord2f(0, 0);
+    glVertex2f(WINDOW_WIDTH/2 -100,2*WINDOW_HEIGHT/3 -50);
+    glTexCoord2f(0, 1);
+    glVertex2f(WINDOW_WIDTH/2 -100,2*WINDOW_HEIGHT/3 +50);
+  glEnd();
+  glBindTexture(GL_TEXTURE_2D, 0);
+
+  glDisable(GL_TEXTURE_2D);
+}
+
+void loadTexture(const char* filename, GLuint textureID[10], int numTexture){
+   SDL_Surface* image;
+   image = IMG_Load(filename);
+   if(image == NULL){
+      printf("Error : image not found : %s\n", filename);
+   } 
+      
+   glGenTextures(10, textureID);
+
+    glBindTexture(GL_TEXTURE_2D, textureID[numTexture]);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image->w, image->h, 0, GL_RGB, GL_UNSIGNED_BYTE, image->pixels);
+   // TODO : Supprimer les texture lors de la fermeture du prog
+   //glDeleteTextures(10, &textureID);
+   SDL_FreeSurface(image);
+}
+

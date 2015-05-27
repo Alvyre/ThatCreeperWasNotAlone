@@ -85,6 +85,12 @@ int main(int argc, char** argv) {
   //glScalef(1.2,1.2,0);
   centerCam(&persoHandler[0], &camera);
 
+  GLuint textureID[10];
+  loadTexture("./img/level1.jpg", textureID, 1);
+  loadTexture("./img/level2.jpg", textureID, 2);
+  loadTexture("./img/level3.jpg", textureID, 3);
+  
+
   while(loop) {
     /* temps au début de la boucle */
     Uint32 startTime = SDL_GetTicks();
@@ -92,7 +98,7 @@ int main(int argc, char** argv) {
     glClear(GL_COLOR_BUFFER_BIT);
     if (menu)
     {
-      // TODO : Faire le menu...
+      dessinMenu(textureID);
     } else {
       /* AFFICHAGE */
       creeDecor(level);
