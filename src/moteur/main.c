@@ -167,18 +167,25 @@ int main(int argc, char** argv) {
           if(persoHandler[j].cursorTimer<180) {
             dessinActiveCursor(&persoHandler[j]);
             persoHandler[j].cursorTimer++;
+
+            glMatrixMode(GL_PROJECTION);
+            glLoadIdentity();
+            gluOrtho2D( persoHandler[j].box.pos.x - WINDOW_WIDTH / 2.0, persoHandler[j].box.pos.x + WINDOW_WIDTH / 2.0, persoHandler[j].box.pos.y + WINDOW_HEIGHT / 2.0, persoHandler[j].box.pos.y - WINDOW_HEIGHT / 2.0);
+            glMatrixMode(GL_MODELVIEW);
+            glLoadIdentity();
           }
         }
       }
       
       // camera
-      if(camera.is_transition == false) scrolling(&camera);
-      else if(camera.is_transition == true){
-        if(camera.Dx < -0.001 || camera.Dx > 0.001){
-          smoothTransition(&camera);
-        }
-        else camera.is_transition = false;
-      }
+     
+      // if(camera.is_transition == false) scrolling(&camera);
+      // else if(camera.is_transition == true){
+      //   if(camera.Dx < -0.001 || camera.Dx > 0.001){
+      //     smoothTransition(&camera);
+      //   }
+      //   else camera.is_transition = false;
+      // }
 
     }
     
