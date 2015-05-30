@@ -5,10 +5,8 @@ void initCam(Personnage *perso, Camera *camera){
 	camera->currentY = WINDOW_HEIGHT/2;
 }
 
-void testCam(Personnage *perso, Camera *camera, Level* level){
+void moveCamera(Personnage *perso, Camera *camera, Level* level){
 
-	//printf("perso->box.pos.x  %d\n", perso->box.pos.x );
-	//printf("camera->currentX %d\n", camera->currentX);
 	// MAx position caméra = level->width*TAILLE_CASE - WINDOW_WIDTH/2
 	// Min position caméra = 0
 

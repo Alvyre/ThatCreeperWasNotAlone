@@ -109,12 +109,12 @@ int main(int argc, char** argv) {
       creeDecor(level);
 
       // CAM
-      testCam(&persoHandler[level->persoActive], &camera, level);
+      moveCamera(&persoHandler[level->persoActive], &camera, level);
 
       // Gestion des fins de niveaux
       // Vérifie que chaque perso est sur sa case de fin,
       // dans le cas échéant, passe au niveau suivant
-      // FIXME : switch dégueux trouver autre chose (essayer avec un for sur le nombre de perso, marche pas)
+      // FIXME : switch dégueux trouver autre chose (essayé avec un for sur le nombre de perso, marche pas)
       switch(nbrPerso){
         case 1:
           if (persoHandler[0].end)

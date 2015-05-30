@@ -26,6 +26,6 @@ typedef struct camera
 
 
 void initCam(Personnage *perso, Camera *camera);
-void testCam(Personnage *perso, Camera *camera, Level* level);
+void moveCamera(Personnage *perso, Camera *camera, Level* level);
 
 #endif /* SCROLLING_H */
