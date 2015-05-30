@@ -5,24 +5,17 @@
 #include <GL/glu.h>
 #include <SDL/SDL.h>
 #include <stdbool.h>
-
+#include "moteur/perso.h"
 #include "moteur/main.h"
 #include "initialisation/level.h"
 
 
 typedef struct camera
 {
-	int formerX;
-	int formerY;
-
-	int currentX;
-	int currentY;
-
-	float Dx;
-	float Dy;
-	bool is_transition;
+	int x;
+	int y;
 } Camera;
-#include "moteur/perso.h"
+
 
 
 void initCam(Personnage *perso, Camera *camera);
