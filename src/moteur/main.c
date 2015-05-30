@@ -120,18 +120,24 @@ int main(int argc, char** argv) {
           if (persoHandler[0].end)
           {
             end = true;
+            glPopMatrix();
+            glPushMatrix();
           }
           break;
         case 2:
           if (persoHandler[0].end && persoHandler[1].end)
           {
             end = true;
+            glPopMatrix();
+            glPushMatrix();
           }
           break;
         case 3:
           if (persoHandler[0].end && persoHandler[1].end && persoHandler[2].end)
           {
             end = true;
+            glPopMatrix();
+            glPushMatrix();
           }
           break;
       }
