@@ -3,6 +3,7 @@
 
 
 #include "moteur/main.h"
+#include "initialisation/level.h"
 #include <stdbool.h>
 
 typedef struct Vector2i {
@@ -49,7 +50,7 @@ typedef struct Personnage
 
 void initPerso(Personnage *personnage, int id, int width, int height, int posCaseX, int posCaseY, Color3f color, int gravite);
 void gestionJoueur(Personnage *persoHandler, int nbrPerso);
-void changeFocus(Personnage *persoHandler, int nbrPerso, Camera *camera);
+void changeFocus(Personnage *persoHandler, int nbrPerso, Level* level);
 
 
 #endif /* PERSO_H */

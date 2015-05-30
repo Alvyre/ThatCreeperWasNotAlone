@@ -7,6 +7,6 @@
 #include "moteur/scrolling.h"
 #include "initialisation/level.h"
 
-void deplacementJoueur(Personnage *persoHandler, int nbrPerso, Level *level, Camera *camera);
+void deplacementJoueur(Personnage *persoHandler, int nbrPerso, Level *level);
 
 #endif /* DEPLACEMENTS_H */

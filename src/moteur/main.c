@@ -82,10 +82,11 @@ int main(int argc, char** argv) {
   // Par défaut perso 1 actif
   initCam(&persoHandler[0], &camera);
   glPushMatrix();
+  level->persoActive = 0;
   persoHandler[0].active = true;
 
   //glScalef(1.2,1.2,0);
-  centerCam(&persoHandler[0], &camera);
+  //centerCam(&persoHandler[0], &camera);
 
   GLuint textureID[10];
   loadTexture("./img/level1.jpg", textureID, 1);
@@ -106,6 +107,9 @@ int main(int argc, char** argv) {
 
       /* AFFICHAGE */
       creeDecor(level);
+
+      // CAM
+      testCam(&persoHandler[level->persoActive], &camera, level);
 
       // Gestion des fins de niveaux
       // Vérifie que chaque perso est sur sa case de fin,
@@ -157,7 +161,7 @@ int main(int argc, char** argv) {
       /* GESTION JOUEUR */
 
       gestionJoueur(persoHandler, nbrPerso);
-      deplacementJoueur(persoHandler, nbrPerso, level, &camera);
+      deplacementJoueur(persoHandler, nbrPerso, level);
 
       // cursor
       for (j = 0; j < nbrPerso; j++)
@@ -169,15 +173,6 @@ int main(int argc, char** argv) {
             persoHandler[j].cursorTimer++;
           }
         }
-      }
-      
-      // camera
-      if(camera.is_transition == false) scrolling(&camera);
-      else if(camera.is_transition == true){
-        if(camera.Dx < -0.001 || camera.Dx > 0.001){
-          smoothTransition(&camera);
-        }
-        else camera.is_transition = false;
       }
 
     }
@@ -227,7 +222,7 @@ int main(int argc, char** argv) {
               break;
 
             case SDLK_TAB:
-              changeFocus(persoHandler, nbrPerso, &camera);
+              changeFocus(persoHandler, nbrPerso, level);
               break;
               default : break;
           }

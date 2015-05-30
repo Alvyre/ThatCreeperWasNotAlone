@@ -7,6 +7,7 @@
 #include <stdbool.h>
 
 #include "moteur/main.h"
+#include "initialisation/level.h"
 
 
 typedef struct camera
@@ -25,8 +26,6 @@ typedef struct camera
 
 
 void initCam(Personnage *perso, Camera *camera);
-void scrolling(Camera *camera);
-void centerCam(Personnage *perso, Camera *camera);
-void smoothTransition(Camera *camera);
+void testCam(Personnage *perso, Camera *camera, Level* level);
 
 #endif /* SCROLLING_H */
