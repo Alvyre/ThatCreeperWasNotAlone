@@ -7,7 +7,7 @@
 #include "moteur/perso.h"
 #include <math.h>
 
-void dessinCarre(int i, int j, Color3f *color);
+void dessinCarre(int posX, int posY, int numTexture, float offsetX, float offsetY);
 void dessinEmptyCarre(int posX, int posY, Color3f *color);
 void dessinPerso(Personnage *perso);
 void dessinActiveCursor(Personnage *perso);
