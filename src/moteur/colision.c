@@ -78,8 +78,9 @@ bool collisionsAvecMap(AABB boxPerso, Personnage* perso, Level *level){
     AABB boxCase;
     boxCase.size.x = TAILLE_CASE;
     boxCase.size.y = TAILLE_CASE;
+    // FIXME : check trop de cases 
     for (x = casePersoX-10; x < casePersoX+10; ++x){           
-        for (y = casePersoY-10; y < casePersoY+10; ++y){
+        for (y = casePersoY-4; y < casePersoY+4; ++y){
             if(x>=0 && x<level->width && y>=0 && y<level->height){
                 // Test fin de niveau pour chaque perso
                 // FIXME decalage surtout pour le perso 3
