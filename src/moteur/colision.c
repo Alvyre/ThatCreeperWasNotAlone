@@ -78,21 +78,21 @@ bool collisionsAvecMap(AABB boxPerso, Personnage* perso, Level *level){
     AABB boxCase;
     boxCase.size.x = TAILLE_CASE;
     boxCase.size.y = TAILLE_CASE;
-    // FIXME : check trop de cases 
+
     for (x = casePersoX-10; x < casePersoX+10; ++x){           
-        for (y = casePersoY-4; y < casePersoY+4; ++y){
+        for (y = casePersoY-10; y < casePersoY+10; ++y){
             if(x>=0 && x<level->width && y>=0 && y<level->height){
-                // Test fin de niveau pour chaque perso
-                // FIXME decalage surtout pour le perso 3
-                if ((level->map[y][x-8] == END_PERSO_1 && perso->id == 0) || (level->map[y][x-8] == END_PERSO_2 && perso->id == 1) || (level->map[y][x-5] == END_PERSO_3 && perso->id == 2))
-                {
-                    perso->end = true;
-                }
-                if (level->map[y][x] == SOLIDE){
+                // Test fin de niveau pour chaque perso              
+                if (level->map[y][x] == SOLIDE || level->map[y][x] == END_PERSO_1 || level->map[y][x] == END_PERSO_2 || level->map[y][x] == END_PERSO_3){
                     boxCase.pos.x = x*TAILLE_CASE;
                     boxCase.pos.y = y*TAILLE_CASE;
-                    if (collide(boxPerso, boxCase))
+                    if (collide(boxPerso, boxCase)){
+                        if ((level->map[y][x] == END_PERSO_1 && perso->id == 0) || (level->map[y][x] == END_PERSO_2 && perso->id == 1) || (level->map[y][x] == END_PERSO_3 && perso->id == 2))
+                        {
+                            perso->end = true;
+                        }
                         return true;
+                    }
                 }
             }
         }
