@@ -92,6 +92,7 @@ int main(int argc, char** argv) {
   loadTexture("./img/level1.jpg", textureID, 1);
   loadTexture("./img/level2.jpg", textureID, 2);
   loadTexture("./img/level3.jpg", textureID, 3);
+  loadTexture("./img/tile.jpg", textureID, 4);
   
 
   while(loop) {
