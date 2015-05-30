@@ -82,7 +82,7 @@ int main(int argc, char** argv) {
   // Par défaut perso 1 actif
   initCam(&persoHandler[0], &camera);
   glPushMatrix();
-  level->persoActive = 0;
+
   persoHandler[0].active = true;
 
   //glScalef(1.2,1.2,0);

@@ -84,14 +84,14 @@ bool collisionsAvecMap(AABB boxPerso, Personnage* perso, Level *level){
             if(x>=0 && x<level->width && y>=0 && y<level->height){
                 // Test fin de niveau pour chaque perso
                 // FIXME decalage surtout pour le perso 3
-                if ((level->map[y][x] == END_PERSO_1 && perso->id == 0) || (level->map[y][x] == END_PERSO_2 && perso->id == 1) || (level->map[y][x] == END_PERSO_3 && perso->id == 2))
+                if ((level->map[y][x].value == END_PERSO_1 && perso->id == 0) || (level->map[y][x].value == END_PERSO_2 && perso->id == 1) || (level->map[y][x].value == END_PERSO_3 && perso->id == 2))
                 {
                     boxCase.pos.x = x*TAILLE_CASE;
                     boxCase.pos.y = y*TAILLE_CASE;
                     if (collide(boxPerso, boxCase))
                         perso->end = true;
                 }
-                if (level->map[y][x] == SOLIDE){
+                if (level->map[y][x].is_solid){
                     boxCase.pos.x = x*TAILLE_CASE;
                     boxCase.pos.y = y*TAILLE_CASE;
                     if (collide(boxPerso, boxCase))

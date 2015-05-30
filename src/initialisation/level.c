@@ -6,18 +6,19 @@
 Level* initLevel(Level* level, int width, int height){
 	int i = 0;
 
-	level = calloc(width + height + 2, sizeof(int*));
-	level->map = calloc(width + height, sizeof(int*));
+	level = calloc(width + height + 2, sizeof(Tile*));
+	level->map = calloc(width + height, sizeof(Tile*));
 	level->width = width;
 	level->height = height;
-
+	level->persoActive = 0;
+	
 	// i nbre de lignes (height)
 	// j nbre colonnes (width)
   	for (i = 0; i < height; i++)
   	{
-    	level->map[i] = calloc(width, sizeof(int));
+    	level->map[i] = calloc(width, sizeof(Tile));
   	}
-  	level->map[29][39] = 1;
+
   	return level;
 }
 
@@ -83,7 +84,7 @@ Level* loadLevelFromFile(char const * path, int persoInfos[3][8], int *nbrPerso)
 	        		for (j = 0, ptr = buffer; j < level->width; j++, ptr++){
 	        			// i nbre de lignes (height)
 						// j nbre colonnes (width)
-	            		level->map[i][j] = (int)strtol(ptr, &ptr, 10);
+	            		level->map[i][j].value = (int)strtol(ptr, &ptr, 10);
 	        		}
 	        		i++;
 	        	}
@@ -143,21 +144,23 @@ void creeDecor(Level* level){
 	{
 		for (j = 0; j < level->width; j++) //width
 		{	
-			
-			if (level->map[i][j] == 1)
+			level->map[i][j].is_solid = false;
+			if (level->map[i][j].value == 1)
 			{
 				color.r = 1;
 				color.g = 1;
 				color.b = 1;
 				dessinCarre(j*32,i*32, &color);
+				level->map[i][j].is_solid = true;
 			}
 
-			if (level->map[i][j] == 2 || level->map[i][j] == 3 || level->map[i][j] == 4)
+			if (level->map[i][j].value == 2 || level->map[i][j].value == 3 || level->map[i][j].value == 4)
 			{
 				color.r = 1;
 				color.g = 1;
 				color.b = 1;
 				dessinEmptyCarre(j*32,i*32, &color);
+
 			}
 		}
 	}
