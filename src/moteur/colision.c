@@ -69,7 +69,7 @@ void collisions(Personnage* persos, int nbJoueurs, Level *level){
 /************* Fonction de collisions map *************/
 
 /** On parcourt les cases pour trouver si le personnage est en collisions avec un bloc non vide (!=0)     **/
-/** On réduit l'espace à parcourir à 100 cases (10 avant le perso et 10 après dans toutes les directions) **/
+/** On réduit l'espace à parcourir à 400 cases (10 avant le perso et 10 après dans toutes les directions) **/
 
 bool collisionsAvecMap(AABB boxPerso, Personnage* perso, Level *level){
     int x,y;
