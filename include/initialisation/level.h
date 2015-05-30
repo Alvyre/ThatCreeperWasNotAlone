@@ -5,6 +5,7 @@
 typedef struct Level {
  int width;
  int height;
+ int persoActive;
  int** map;
 }Level;
 

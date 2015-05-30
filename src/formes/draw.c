@@ -120,14 +120,14 @@ void loadTexture(const char* filename, GLuint textureID[10], int numTexture){
       printf("Error : image not found : %s\n", filename);
    } 
       
-   glGenTextures(1, textureID);
+  glGenTextures(1, textureID);
 
-    glBindTexture(GL_TEXTURE_2D, numTexture);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image->w, image->h, 0, GL_RGB, GL_UNSIGNED_BYTE, image->pixels);
-   // TODO : Supprimer les texture lors de la fermeture du prog
-   //glDeleteTextures(10, &textureID);
-   SDL_FreeSurface(image);
+  glBindTexture(GL_TEXTURE_2D, numTexture);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image->w, image->h, 0, GL_RGB, GL_UNSIGNED_BYTE, image->pixels);
+  // TODO : Supprimer les texture lors de la fermeture du prog
+  //glDeleteTextures(10, &textureID);
+  SDL_FreeSurface(image);
 }
 
 void dessinActiveMenu(int numMenu){

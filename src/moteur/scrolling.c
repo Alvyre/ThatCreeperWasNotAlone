@@ -1,46 +1,54 @@
 #include "moteur/scrolling.h"
 
 void initCam(Personnage *perso, Camera *camera){
-
-	camera->formerX = 0;
-	camera->formerY = 0;
-	camera->currentX = perso->box.pos.x + perso->box.size.x/2;
-	camera->currentY = perso->box.pos.y + perso->box.size.y/2;
-	camera->Dx = 0;
-	camera->Dy = 0;
-	camera->is_transition = false;
+	camera->currentX = WINDOW_WIDTH/2;
+	camera->currentY = WINDOW_HEIGHT/2;
 }
 
-void scrolling(Camera *camera){
-	camera->Dx = camera->currentX - camera->formerX;
-	camera->Dy = camera->currentY - camera->formerY;
+void testCam(Personnage *perso, Camera *camera, Level* level){
 
-	//si début ou fin du level pas de translation
+	//printf("perso->box.pos.x  %d\n", perso->box.pos.x );
+	//printf("camera->currentX %d\n", camera->currentX);
+	// MAx position caméra = level->width*TAILLE_CASE - WINDOW_WIDTH/2
+	// Min position caméra = 0
 
+		// Perso va vers la gauche
+		if (perso->gauche && camera->currentX - WINDOW_WIDTH/2 >= 0)
+		{
+		// 	if (camera->currentX - perso->box.pos.x > WINDOW_WIDTH/2)
+		// {
+			glTranslatef(perso->vitesse,0,0);
+			camera->currentX -= perso->vitesse;	
+			
+			//} 
+		}
 
-	// if(camera->currentX < WINDOW_WIDTH/2){
-	// 	glPopMatrix();
-	// 	glTranslatef(0,0,0);			// retour au début  // FIXME C'EST DEGUEULASSE
-	// 	glPushMatrix();
-	// } 
-	glTranslatef(-camera->Dx,0,0);
-}
+		// Perso va vers la droite
+		if (perso->droite && camera->currentX < level->width*TAILLE_CASE - WINDOW_WIDTH/2)
+		{
+			glTranslatef(-perso->vitesse,0,0);
+			camera->currentX = camera->currentX +perso->vitesse;
+		}
 
-void centerCam(Personnage *perso, Camera *camera){
+		// Si perso trop en arrière par rapport à la caméra
+		// FIXME : fait trembler la caméra
+		if (camera->currentX - perso->box.pos.x > WINDOW_WIDTH/4)
+		{
+			while(camera->currentX - perso->box.pos.x > WINDOW_WIDTH/4 && camera->currentX - WINDOW_WIDTH/2 >= 0){
+				glTranslatef(10,0,0);
+				camera->currentX -= 10;	
+			}
+			printf("Trop loinf\n");
+		}
 
-	camera->formerX = camera->currentX;
-	camera->formerY = camera->currentY;
+		// si perso trop en avance sur la caméra
+		if (perso->box.pos.x - camera->currentX > WINDOW_WIDTH/4)
+		{
+			while(perso->box.pos.x - camera->currentX > WINDOW_WIDTH/4 && camera->currentX + WINDOW_WIDTH/2 <= level->width*TAILLE_CASE){
+				glTranslatef(-10,0,0);
+				camera->currentX += 10;	
+			}
+			printf("Trop loinf après\n");
+		}
 
-	camera->currentX = perso->box.pos.x + perso->box.size.x/2;
-	camera->currentY = perso->box.pos.y + perso->box.size.y/2;
-
-	camera->Dx = camera->currentX - camera->formerX;
-	camera->Dy = camera->currentY - camera->formerY;
-	camera->is_transition = true;
-
-}
-
-void smoothTransition(Camera *camera){
-	camera->Dx *=0.5;
-	glTranslatef(-camera->Dx,0,0);
 }

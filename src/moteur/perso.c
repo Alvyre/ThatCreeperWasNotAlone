@@ -40,7 +40,7 @@ void gestionJoueur(Personnage *persoHandler, int nbrPerso){
 	perso->dir.x = (int)perso->droite - (int)perso->gauche;
 }
 
-void changeFocus(Personnage *persoHandler, int nbrPerso, Camera *camera){
+void changeFocus(Personnage *persoHandler, int nbrPerso, Level* level){
 	int i = 0;
 
 	for (i = 0; i < nbrPerso; i++)
@@ -55,11 +55,11 @@ void changeFocus(Personnage *persoHandler, int nbrPerso, Camera *camera){
 			{
 				persoHandler[i+1].cursorTimer = 0;
 				persoHandler[i+1].active = true;
-				centerCam(&persoHandler[i+1], camera);
+				level->persoActive = i+1;
 			} else {
 				persoHandler[0].cursorTimer = 0;
 				persoHandler[0].active = true;
-				centerCam(&persoHandler[0], camera);
+				level->persoActive = 0;
 			}
 			return;
 		}
