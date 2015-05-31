@@ -154,7 +154,7 @@ void creeDecor(Level* level){
 				level->map[i][j].is_solid = true;
 			}
 
-			if (level->map[i][j].value == 7 || level->map[i][j].value == 8 || level->map[i][j].value == 9)
+			if (level->map[i][j].value == -1 || level->map[i][j].value == -2 || level->map[i][j].value == -3)
 			{
 				color.r = 1;
 				color.g = 1;

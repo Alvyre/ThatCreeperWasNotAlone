@@ -14,8 +14,8 @@ bool collide(AABB a, AABB b);
 
 
 #define SOLIDE 1		//bloc de type solide
-#define END_PERSO_1 7			//bloc de type fin du jeu
-#define END_PERSO_2 8
-#define END_PERSO_3 9
+#define END_PERSO_1 -1			//bloc de type fin du jeu
+#define END_PERSO_2 -2
+#define END_PERSO_3 -3
 
 #endif /* COLISION_H */
