@@ -135,43 +135,43 @@ void dessinActiveMenu(int numMenu){
   switch(numMenu){
     case 1:
       glBegin(GL_TRIANGLES);
-        glVertex2f(WINDOW_WIDTH/3 + 60 , WINDOW_HEIGHT/3 +10);
-        glVertex2f(WINDOW_WIDTH/3 + 60, WINDOW_HEIGHT/3 -10);
-        glVertex2f(WINDOW_WIDTH/3 + 80, WINDOW_HEIGHT/3);
+        glVertex2f(WINDOW_WIDTH/3 + WINDOW_WIDTH/50 , WINDOW_HEIGHT/3 +10);
+        glVertex2f(WINDOW_WIDTH/3 + WINDOW_WIDTH/50, WINDOW_HEIGHT/3 -10);
+        glVertex2f(WINDOW_WIDTH/3 + WINDOW_WIDTH/50 +20, WINDOW_HEIGHT/3);
       glEnd();
 
       glBegin(GL_TRIANGLES);
-        glVertex2f(2*WINDOW_WIDTH/3 - 80, WINDOW_HEIGHT/3);
-        glVertex2f(2*WINDOW_WIDTH/3 - 60 , WINDOW_HEIGHT/3 +10);
-        glVertex2f(2*WINDOW_WIDTH/3 - 60, WINDOW_HEIGHT/3 -10);          
+        glVertex2f(2*WINDOW_WIDTH/3 - WINDOW_WIDTH/50 -20, WINDOW_HEIGHT/3);
+        glVertex2f(2*WINDOW_WIDTH/3 - WINDOW_WIDTH/50 , WINDOW_HEIGHT/3 +10);
+        glVertex2f(2*WINDOW_WIDTH/3 - WINDOW_WIDTH/50, WINDOW_HEIGHT/3 -10);          
       glEnd();
     break;
 
     case 2:
       glBegin(GL_TRIANGLES);        
-        glVertex2f(WINDOW_WIDTH/3 + 60 , WINDOW_HEIGHT/2 +10);
-        glVertex2f(WINDOW_WIDTH/3 + 60, WINDOW_HEIGHT/2 -10);
-        glVertex2f(WINDOW_WIDTH/3 + 80, WINDOW_HEIGHT/2);
+        glVertex2f(WINDOW_WIDTH/3 + WINDOW_WIDTH/50 , WINDOW_HEIGHT/2 +10);
+        glVertex2f(WINDOW_WIDTH/3 + WINDOW_WIDTH/50, WINDOW_HEIGHT/2 -10);
+        glVertex2f(WINDOW_WIDTH/3 + WINDOW_WIDTH/50 + 20, WINDOW_HEIGHT/2);
       glEnd();
 
       glBegin(GL_TRIANGLES);
-        glVertex2f(2*WINDOW_WIDTH/3 - 80, WINDOW_HEIGHT/2);
-        glVertex2f(2*WINDOW_WIDTH/3 - 60 , WINDOW_HEIGHT/2 +10);
-        glVertex2f(2*WINDOW_WIDTH/3 - 60, WINDOW_HEIGHT/2 -10);
+        glVertex2f(2*WINDOW_WIDTH/3 - WINDOW_WIDTH/50 -20, WINDOW_HEIGHT/2);
+        glVertex2f(2*WINDOW_WIDTH/3 - WINDOW_WIDTH/50 , WINDOW_HEIGHT/2 +10);
+        glVertex2f(2*WINDOW_WIDTH/3 - WINDOW_WIDTH/50, WINDOW_HEIGHT/2 -10);
       glEnd();
       break;
 
     case 3:
       glBegin(GL_TRIANGLES);
-        glVertex2f(WINDOW_WIDTH/3 + 60 , 2*WINDOW_HEIGHT/3 +10);
-        glVertex2f(WINDOW_WIDTH/3 + 60, 2*WINDOW_HEIGHT/3 -10);
-        glVertex2f(WINDOW_WIDTH/3 + 80, 2*WINDOW_HEIGHT/3);
+        glVertex2f(WINDOW_WIDTH/3 + WINDOW_WIDTH/50 , 2*WINDOW_HEIGHT/3 +10);
+        glVertex2f(WINDOW_WIDTH/3 + WINDOW_WIDTH/50, 2*WINDOW_HEIGHT/3 -10);
+        glVertex2f(WINDOW_WIDTH/3 + WINDOW_WIDTH/50 + 20, 2*WINDOW_HEIGHT/3);
       glEnd();
 
       glBegin(GL_TRIANGLES);
-        glVertex2f(2*WINDOW_WIDTH/3 - 80, 2*WINDOW_HEIGHT/3);
-        glVertex2f(2*WINDOW_WIDTH/3 - 60 , 2*WINDOW_HEIGHT/3 +10);
-        glVertex2f(2*WINDOW_WIDTH/3 - 60, 2*WINDOW_HEIGHT/3 -10);
+        glVertex2f(2*WINDOW_WIDTH/3 - WINDOW_WIDTH/50 -20, 2*WINDOW_HEIGHT/3);
+        glVertex2f(2*WINDOW_WIDTH/3 - WINDOW_WIDTH/50 , 2*WINDOW_HEIGHT/3 +10);
+        glVertex2f(2*WINDOW_WIDTH/3 - WINDOW_WIDTH/50, 2*WINDOW_HEIGHT/3 -10);
       glEnd();
       break;
   }
