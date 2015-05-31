@@ -13,7 +13,7 @@
 #include "moteur/perso.h"
 #include "moteur/touche.h"
 #include "moteur/deplacements.h"
-#include "moteur/scrolling.h"
+#include "moteur/camera.h"
 #include "moteur/colision.h"
 #include "tools/menu.h" 
 

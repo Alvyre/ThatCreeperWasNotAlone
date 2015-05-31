@@ -1,4 +1,4 @@
-#include "moteur/scrolling.h"
+#include "moteur/camera.h"
 
 void initCam(Personnage *perso, Camera *camera){
 	camera->x = WINDOW_WIDTH/2;
