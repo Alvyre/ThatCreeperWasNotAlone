@@ -165,3 +165,15 @@ void creeDecor(Level* level){
 		}
 	}
 }
+
+									/**** TEXTURE INFO ****/
+									/*					  */
+									/*					  */
+									/*	2 = terre		  */
+									/*	3 = pelouse		  */
+									/*					  */
+									/*	7 = end perso 1	  */
+									/*	8 = end perso 2	  */
+									/*	9 = end perso 3	  */
+									/*					  */
+									/**********************/
