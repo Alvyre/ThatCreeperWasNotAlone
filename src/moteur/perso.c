@@ -10,6 +10,8 @@ void initPerso(Personnage *personnage, int id, int width, int height, int posCas
 	personnage->box.size.y = (height * TAILLE_CASE);
 	personnage->dir.x = 0;
 	personnage->dir.y = 0;
+	personnage->initialPosX = posCaseX;
+	personnage->initialPosY = posCaseY;
 
 	personnage->color.r = color.r;
 	personnage->color.g = color.g;

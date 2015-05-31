@@ -19,5 +19,12 @@ void deplacementJoueur(Personnage *persoHandler, int nbrPerso, Level *level){
     // Si perso bouge, il n'est plus sur sa case de fin
     perso->end = false;
 
+    // Si le perso tombe on le remet à sa place de départ
+    if (perso->box.pos.y > WINDOW_HEIGHT + WINDOW_HEIGHT/2)
+    {
+    	perso->box.pos.y = perso->initialPosY * TAILLE_CASE;
+    	perso->box.pos.x = perso->initialPosX * TAILLE_CASE;
+    }
+
     collisions(persoHandler, nbrPerso, level);
 }

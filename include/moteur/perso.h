@@ -21,6 +21,8 @@ typedef struct Personnage
 	//position et direction
 	AABB box;
 	Vector2i dir;
+	int initialPosY;
+	int initialPosX;
 	//couleur
 	Color3f color;
 	// variables touches
