@@ -46,8 +46,8 @@ void moveCamera(Personnage *perso, Camera *camera, Level* level){
 
 
 	// EN Y
-	// Si perso trop en arrière par rapport à la caméra
-	if (camera->y - perso->box.pos.y > WINDOW_HEIGHT/4)
+	// Si perso trop haut par rapport à la caméra
+	if (camera->y - perso->box.pos.y >= WINDOW_HEIGHT/4)
 	{
 		while(camera->y - perso->box.pos.y > WINDOW_HEIGHT/4 && camera->y - WINDOW_HEIGHT/2 >= 0){
 			glTranslatef(0,1,0);
@@ -55,10 +55,11 @@ void moveCamera(Personnage *perso, Camera *camera, Level* level){
 		}
 	}
 
-	// si perso trop en avance sur la caméra
-	if (perso->box.pos.y - camera->y > WINDOW_HEIGHT/4)
-	{
-		while(perso->box.pos.y - camera->y > WINDOW_HEIGHT/4 && camera->y + WINDOW_HEIGHT/2 <= level->height*TAILLE_CASE){
+	// si perso trop bas par rapport à la caméra
+	if (perso->box.pos.y - camera->y >= WINDOW_HEIGHT/4)
+	{	
+		// Ajout de -30 pour avoir une marge de manoeuvre et voir le sol sous le perso
+		while(perso->box.pos.y - camera->y > WINDOW_HEIGHT/4 - 30 && camera->y + WINDOW_HEIGHT/2 <= level->height*TAILLE_CASE){
 			glTranslatef(0,-1,0);
 			camera->y += 1;	
 		}
