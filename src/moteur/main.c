@@ -88,11 +88,12 @@ int main(int argc, char** argv) {
   //glScalef(1.2,1.2,0);
   //centerCam(&persoHandler[0], &camera);
 
-  GLuint textureID[10];
+  GLuint textureID[11];
   loadTexture("./img/level1.jpg", textureID, 1);
   loadTexture("./img/level2.jpg", textureID, 2);
   loadTexture("./img/level3.jpg", textureID, 3);
   loadTexture("./img/tile.jpg", textureID, 4);
+  loadTexture("./img/tile2.jpg", textureID, 5);
   
 
   while(loop) {

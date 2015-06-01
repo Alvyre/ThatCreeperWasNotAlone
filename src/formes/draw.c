@@ -64,7 +64,7 @@ void dessinActiveCursor(Personnage *perso){
 }
 
 // 
-void dessinMenu(GLuint textureID[10]){
+void dessinMenu(){
   glEnable(GL_TEXTURE_2D);
   // FIXME : Bind texture
   glBindTexture(GL_TEXTURE_2D, 1);
@@ -113,7 +113,7 @@ void dessinMenu(GLuint textureID[10]){
   glDisable(GL_TEXTURE_2D);
 }
 
-void loadTexture(const char* filename, GLuint textureID[10], int numTexture){
+void loadTexture(const char* filename, GLuint textureID[11], int numTexture){
    SDL_Surface* image;
    image = IMG_Load(filename);
    if(image == NULL){

@@ -145,23 +145,50 @@ void creeDecor(Level* level){
 		for (j = 0; j < level->width; j++) //width
 		{	
 			level->map[i][j].is_solid = false;
+			// Pelouse
 			if (level->map[i][j].value == 3){
 				dessinCarre(j*32,i*32, 4, 0.6, 0);
 				level->map[i][j].is_solid = true;
 			}
+			// Terre
 			if (level->map[i][j].value == 2){
 				dessinCarre(j*32,i*32, 4, 0.4, 0);
 				level->map[i][j].is_solid = true;
 			}
+			// Bois
 			if (level->map[i][j].value == 4){
 				dessinCarre(j*32,i*32, 4, 0.8, 0);
 				level->map[i][j].is_solid = true;
 			}
+			// Pierre
 			if (level->map[i][j].value == 5){
 				dessinCarre(j*32,i*32, 4, 0.2, 0);
 				level->map[i][j].is_solid = true;
 			}
-
+			// Eau
+			if (level->map[i][j].value == 6){
+				dessinCarre(j*32,i*32, 5, 0, 0);
+				level->map[i][j].is_solid = true;
+			}
+			// Pierre 2
+			if (level->map[i][j].value == 7){
+				dessinCarre(j*32,i*32, 5, 0.2, 0);
+				level->map[i][j].is_solid = true;
+			}
+			// Pierre bleue
+			if (level->map[i][j].value == 8){
+				dessinCarre(j*32,i*32, 5, 0.4, 0);
+				level->map[i][j].is_solid = true;
+			}
+			// Pierre rouge
+			if (level->map[i][j].value == 9){
+				dessinCarre(j*32,i*32, 5, 0.6, 0);
+				level->map[i][j].is_solid = true;
+			}
+			// Lave
+			if (level->map[i][j].value == 10){
+				dessinCarre(j*32,i*32, 5, 0.8, 0);
+			}
 			if (level->map[i][j].value == -1 || level->map[i][j].value == -2 || level->map[i][j].value == -3)
 			{
 				color.r = 1;
@@ -181,6 +208,11 @@ void creeDecor(Level* level){
 									/*	3 = pelouse	      */
 									/*  4 = bois     	  */
 									/*  5 = pierre     	  */
+									/*	6 = eau  		  */
+									/*	7 = pierre 2	  */
+									/*  8 = pierre bleue  */
+									/*  9 = pierre rouge  */
+									/*  10 = lave    	  */
 									/*					  */
 									/*	7 = end perso 1	  */
 									/*	8 = end perso 2	  */
