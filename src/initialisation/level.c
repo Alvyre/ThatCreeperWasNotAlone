@@ -145,48 +145,60 @@ void creeDecor(Level* level){
 		for (j = 0; j < level->width; j++) //width
 		{	
 			level->map[i][j].is_solid = false;
-			// Pelouse
-			if (level->map[i][j].value == 3){
-				dessinCarre(j*32,i*32, 4, 0.6, 0);
-				level->map[i][j].is_solid = true;
-			}
-			// Terre
-			if (level->map[i][j].value == 2){
-				dessinCarre(j*32,i*32, 4, 0.4, 0);
-				level->map[i][j].is_solid = true;
-			}
-			// Bois
-			if (level->map[i][j].value == 4){
-				dessinCarre(j*32,i*32, 4, 0.8, 0);
-				level->map[i][j].is_solid = true;
-			}
-			// Pierre
-			if (level->map[i][j].value == 5){
-				dessinCarre(j*32,i*32, 4, 0.2, 0);
-				level->map[i][j].is_solid = true;
-			}
-			// Eau
-			if (level->map[i][j].value == 6){
-				dessinCarre(j*32,i*32, 5, 0, 0);
-			}
-			// Pierre 2
-			if (level->map[i][j].value == 7){
-				dessinCarre(j*32,i*32, 5, 0.2, 0);
-				level->map[i][j].is_solid = true;
-			}
-			// Pierre bleue
-			if (level->map[i][j].value == 8){
-				dessinCarre(j*32,i*32, 5, 0.4, 0);
-				level->map[i][j].is_solid = true;
-			}
-			// Pierre rouge
-			if (level->map[i][j].value == 9){
-				dessinCarre(j*32,i*32, 5, 0.6, 0);
-				level->map[i][j].is_solid = true;
-			}
-			// Lave
-			if (level->map[i][j].value == 10){
-				dessinCarre(j*32,i*32, 5, 0.8, 0);
+			switch(level->map[i][j].value){
+				case 1: 
+					dessinCarre(j*32,i*32, 4, 0, 0);		// left corner grass
+					level->map[i][j].is_solid = true;
+					break;
+				case 2 :
+					dessinCarre(j*32,i*32, 4, 0.2, 0);		// top grass
+					level->map[i][j].is_solid = true;
+					break;
+				case 3:
+					dessinCarre(j*32,i*32, 4, 0.4, 0);		// right corner grass
+					level->map[i][j].is_solid = true;
+					break;
+				case 4:
+					dessinCarre(j*32,i*32, 4, 0.6, 0);		// dirt
+					level->map[i][j].is_solid = true;
+					break;
+				case 5:
+					dessinCarre(j*32,i*32, 4, 0.8, 0);		// stone
+					break;
+				case 6:
+					dessinCarre(j*32,i*32, 4, 0, 1.0/3.0);		// wood planks
+					level->map[i][j].is_solid = true;
+					break;
+				case 7:
+					dessinCarre(j*32,i*32, 4, 0.2, 1.0/3.0);		//sapling
+					level->map[i][j].is_solid = true;
+					break;
+				case 8:
+					dessinCarre(j*32,i*32, 4, 0.4, 1.0/3.0);		// gold ore
+					level->map[i][j].is_solid = true;
+					break;
+				case 9:
+					dessinCarre(j*32,i*32, 4, 0.6, 1.0/3.0);		// iron ore
+					break;
+				case 10:
+					dessinCarre(j*32,i*32, 4, 0.8, 1.0/3.0);		// coal ore
+					break;
+				case 11:
+					dessinCarre(j*32,i*32, 4, 0.0, 2.0/3.0);		// water
+					break;
+				case 12:
+					dessinCarre(j*32,i*32, 4, 0.2, 2.0/3.0);		// bedrock
+					break;
+				case 13:
+					dessinCarre(j*32,i*32, 4, 0.4, 2.0/3.0);		// lapi lazuli ore
+					break;
+				case 14:
+					dessinCarre(j*32,i*32, 4, 0.6, 2.0/3.0);		// redstone ore
+					break;
+				case 15:
+					dessinCarre(j*32,i*32, 4, 0.8, 2.0/3.0);		// lava
+					break;
+				default : break;
 			}
 			if (level->map[i][j].value == -1 || level->map[i][j].value == -2 || level->map[i][j].value == -3)
 			{

@@ -10,9 +10,9 @@ void dessinCarre(int posX, int posY, int numTexture, float offsetX, float offset
     // Haut droite
     glTexCoord2f(offsetX+0.2, offsetY); glVertex2f(posX+TAILLE_CASE,posY);
     // BAs droite
-    glTexCoord2f(offsetX+0.2, offsetY+0.5); glVertex2f(posX+TAILLE_CASE,posY+TAILLE_CASE);
+    glTexCoord2f(offsetX+0.2, offsetY+1.0/3.0); glVertex2f(posX+TAILLE_CASE,posY+TAILLE_CASE);
     // Bas gauche
-    glTexCoord2f(offsetX, offsetY+0.5); glVertex2f(posX,posY+TAILLE_CASE);
+    glTexCoord2f(offsetX, offsetY+1.0/3.0); glVertex2f(posX,posY+TAILLE_CASE);
   glEnd();
 
   glBindTexture(GL_TEXTURE_2D, 0);
@@ -119,12 +119,27 @@ void loadTexture(const char* filename, GLuint textureID[11], int numTexture){
    if(image == NULL){
       printf("Error : image not found : %s\n", filename);
    } 
-      
+    GLenum format;
+    switch(image->format->BytesPerPixel) {
+      case 1:
+        format = GL_RED;
+        break;
+      case 3:
+        format = GL_RGB;
+        break;
+      case 4:
+        format = GL_RGBA;
+        break;
+      default:
+      /* On ne traite pas les autres cas */
+        fprintf(stderr, "Format des pixels de l’image %s non pris en charge\n", filename);
+        return EXIT_FAILURE;
+    } 
   glGenTextures(1, textureID);
 
   glBindTexture(GL_TEXTURE_2D, numTexture);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image->w, image->h, 0, GL_RGB, GL_UNSIGNED_BYTE, image->pixels);
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image->w, image->h, 0, format, GL_UNSIGNED_BYTE, image->pixels);
   // TODO : Supprimer les texture lors de la fermeture du prog
   //glDeleteTextures(10, &textureID);
   SDL_FreeSurface(image);

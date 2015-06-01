@@ -5,7 +5,7 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <math.h>
-
+#include <SDL/SDL_image.h>
 
 #include "moteur/main.h"
 #include "initialisation/level.h"
@@ -89,11 +89,11 @@ int main(int argc, char** argv) {
   //centerCam(&persoHandler[0], &camera);
 
   GLuint textureID[11];
-  loadTexture("./img/level1.jpg", textureID, 1);
-  loadTexture("./img/level2.jpg", textureID, 2);
-  loadTexture("./img/level3.jpg", textureID, 3);
-  loadTexture("./img/tile.jpg", textureID, 4);
-  loadTexture("./img/tile2.jpg", textureID, 5);
+  loadTexture("./img/level1.png", textureID, 1);
+  loadTexture("./img/level2.png", textureID, 2);
+  loadTexture("./img/level3.png", textureID, 3);
+  loadTexture("./img/minecraft_tile.png", textureID, 4);
+
   
 
   while(loop) {
