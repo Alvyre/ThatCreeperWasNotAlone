@@ -228,6 +228,12 @@ int main(int argc, char** argv) {
               loop = 0;
               break;
 
+            case SDLK_BACKSPACE :
+              glPopMatrix();
+              glPushMatrix();
+              goto levelStart;
+              break;
+
             case SDLK_TAB:
               changeFocus(persoHandler, nbrPerso, level);
               break;
