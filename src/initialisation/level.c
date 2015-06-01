@@ -147,31 +147,31 @@ void creeDecor(Level* level){
 			level->map[i][j].is_solid = false;
 			switch(level->map[i][j].value){
 				case 1: 
-					dessinCarre(j*32,i*32, 4, 0, 0);		// left corner grass
+					dessinCarre(j*32,i*32, 4, 0, 0);				// left corner grass
 					level->map[i][j].is_solid = true;
 					break;
 				case 2 :
-					dessinCarre(j*32,i*32, 4, 0.2, 0);		// top grass
+					dessinCarre(j*32,i*32, 4, 0.2, 0);				// top grass
 					level->map[i][j].is_solid = true;
 					break;
 				case 3:
-					dessinCarre(j*32,i*32, 4, 0.4, 0);		// right corner grass
+					dessinCarre(j*32,i*32, 4, 0.4, 0);				// right corner grass
 					level->map[i][j].is_solid = true;
 					break;
 				case 4:
-					dessinCarre(j*32,i*32, 4, 0.6, 0);		// dirt
+					dessinCarre(j*32,i*32, 4, 0.6, 0);				// dirt
 					level->map[i][j].is_solid = true;
 					break;
 				case 5:
-					dessinCarre(j*32,i*32, 4, 0.8, 0);		// stone
+					dessinCarre(j*32,i*32, 4, 0.8, 0);				// stone
+					level->map[i][j].is_solid = true;
 					break;
 				case 6:
-					dessinCarre(j*32,i*32, 4, 0, 1.0/3.0);		// wood planks
+					dessinCarre(j*32,i*32, 4, 0, 1.0/3.0);			// wood planks
 					level->map[i][j].is_solid = true;
 					break;
 				case 7:
 					dessinCarre(j*32,i*32, 4, 0.2, 1.0/3.0);		//sapling
-					level->map[i][j].is_solid = true;
 					break;
 				case 8:
 					dessinCarre(j*32,i*32, 4, 0.4, 1.0/3.0);		// gold ore
@@ -179,21 +179,26 @@ void creeDecor(Level* level){
 					break;
 				case 9:
 					dessinCarre(j*32,i*32, 4, 0.6, 1.0/3.0);		// iron ore
+					level->map[i][j].is_solid = true;
 					break;
 				case 10:
 					dessinCarre(j*32,i*32, 4, 0.8, 1.0/3.0);		// coal ore
+					level->map[i][j].is_solid = true;
 					break;
 				case 11:
 					dessinCarre(j*32,i*32, 4, 0.0, 2.0/3.0);		// water
 					break;
 				case 12:
 					dessinCarre(j*32,i*32, 4, 0.2, 2.0/3.0);		// bedrock
+					level->map[i][j].is_solid = true;
 					break;
 				case 13:
 					dessinCarre(j*32,i*32, 4, 0.4, 2.0/3.0);		// lapi lazuli ore
+					level->map[i][j].is_solid = true;
 					break;
 				case 14:
 					dessinCarre(j*32,i*32, 4, 0.6, 2.0/3.0);		// redstone ore
+					level->map[i][j].is_solid = true;
 					break;
 				case 15:
 					dessinCarre(j*32,i*32, 4, 0.8, 2.0/3.0);		// lava
