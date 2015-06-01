@@ -168,7 +168,6 @@ void creeDecor(Level* level){
 			// Eau
 			if (level->map[i][j].value == 6){
 				dessinCarre(j*32,i*32, 5, 0, 0);
-				level->map[i][j].is_solid = true;
 			}
 			// Pierre 2
 			if (level->map[i][j].value == 7){
