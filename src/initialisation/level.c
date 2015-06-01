@@ -153,6 +153,14 @@ void creeDecor(Level* level){
 				dessinCarre(j*32,i*32, 4, 0.4, 0);
 				level->map[i][j].is_solid = true;
 			}
+			if (level->map[i][j].value == 4){
+				dessinCarre(j*32,i*32, 4, 0.8, 0);
+				level->map[i][j].is_solid = true;
+			}
+			if (level->map[i][j].value == 5){
+				dessinCarre(j*32,i*32, 4, 0.2, 0);
+				level->map[i][j].is_solid = true;
+			}
 
 			if (level->map[i][j].value == -1 || level->map[i][j].value == -2 || level->map[i][j].value == -3)
 			{
@@ -170,7 +178,9 @@ void creeDecor(Level* level){
 									/*					  */
 									/*					  */
 									/*	2 = terre		  */
-									/*	3 = pelouse		  */
+									/*	3 = pelouse	      */
+									/*  4 = bois     	  */
+									/*  5 = pierre     	  */
 									/*					  */
 									/*	7 = end perso 1	  */
 									/*	8 = end perso 2	  */
