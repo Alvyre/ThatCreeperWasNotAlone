@@ -171,7 +171,8 @@ void creeDecor(Level* level){
 					level->map[i][j].is_solid = true;
 					break;
 				case 7:
-					dessinCarre(j*32,i*32, 4, 0.2, 1.0/3.0);		//sapling
+					dessinCarre(j*32,i*32, 4, 0.2, 1.0/3.0);		// nether rock
+					level->map[i][j].is_solid = true;				
 					break;
 				case 8:
 					dessinCarre(j*32,i*32, 4, 0.4, 1.0/3.0);		// gold ore
