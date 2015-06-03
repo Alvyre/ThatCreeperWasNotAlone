@@ -96,6 +96,9 @@ int main(int argc, char** argv) {
   loadTexture("./img/slime.png", textureID, 5);
   loadTexture("./img/champimeuh.png", textureID, 6);
   loadTexture("./img/creeper.png", textureID, 7);
+  loadTexture("./img/bg-level1.jpg", textureID, 8);
+  loadTexture("./img/bg-level2.jpg", textureID, 9);
+  loadTexture("./img/bg-level3.jpg", textureID, 10);
 
 
   /*** GESTION DU SON ***/
@@ -134,6 +137,7 @@ int main(int argc, char** argv) {
     } else {
 
       /* AFFICHAGE */
+      drawBackground(level, menu.levelNumber);
       creeDecor(level);
 
       // CAM
