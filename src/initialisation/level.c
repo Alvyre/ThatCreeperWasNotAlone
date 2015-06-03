@@ -218,21 +218,3 @@ void creeDecor(Level* level){
 	}
 }
 
-									/**** TEXTURE INFO ****/
-									/*					  */
-									/*					  */
-									/*	2 = terre		  */
-									/*	3 = pelouse	      */
-									/*  4 = bois     	  */
-									/*  5 = pierre     	  */
-									/*	6 = eau  		  */
-									/*	7 = pierre 2	  */
-									/*  8 = pierre bleue  */
-									/*  9 = pierre rouge  */
-									/*  10 = lave    	  */
-									/*					  */
-									/*	7 = end perso 1	  */
-									/*	8 = end perso 2	  */
-									/*	9 = end perso 3	  */
-									/*					  */
-									/**********************/

@@ -6,6 +6,7 @@
 #include <GL/glu.h>
 #include <math.h>
 #include <SDL/SDL_image.h>
+#include <SDL/SDL_mixer.h>
 
 #include "moteur/main.h"
 #include "initialisation/level.h"
@@ -57,7 +58,7 @@ int main(int argc, char** argv) {
   Level* level;
 
   int persoInfos[3][8];
-  //FIXME : Choose level in menu 
+
   levelStart:
   level = loadLevelFromFile(selectLevelFromNumber(menu.levelNumber), persoInfos, &nbrPerso);
   //creation camera
@@ -65,7 +66,7 @@ int main(int argc, char** argv) {
   
   //Tous les perso sont ils à leur case de fin
   bool end = false;
-  //test
+
   Personnage *persoHandler;
   persoHandler = calloc(3,sizeof(Personnage));
 
@@ -85,8 +86,7 @@ int main(int argc, char** argv) {
 
   persoHandler[0].active = true;
 
-  //glScalef(1.2,1.2,0);
-  //centerCam(&persoHandler[0], &camera);
+  /*** TEXTURES ***/
 
   GLuint textureID[11];
   loadTexture("./img/level1.png", textureID, 1);
@@ -94,15 +94,37 @@ int main(int argc, char** argv) {
   loadTexture("./img/level3.png", textureID, 3);
   loadTexture("./img/minecraft_tile.png", textureID, 4);
 
+  /*** GESTION DU SON ***/
+  if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1) //Initialisation de l'API Mixer
+    printf("%s", Mix_GetError());
+  Mix_AllocateChannels(2);
+  Mix_Chunk *bruitages[3];
+  bruitages[0] = Mix_LoadWAV("./sounds/slime.wav");
+  bruitages[1] = Mix_LoadWAV("./sounds/champimeuh.wav");
+  bruitages[2] = Mix_LoadWAV("./sounds/creeper.wav");
+
+
+  Mix_Music *musicLevel[4];
+  musicLevel[0] = Mix_LoadMUS("./sounds/menu.mp3");
+  musicLevel[1] = Mix_LoadMUS("./sounds/level1.mp3");
+  musicLevel[2] = Mix_LoadMUS("./sounds/level2.mp3");
+  musicLevel[3] = Mix_LoadMUS("./sounds/level3.mp3");
+
+
   
+
+
+
 
   while(loop) {
     /* temps au début de la boucle */
     Uint32 startTime = SDL_GetTicks();
-
     glClear(GL_COLOR_BUFFER_BIT);
+
+    /*** MENU ***/
     if (menu.active)
     {
+      if( Mix_PlayingMusic() != 1) Mix_PlayMusic(musicLevel[0], -1); //Jouer infiniment la musique
       dessinMenu(textureID);
       dessinActiveMenu(menu.levelNumber);
     } else {
@@ -145,10 +167,13 @@ int main(int argc, char** argv) {
       }
      if (end) 
      {
+        Mix_HaltMusic();
         // Il n'y a que trois niveaux si on est au 3ème et qu'on le fini, retour au menu
         if (menu.levelNumber < 3)
         {
+          
           menu.levelNumber++;
+          Mix_PlayMusic(musicLevel[menu.levelNumber], -1); //Jouer infiniment la musique
           goto levelStart;
           end = true;
         } else {
@@ -195,12 +220,12 @@ int main(int argc, char** argv) {
         {
           if (persoHandler[j].active)
           {
-            appuyer(&persoHandler[j],e);
-            relacher(&persoHandler[j],e);
+            appuyer(&persoHandler[j],e, j, bruitages);
+            relacher(&persoHandler[j],e, j, bruitages);
           }
         }
       } else {
-        touchesMenu(e, &menu);
+        touchesMenu(e, &menu, musicLevel);
         if (!menu.active)
         {
           goto levelStart;
@@ -252,7 +277,7 @@ int main(int argc, char** argv) {
       SDL_Delay(FRAMERATE_MILLISECONDS - elapsedTime);
     }
   }
-
+  Mix_CloseAudio();
   SDL_Quit();
 
   return EXIT_SUCCESS;

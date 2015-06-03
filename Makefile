@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -Wall 
-LDFLAGS = -lSDL -lGLU -lGL -lm -lSDL_image
+LDFLAGS = -lSDL -lGLU -lGL -lm -lSDL_image -lSDL_mixer
 
 APP_BIN = ThomasWasAlone
 

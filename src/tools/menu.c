@@ -1,19 +1,21 @@
 #include "tools/menu.h"
 #include "formes/draw.h"
 
-void touchesMenu(SDL_Event e, Menu *menu){
+
+void touchesMenu(SDL_Event e, Menu *menu, Mix_Music *musicLevel[4]){
     if(e.type == SDL_KEYDOWN){
         switch(e.key.keysym.sym){
             case SDLK_DOWN : 
-                menuHandler(menu, -1);
+                menuHandler(menu, -1, musicLevel);
             break;
 
             case SDLK_UP : 
-                menuHandler(menu, 1);
+                menuHandler(menu, 1, musicLevel);
             break;
 
             case SDLK_RETURN :
-            	menuHandler(menu, 0);
+            	menuHandler(menu, 0, musicLevel);
+            	
             break;
 
             default : break;
@@ -22,11 +24,13 @@ void touchesMenu(SDL_Event e, Menu *menu){
 }
 
 
-void menuHandler(Menu* menu, int sens){
+void menuHandler(Menu* menu, int sens, Mix_Music *musicLevel[4]){
 
 	switch(sens){
 		case 0:
 			menu->active = false;
+			Mix_HaltMusic();
+			Mix_PlayMusic(musicLevel[menu->levelNumber], -1);
 			break;
 		case 1 :
 			if (menu->levelNumber > 1)

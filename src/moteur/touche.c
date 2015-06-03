@@ -5,7 +5,7 @@
 #include "moteur/main.h"
 
 // Appuyer sur une touche
-void appuyer(Personnage *perso, SDL_Event e){
+void appuyer(Personnage *perso, SDL_Event e, int numPerso, Mix_Chunk *bruitages[3]){
     if(e.type == SDL_KEYDOWN){
         switch(e.key.keysym.sym){
             case SDLK_RIGHT :
@@ -28,6 +28,8 @@ void appuyer(Personnage *perso, SDL_Event e){
                     perso->gravite = perso->defaultGravite;
                     perso->dir.y -= perso->defaultGravite *1.7;
                     perso->saute = true;
+                    if(Mix_Playing(1) == 0)
+                        Mix_PlayChannel(1, bruitages[numPerso], 0);
                 }
             break;
 
@@ -39,7 +41,7 @@ void appuyer(Personnage *perso, SDL_Event e){
     
 }
 // Appuyer sur une touche
-void relacher(Personnage *perso, SDL_Event e){
+void relacher(Personnage *perso, SDL_Event e, int numPerso, Mix_Chunk *bruitages[3]){
     if(e.type == SDL_KEYUP){
 
         switch(e.key.keysym.sym){
