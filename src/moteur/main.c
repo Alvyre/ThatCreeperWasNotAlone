@@ -93,6 +93,10 @@ int main(int argc, char** argv) {
   loadTexture("./img/level2.png", textureID, 2);
   loadTexture("./img/level3.png", textureID, 3);
   loadTexture("./img/minecraft_tile.png", textureID, 4);
+  loadTexture("./img/slime.png", textureID, 5);
+  loadTexture("./img/champimeuh.png", textureID, 6);
+  loadTexture("./img/creeper.png", textureID, 7);
+
 
   /*** GESTION DU SON ***/
   if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1) //Initialisation de l'API Mixer
@@ -186,9 +190,9 @@ int main(int argc, char** argv) {
 
       for (j = 0; j < nbrPerso; j++)
       {
-        glColor3f(persoHandler[j].color.r, persoHandler[j].color.g, persoHandler[j].color.b);  // Affichage du joueur
-        dessinPerso(&persoHandler[j]);
-        glColor3f(1, 1, 1);
+        //glColor3f(1, 1, 1);//glColor3f(persoHandler[j].color.r, persoHandler[j].color.g, persoHandler[j].color.b);  // Affichage du joueur
+        dessinPerso(&persoHandler[j],j);
+        //glColor3f(1, 1, 1);
       }
 
       /* GESTION JOUEUR */

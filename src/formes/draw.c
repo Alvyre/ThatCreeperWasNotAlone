@@ -33,18 +33,22 @@ void dessinEmptyCarre(int posX, int posY, Color3f *color){
   glEnd();
 }
 
-void dessinPerso(Personnage *perso){
+void dessinPerso(Personnage *perso, int numPerso){
+  glEnable(GL_TEXTURE_2D);
+  glBindTexture(GL_TEXTURE_2D, numPerso+5);
+
   glBegin(GL_POLYGON);
     // Haut gauche
-        glVertex2f(perso->box.pos.x,perso->box.pos.y);
+        glTexCoord2f(0, 0); glVertex2f(perso->box.pos.x,perso->box.pos.y);
     // Haut droite
-        glVertex2f(perso->box.pos.x + perso->box.size.x,perso->box.pos.y );
+        glTexCoord2f(1, 0); glVertex2f(perso->box.pos.x + perso->box.size.x,perso->box.pos.y );
     // Bas droite
-        glVertex2f(perso->box.pos.x + perso->box.size.x,perso->box.pos.y + perso->box.size.y );
+        glTexCoord2f(1, 1); glVertex2f(perso->box.pos.x + perso->box.size.x,perso->box.pos.y + perso->box.size.y );
     // Bas gauche
-        glVertex2f(perso->box.pos.x ,perso->box.pos.y + perso->box.size.y );
+        glTexCoord2f(0, 1); glVertex2f(perso->box.pos.x ,perso->box.pos.y + perso->box.size.y );
 
   glEnd();
+  glDisable(GL_TEXTURE_2D);
 
 }
 
@@ -53,13 +57,10 @@ void dessinActiveCursor(Personnage *perso){
   glBegin(GL_TRIANGLES);
       // Haut gauche
           glVertex2f(perso->box.pos.x + perso->box.size.x/2 - (TAILLE_CASE/4), perso->box.pos.y - (TAILLE_CASE) +i );
-      // glVertex2f((perso->centerX - (TAILLE_CASE/4)) -4*perso->sens , perso->centerY - (perso->height*TAILLE_CASE/2) - (TAILLE_CASE) +i);
       // Haut droite
           glVertex2f(perso->box.pos.x + perso->box.size.x/2 + (TAILLE_CASE/4) , perso->box.pos.y - (TAILLE_CASE) +i );
-      // glVertex2f((perso->centerX + (TAILLE_CASE/4)) -4*perso->sens , perso->centerY - (perso->height*TAILLE_CASE/2) - (TAILLE_CASE) +i);
       // Bas millieu
           glVertex2f(perso->box.pos.x + perso->box.size.x/2, perso->box.pos.y - (TAILLE_CASE/2) +i );
-      // glVertex2f((perso->centerX) -4*perso->sens , perso->centerY - (perso->height*TAILLE_CASE/2) - (TAILLE_CASE/2) +i);
   glEnd();
 }
 
