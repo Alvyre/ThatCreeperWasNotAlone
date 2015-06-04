@@ -293,7 +293,10 @@ int main(int argc, char** argv) {
           break;
 
           case SDLK_TAB:
-          changeFocus(persoHandler, nbrPerso, level);
+          if (!menu.active)
+          {
+            changeFocus(persoHandler, nbrPerso, level);
+          }
           break;
           default : break;
         }
