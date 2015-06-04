@@ -98,7 +98,7 @@ int main(int argc, char** argv) {
   loadTexture("./img/creeper.png", textureID, 7);
   loadTexture("./img/bg-level1.jpg", textureID, 8);
   loadTexture("./img/bg-level2.jpg", textureID, 9);
-  loadTexture("./img/bg-level3.jpg", textureID, 10);
+  loadTexture("./img/bg-level3.png", textureID, 10);
 
 
   /*** GESTION DU SON ***/
