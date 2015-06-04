@@ -111,7 +111,7 @@ void dessinMenu(){
   glEnd();
   glBindTexture(GL_TEXTURE_2D, 0);
 
-  glBindTexture(GL_TEXTURE_2D, 8);
+  glBindTexture(GL_TEXTURE_2D, 11);
   glBegin(GL_QUADS);
     glColor3f(1,1,1);
     glTexCoord2f(1, 1);
@@ -205,4 +205,23 @@ void dessinActiveMenu(int numMenu){
       glEnd();
       break;
   }
+}
+
+
+void drawBackground(Level *level, int levelNumber){
+  glEnable(GL_TEXTURE_2D);
+  glBindTexture(GL_TEXTURE_2D, levelNumber+7);
+
+  glBegin(GL_POLYGON);
+    // Haut gauche
+        glTexCoord2f(0, 0); glVertex2f(0,0);
+    // Haut droite
+        glTexCoord2f(1, 0); glVertex2f(level->width*TAILLE_CASE,0);
+    // Bas droite
+        glTexCoord2f(1, 1); glVertex2f(level->width*TAILLE_CASE, level->height*TAILLE_CASE );
+    // Bas gauche
+        glTexCoord2f(0, 1); glVertex2f(0, level->height*TAILLE_CASE );
+
+  glEnd();
+  glDisable(GL_TEXTURE_2D);
 }
