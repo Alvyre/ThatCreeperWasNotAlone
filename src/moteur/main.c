@@ -41,6 +41,7 @@ int main(int argc, char** argv) {
   int loop = 1;
   int nbrPerso = 0;
   int j = 0;
+
   Menu menu;
   menu.active = true;
   menu.levelNumber = 1;
@@ -52,7 +53,7 @@ int main(int argc, char** argv) {
 
   setVideoMode(WINDOW_WIDTH, WINDOW_HEIGHT);
 
-  SDL_WM_SetCaption("Thomas Was Alone", NULL);
+  SDL_WM_SetCaption("That Creeper was not alone", NULL);
 
   // Création du level
   Level* level;
@@ -64,7 +65,7 @@ int main(int argc, char** argv) {
   //creation camera
   Camera camera;
   
-  //Tous les perso sont ils à leur case de fin
+  //Les perso sont-ils à leur case de fin
   bool end = false;
 
   Personnage *persoHandler;
@@ -103,10 +104,11 @@ int main(int argc, char** argv) {
 
 
   /*** GESTION DU SON ***/
+
   if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1) //Initialisation de l'API Mixer
     printf("%s", Mix_GetError());
   Mix_AllocateChannels(2);
-  Mix_Chunk *bruitages[3];
+  Mix_Chunk *bruitages[5];
   bruitages[0] = Mix_LoadWAV("./sounds/slime.wav");
   bruitages[1] = Mix_LoadWAV("./sounds/champimeuh.wav");
   bruitages[2] = Mix_LoadWAV("./sounds/creeper.wav");
@@ -150,37 +152,37 @@ int main(int argc, char** argv) {
       // FIXME : switch dégueux trouver autre chose (essayé avec un for sur le nombre de perso, marche pas)
       switch(nbrPerso){
         case 1:
-          if (persoHandler[0].end)
-          {
-            end = true;
-            glPopMatrix();
-            glPushMatrix();
-          }
-          break;
+        if (persoHandler[0].end)
+        {
+          end = true;
+          glPopMatrix();
+          glPushMatrix();
+        }
+        break;
         case 2:
-          if (persoHandler[0].end && persoHandler[1].end)
-          {
-            end = true;
-            glPopMatrix();
-            glPushMatrix();
-          }
-          break;
+        if (persoHandler[0].end && persoHandler[1].end)
+        {
+          end = true;
+          glPopMatrix();
+          glPushMatrix();
+        }
+        break;
         case 3:
-          if (persoHandler[0].end && persoHandler[1].end && persoHandler[2].end)
-          {
-            end = true;
-            glPopMatrix();
-            glPushMatrix();
-          }
-          break;
+        if (persoHandler[0].end && persoHandler[1].end && persoHandler[2].end)
+        {
+          end = true;
+          glPopMatrix();
+          glPushMatrix();
+        }
+        break;
       }
-     if (end) 
-     {
+      if (end) 
+      {
         Mix_HaltMusic();
         // Il n'y a que trois niveaux si on est au 3ème et qu'on le fini, retour au menu
         if (menu.levelNumber < 3)
         {
-          
+
           menu.levelNumber++;
           Mix_PlayMusic(musicLevel[menu.levelNumber], -1); //Jouer infiniment la musique
           goto levelStart;
@@ -190,7 +192,7 @@ int main(int argc, char** argv) {
           goto levelStart;
           break;
         }
-     }
+      }
      /**** FIN GESTION NIVEAUX ******/
 
       for (j = 0; j < nbrPerso; j++)
@@ -242,9 +244,9 @@ int main(int argc, char** argv) {
 
       switch(e.type) {
         case SDL_QUIT:
-          loop = 0;
-          break;
-          
+        loop = 0;
+        break;
+
         case SDL_VIDEORESIZE:
         WINDOW_WIDTH  = e.resize.w;
         WINDOW_HEIGHT = e.resize.h;
@@ -252,41 +254,46 @@ int main(int argc, char** argv) {
         break;
 
         case SDL_KEYDOWN:
-          switch(e.key.keysym.sym){
-            case 'q' : 
-            case SDLK_ESCAPE :
-              freeLevel(level);
-              free(persoHandler);
-              persoHandler = NULL;
-              loop = 0;
-              break;
+        switch(e.key.keysym.sym){
+          case 'q' : 
+          case SDLK_ESCAPE :
+          freeLevel(level);
+          free(persoHandler);
+          int i;
+          for(i =0;i<4;++i)
+            Mix_FreeMusic(musicLevel[i]);
+          for(i =0;i<5;++i)
+            Mix_FreeChunk(bruitages[i]);
+          persoHandler = NULL;
+          loop = 0;
+          break;
 
-            case 'p':
-              if (!menu.active)
-              {
-                glPushMatrix();
-                glMatrixMode(GL_PROJECTION);
+          case 'p':
+          if (!menu.active)
+          {
+            glPushMatrix();
+            glMatrixMode(GL_PROJECTION);
                 // FIXME : reset ?
-                glLoadIdentity();
-                menu.active = true;
-              } else {
-                glMatrixMode(GL_MODELVIEW);
-                glPopMatrix();
-                menu.active = false;
-              }
-              break;
-
-            case SDLK_BACKSPACE :
-              glPopMatrix();
-              glPushMatrix();
-              goto levelStart;
-              break;
-
-            case SDLK_TAB:
-              changeFocus(persoHandler, nbrPerso, level);
-              break;
-              default : break;
+            glLoadIdentity();
+            menu.active = true;
+          } else {
+            glMatrixMode(GL_MODELVIEW);
+            glPopMatrix();
+            menu.active = false;
           }
+          break;
+
+          case SDLK_BACKSPACE :
+          glPopMatrix();
+          glPushMatrix();
+          goto levelStart;
+          break;
+
+          case SDLK_TAB:
+          changeFocus(persoHandler, nbrPerso, level);
+          break;
+          default : break;
+        }
         break;
 
         default:
