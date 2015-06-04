@@ -96,6 +96,7 @@ int main(int argc, char** argv) {
   loadTexture("./img/slime.png", textureID, 5);
   loadTexture("./img/champimeuh.png", textureID, 6);
   loadTexture("./img/creeper.png", textureID, 7);
+  loadTexture("./img/full_keyboard.png", textureID, 8);
 
 
   /*** GESTION DU SON ***/
@@ -190,9 +191,7 @@ int main(int argc, char** argv) {
 
       for (j = 0; j < nbrPerso; j++)
       {
-        //glColor3f(1, 1, 1);//glColor3f(persoHandler[j].color.r, persoHandler[j].color.g, persoHandler[j].color.b);  // Affichage du joueur
         dessinPerso(&persoHandler[j],j);
-        //glColor3f(1, 1, 1);
       }
 
       /* GESTION JOUEUR */
@@ -256,6 +255,21 @@ int main(int argc, char** argv) {
               free(persoHandler);
               persoHandler = NULL;
               loop = 0;
+              break;
+
+            case 'p':
+              if (!menu.active)
+              {
+                glPushMatrix();
+                glMatrixMode(GL_PROJECTION);
+                // FIXME : reset ?
+                glLoadIdentity();
+                menu.active = true;
+              } else {
+                glMatrixMode(GL_MODELVIEW);
+                glPopMatrix();
+                menu.active = false;
+              }
               break;
 
             case SDLK_BACKSPACE :

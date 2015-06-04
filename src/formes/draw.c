@@ -73,13 +73,13 @@ void dessinMenu(){
   glBegin(GL_QUADS);
     glColor3f(1,1,1);
     glTexCoord2f(1, 1);
-    glVertex2f(WINDOW_WIDTH/2 + 100, WINDOW_HEIGHT/3 +50);
+    glVertex2f(WINDOW_WIDTH/2 + 100, WINDOW_HEIGHT/6 +50);
     glTexCoord2f(1, 0);
-    glVertex2f(WINDOW_WIDTH/2 + 100, WINDOW_HEIGHT/3 -50);
+    glVertex2f(WINDOW_WIDTH/2 + 100, WINDOW_HEIGHT/6 -50);
     glTexCoord2f(0, 0);
-    glVertex2f(WINDOW_WIDTH/2 -100,WINDOW_HEIGHT/3 -50);
+    glVertex2f(WINDOW_WIDTH/2 -100,WINDOW_HEIGHT/6 -50);
     glTexCoord2f(0, 1);
-    glVertex2f(WINDOW_WIDTH/2 -100,WINDOW_HEIGHT/3 +50);
+    glVertex2f(WINDOW_WIDTH/2 -100,WINDOW_HEIGHT/6 +50);
   glEnd();
   glBindTexture(GL_TEXTURE_2D, 0);
 
@@ -87,13 +87,13 @@ void dessinMenu(){
   glBegin(GL_QUADS);
     glColor3f(1,1,1);
     glTexCoord2f(1, 1);
-    glVertex2f(WINDOW_WIDTH/2 + 100, WINDOW_HEIGHT/2 +50);
+    glVertex2f(WINDOW_WIDTH/2 + 100, 2*WINDOW_HEIGHT/6 +50);
     glTexCoord2f(1, 0);
-    glVertex2f(WINDOW_WIDTH/2 + 100, WINDOW_HEIGHT/2 -50);
+    glVertex2f(WINDOW_WIDTH/2 + 100, 2*WINDOW_HEIGHT/6 -50);
     glTexCoord2f(0, 0);
-    glVertex2f(WINDOW_WIDTH/2 -100,WINDOW_HEIGHT/2 -50);
+    glVertex2f(WINDOW_WIDTH/2 -100, 2*WINDOW_HEIGHT/6 -50);
     glTexCoord2f(0, 1);
-    glVertex2f(WINDOW_WIDTH/2 -100,WINDOW_HEIGHT/2 +50);
+    glVertex2f(WINDOW_WIDTH/2 -100, 2*WINDOW_HEIGHT/6 +50);
   glEnd();
   glBindTexture(GL_TEXTURE_2D, 0);
 
@@ -101,13 +101,27 @@ void dessinMenu(){
   glBegin(GL_QUADS);
     glColor3f(1,1,1);
     glTexCoord2f(1, 1);
-    glVertex2f(WINDOW_WIDTH/2 + 100, 2*WINDOW_HEIGHT/3 +50);
+    glVertex2f(WINDOW_WIDTH/2 + 100, 3*WINDOW_HEIGHT/6 +50);
     glTexCoord2f(1, 0);
-    glVertex2f(WINDOW_WIDTH/2 + 100, 2*WINDOW_HEIGHT/3 -50);
+    glVertex2f(WINDOW_WIDTH/2 + 100, 3*WINDOW_HEIGHT/6 -50);
     glTexCoord2f(0, 0);
-    glVertex2f(WINDOW_WIDTH/2 -100,2*WINDOW_HEIGHT/3 -50);
+    glVertex2f(WINDOW_WIDTH/2 -100,3*WINDOW_HEIGHT/6 -50);
     glTexCoord2f(0, 1);
-    glVertex2f(WINDOW_WIDTH/2 -100,2*WINDOW_HEIGHT/3 +50);
+    glVertex2f(WINDOW_WIDTH/2 -100,3*WINDOW_HEIGHT/6 +50);
+  glEnd();
+  glBindTexture(GL_TEXTURE_2D, 0);
+
+  glBindTexture(GL_TEXTURE_2D, 8);
+  glBegin(GL_QUADS);
+    glColor3f(1,1,1);
+    glTexCoord2f(1, 1);
+    glVertex2f(WINDOW_WIDTH/2 + 200, 4*WINDOW_HEIGHT/5 +100);
+    glTexCoord2f(1, 0);
+    glVertex2f(WINDOW_WIDTH/2 + 200, 4*WINDOW_HEIGHT/5 -100);
+    glTexCoord2f(0, 0);
+    glVertex2f(WINDOW_WIDTH/2 - 200, 4*WINDOW_HEIGHT/5 -100);
+    glTexCoord2f(0, 1);
+    glVertex2f(WINDOW_WIDTH/2 - 200, 4*WINDOW_HEIGHT/5 +100);
   glEnd();
   glBindTexture(GL_TEXTURE_2D, 0);
 
@@ -133,8 +147,8 @@ void loadTexture(const char* filename, GLuint textureID[11], int numTexture){
         break;
       default:
       /* On ne traite pas les autres cas */
-        fprintf(stderr, "Format des pixels de l’image %s non pris en charge\n", filename);
-        return EXIT_FAILURE;
+      fprintf(stderr, "Format des pixels de l’image %s non pris en charge\n", filename);
+      exit(EXIT_FAILURE);
     } 
   glGenTextures(1, textureID);
 
@@ -151,43 +165,43 @@ void dessinActiveMenu(int numMenu){
   switch(numMenu){
     case 1:
       glBegin(GL_TRIANGLES);
-        glVertex2f(WINDOW_WIDTH/3 + WINDOW_WIDTH/50 , WINDOW_HEIGHT/3 +10);
-        glVertex2f(WINDOW_WIDTH/3 + WINDOW_WIDTH/50, WINDOW_HEIGHT/3 -10);
-        glVertex2f(WINDOW_WIDTH/3 + WINDOW_WIDTH/50 +20, WINDOW_HEIGHT/3);
+        glVertex2f(WINDOW_WIDTH/3 + WINDOW_WIDTH/50 , WINDOW_HEIGHT/6 +10);
+        glVertex2f(WINDOW_WIDTH/3 + WINDOW_WIDTH/50, WINDOW_HEIGHT/6 -10);
+        glVertex2f(WINDOW_WIDTH/3 + WINDOW_WIDTH/50 +20, WINDOW_HEIGHT/6);
       glEnd();
 
       glBegin(GL_TRIANGLES);
-        glVertex2f(2*WINDOW_WIDTH/3 - WINDOW_WIDTH/50 -20, WINDOW_HEIGHT/3);
-        glVertex2f(2*WINDOW_WIDTH/3 - WINDOW_WIDTH/50 , WINDOW_HEIGHT/3 +10);
-        glVertex2f(2*WINDOW_WIDTH/3 - WINDOW_WIDTH/50, WINDOW_HEIGHT/3 -10);          
+        glVertex2f(2*WINDOW_WIDTH/3 - WINDOW_WIDTH/50 -20, WINDOW_HEIGHT/6);
+        glVertex2f(2*WINDOW_WIDTH/3 - WINDOW_WIDTH/50 , WINDOW_HEIGHT/6 +10);
+        glVertex2f(2*WINDOW_WIDTH/3 - WINDOW_WIDTH/50, WINDOW_HEIGHT/6 -10);          
       glEnd();
     break;
 
     case 2:
       glBegin(GL_TRIANGLES);        
-        glVertex2f(WINDOW_WIDTH/3 + WINDOW_WIDTH/50 , WINDOW_HEIGHT/2 +10);
-        glVertex2f(WINDOW_WIDTH/3 + WINDOW_WIDTH/50, WINDOW_HEIGHT/2 -10);
-        glVertex2f(WINDOW_WIDTH/3 + WINDOW_WIDTH/50 + 20, WINDOW_HEIGHT/2);
+        glVertex2f(WINDOW_WIDTH/3 + WINDOW_WIDTH/50 , 2*WINDOW_HEIGHT/6 +10);
+        glVertex2f(WINDOW_WIDTH/3 + WINDOW_WIDTH/50, 2*WINDOW_HEIGHT/6 -10);
+        glVertex2f(WINDOW_WIDTH/3 + WINDOW_WIDTH/50 + 20, 2*WINDOW_HEIGHT/6);
       glEnd();
 
       glBegin(GL_TRIANGLES);
-        glVertex2f(2*WINDOW_WIDTH/3 - WINDOW_WIDTH/50 -20, WINDOW_HEIGHT/2);
-        glVertex2f(2*WINDOW_WIDTH/3 - WINDOW_WIDTH/50 , WINDOW_HEIGHT/2 +10);
-        glVertex2f(2*WINDOW_WIDTH/3 - WINDOW_WIDTH/50, WINDOW_HEIGHT/2 -10);
+        glVertex2f(2*WINDOW_WIDTH/3 - WINDOW_WIDTH/50 -20, 2*WINDOW_HEIGHT/6);
+        glVertex2f(2*WINDOW_WIDTH/3 - WINDOW_WIDTH/50 , 2*WINDOW_HEIGHT/6 +10);
+        glVertex2f(2*WINDOW_WIDTH/3 - WINDOW_WIDTH/50, 2*WINDOW_HEIGHT/6 -10);
       glEnd();
       break;
 
     case 3:
       glBegin(GL_TRIANGLES);
-        glVertex2f(WINDOW_WIDTH/3 + WINDOW_WIDTH/50 , 2*WINDOW_HEIGHT/3 +10);
-        glVertex2f(WINDOW_WIDTH/3 + WINDOW_WIDTH/50, 2*WINDOW_HEIGHT/3 -10);
-        glVertex2f(WINDOW_WIDTH/3 + WINDOW_WIDTH/50 + 20, 2*WINDOW_HEIGHT/3);
+        glVertex2f(WINDOW_WIDTH/3 + WINDOW_WIDTH/50 , 3*WINDOW_HEIGHT/6 +10);
+        glVertex2f(WINDOW_WIDTH/3 + WINDOW_WIDTH/50, 3*WINDOW_HEIGHT/6 -10);
+        glVertex2f(WINDOW_WIDTH/3 + WINDOW_WIDTH/50 + 20, 3*WINDOW_HEIGHT/6);
       glEnd();
 
       glBegin(GL_TRIANGLES);
-        glVertex2f(2*WINDOW_WIDTH/3 - WINDOW_WIDTH/50 -20, 2*WINDOW_HEIGHT/3);
-        glVertex2f(2*WINDOW_WIDTH/3 - WINDOW_WIDTH/50 , 2*WINDOW_HEIGHT/3 +10);
-        glVertex2f(2*WINDOW_WIDTH/3 - WINDOW_WIDTH/50, 2*WINDOW_HEIGHT/3 -10);
+        glVertex2f(2*WINDOW_WIDTH/3 - WINDOW_WIDTH/50 -20, 3*WINDOW_HEIGHT/6);
+        glVertex2f(2*WINDOW_WIDTH/3 - WINDOW_WIDTH/50 , 3*WINDOW_HEIGHT/6 +10);
+        glVertex2f(2*WINDOW_WIDTH/3 - WINDOW_WIDTH/50, 3*WINDOW_HEIGHT/6 -10);
       glEnd();
       break;
   }
