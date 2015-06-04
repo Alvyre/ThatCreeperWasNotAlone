@@ -37,14 +37,10 @@ typedef struct Personnage
 	int sens;
 	// variables mouvements
 	bool saute;
-
-	bool active; // perso actif (controlable) ou pas
+	// perso actif (controlable) ou pas
+	bool active;
 	int cursorTimer;
 	bool end;
-
-	//test
-
-
 }Personnage;
 
 
