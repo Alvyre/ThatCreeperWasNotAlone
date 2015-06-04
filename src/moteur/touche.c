@@ -28,8 +28,8 @@ void appuyer(Personnage *perso, SDL_Event e, int numPerso, Mix_Chunk *bruitages[
                     perso->gravite = perso->defaultGravite;
                     perso->dir.y -= perso->defaultGravite *1.7;
                     perso->saute = true;
-                    if(Mix_Playing(1) == 0)
-                        Mix_PlayChannel(1, bruitages[numPerso], 0);
+                    if(Mix_Playing(0) == 0)
+                        Mix_PlayChannel(0, bruitages[numPerso], 0);
                 }
             break;
 

@@ -40,8 +40,8 @@ void setVideoMode(int winWidth, int winHeight) {
 int main(int argc, char** argv) {
   int loop = 1;
   int nbrPerso = 0;
-  int j = 0;
-
+  int i =0,j = 0;
+  int currentLevel;
   Menu menu;
   menu.active = true;
   menu.levelNumber = 1;
@@ -107,12 +107,14 @@ int main(int argc, char** argv) {
 
   if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1) //Initialisation de l'API Mixer
     printf("%s", Mix_GetError());
-  Mix_AllocateChannels(2);
+  Mix_AllocateChannels(3);
+  Mix_Volume(1,MIX_MAX_VOLUME/2);
   Mix_Chunk *bruitages[5];
   bruitages[0] = Mix_LoadWAV("./sounds/slime.wav");
   bruitages[1] = Mix_LoadWAV("./sounds/champimeuh.wav");
   bruitages[2] = Mix_LoadWAV("./sounds/creeper.wav");
-
+  bruitages[3] = Mix_LoadWAV("./sounds/lava.wav");
+  bruitages[4] = Mix_LoadWAV("./sounds/water.wav");
 
   Mix_Music *musicLevel[4];
   musicLevel[0] = Mix_LoadMUS("./sounds/menu.mp3");
@@ -179,6 +181,7 @@ int main(int argc, char** argv) {
       if (end) 
       {
         Mix_HaltMusic();
+        Mix_HaltChannel(-1);
         // Il n'y a que trois niveaux si on est au 3ème et qu'on le fini, retour au menu
         if (menu.levelNumber < 3)
         {
@@ -194,7 +197,12 @@ int main(int argc, char** argv) {
         }
       }
      /**** FIN GESTION NIVEAUX ******/
-
+    /*** son environnement ***/
+    if(Mix_Playing(1) == 0 && menu.levelNumber !=2)
+       Mix_PlayChannel(1, bruitages[3], -1);
+    else if(Mix_Playing(1) == 0 && menu.levelNumber ==2)
+       Mix_PlayChannel(1, bruitages[4], -1);
+    /*** FIN son environnement ***/
       for (j = 0; j < nbrPerso; j++)
       {
         dessinPerso(&persoHandler[j],j);
@@ -259,7 +267,6 @@ int main(int argc, char** argv) {
           case SDLK_ESCAPE :
           freeLevel(level);
           free(persoHandler);
-          int i;
           for(i =0;i<4;++i)
             Mix_FreeMusic(musicLevel[i]);
           for(i =0;i<5;++i)
@@ -271,14 +278,10 @@ int main(int argc, char** argv) {
           case 'p':
           if (!menu.active)
           {
-            glPushMatrix();
-            glMatrixMode(GL_PROJECTION);
-                // FIXME : reset ?
-            glLoadIdentity();
+            currentLevel = menu.levelNumber;
             menu.active = true;
           } else {
-            glMatrixMode(GL_MODELVIEW);
-            glPopMatrix();
+            menu.levelNumber = currentLevel;
             menu.active = false;
           }
           break;
