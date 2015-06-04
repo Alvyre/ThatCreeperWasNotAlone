@@ -65,7 +65,7 @@ void dessinActiveCursor(Personnage *perso){
 }
 
 // 
-void dessinMenu(){
+void dessinMenu(Camera *camera){
   glEnable(GL_TEXTURE_2D);
   // FIXME : Bind texture
   glBindTexture(GL_TEXTURE_2D, 1);
@@ -73,13 +73,13 @@ void dessinMenu(){
   glBegin(GL_QUADS);
     glColor3f(1,1,1);
     glTexCoord2f(1, 1);
-    glVertex2f(WINDOW_WIDTH/2 + 100, WINDOW_HEIGHT/6 +50);
+    glVertex2f(camera->x + 100, camera->y - 2*WINDOW_HEIGHT/6 +50);
     glTexCoord2f(1, 0);
-    glVertex2f(WINDOW_WIDTH/2 + 100, WINDOW_HEIGHT/6 -50);
+    glVertex2f(camera->x + 100, camera->y - 2*WINDOW_HEIGHT/6 -50);
     glTexCoord2f(0, 0);
-    glVertex2f(WINDOW_WIDTH/2 -100,WINDOW_HEIGHT/6 -50);
+    glVertex2f(camera->x -100,camera->y - 2*WINDOW_HEIGHT/6 -50);
     glTexCoord2f(0, 1);
-    glVertex2f(WINDOW_WIDTH/2 -100,WINDOW_HEIGHT/6 +50);
+    glVertex2f(camera->x -100,camera->y - 2*WINDOW_HEIGHT/6 +50);
   glEnd();
   glBindTexture(GL_TEXTURE_2D, 0);
 
@@ -87,13 +87,13 @@ void dessinMenu(){
   glBegin(GL_QUADS);
     glColor3f(1,1,1);
     glTexCoord2f(1, 1);
-    glVertex2f(WINDOW_WIDTH/2 + 100, 2*WINDOW_HEIGHT/6 +50);
+    glVertex2f(camera->x + 100, camera->y - WINDOW_HEIGHT/6 +50);
     glTexCoord2f(1, 0);
-    glVertex2f(WINDOW_WIDTH/2 + 100, 2*WINDOW_HEIGHT/6 -50);
+    glVertex2f(camera->x + 100, camera->y - WINDOW_HEIGHT/6 -50);
     glTexCoord2f(0, 0);
-    glVertex2f(WINDOW_WIDTH/2 -100, 2*WINDOW_HEIGHT/6 -50);
+    glVertex2f(camera->x -100, camera->y - WINDOW_HEIGHT/6 -50);
     glTexCoord2f(0, 1);
-    glVertex2f(WINDOW_WIDTH/2 -100, 2*WINDOW_HEIGHT/6 +50);
+    glVertex2f(camera->x -100, camera->y - WINDOW_HEIGHT/6 +50);
   glEnd();
   glBindTexture(GL_TEXTURE_2D, 0);
 
@@ -101,13 +101,13 @@ void dessinMenu(){
   glBegin(GL_QUADS);
     glColor3f(1,1,1);
     glTexCoord2f(1, 1);
-    glVertex2f(WINDOW_WIDTH/2 + 100, 3*WINDOW_HEIGHT/6 +50);
+    glVertex2f(camera->x + 100, camera->y +50);
     glTexCoord2f(1, 0);
-    glVertex2f(WINDOW_WIDTH/2 + 100, 3*WINDOW_HEIGHT/6 -50);
+    glVertex2f(camera->x + 100, camera->y -50);
     glTexCoord2f(0, 0);
-    glVertex2f(WINDOW_WIDTH/2 -100,3*WINDOW_HEIGHT/6 -50);
+    glVertex2f(camera->x -100,camera->y -50);
     glTexCoord2f(0, 1);
-    glVertex2f(WINDOW_WIDTH/2 -100,3*WINDOW_HEIGHT/6 +50);
+    glVertex2f(camera->x -100,camera->y +50);
   glEnd();
   glBindTexture(GL_TEXTURE_2D, 0);
 
@@ -115,13 +115,13 @@ void dessinMenu(){
   glBegin(GL_QUADS);
     glColor3f(1,1,1);
     glTexCoord2f(1, 1);
-    glVertex2f(WINDOW_WIDTH/2 + 200, 4*WINDOW_HEIGHT/5 +100);
+    glVertex2f(camera->x + 200, camera->y  + WINDOW_HEIGHT/4 +100);
     glTexCoord2f(1, 0);
-    glVertex2f(WINDOW_WIDTH/2 + 200, 4*WINDOW_HEIGHT/5 -100);
+    glVertex2f(camera->x + 200, camera->y  + WINDOW_HEIGHT/4 -100);
     glTexCoord2f(0, 0);
-    glVertex2f(WINDOW_WIDTH/2 - 200, 4*WINDOW_HEIGHT/5 -100);
+    glVertex2f(camera->x - 200, camera->y  + WINDOW_HEIGHT/4 -100);
     glTexCoord2f(0, 1);
-    glVertex2f(WINDOW_WIDTH/2 - 200, 4*WINDOW_HEIGHT/5 +100);
+    glVertex2f(camera->x - 200, camera->y  + WINDOW_HEIGHT/4 +100);
   glEnd();
   glBindTexture(GL_TEXTURE_2D, 0);
 
@@ -160,48 +160,48 @@ void loadTexture(const char* filename, GLuint textureID[11], int numTexture){
   SDL_FreeSurface(image);
 }
 
-void dessinActiveMenu(int numMenu){
+void dessinActiveMenu(int numMenu, Camera *camera){
 
   switch(numMenu){
     case 1:
       glBegin(GL_TRIANGLES);
-        glVertex2f(WINDOW_WIDTH/3 + WINDOW_WIDTH/50 , WINDOW_HEIGHT/6 +10);
-        glVertex2f(WINDOW_WIDTH/3 + WINDOW_WIDTH/50, WINDOW_HEIGHT/6 -10);
-        glVertex2f(WINDOW_WIDTH/3 + WINDOW_WIDTH/50 +20, WINDOW_HEIGHT/6);
+        glVertex2f(camera->x - 150 , camera->y - 2*WINDOW_HEIGHT/6 +10);
+        glVertex2f(camera->x - 150 , camera->y - 2*WINDOW_HEIGHT/6 -10);
+        glVertex2f(camera->x - 150  +20, camera->y - 2*WINDOW_HEIGHT/6);
       glEnd();
 
       glBegin(GL_TRIANGLES);
-        glVertex2f(2*WINDOW_WIDTH/3 - WINDOW_WIDTH/50 -20, WINDOW_HEIGHT/6);
-        glVertex2f(2*WINDOW_WIDTH/3 - WINDOW_WIDTH/50 , WINDOW_HEIGHT/6 +10);
-        glVertex2f(2*WINDOW_WIDTH/3 - WINDOW_WIDTH/50, WINDOW_HEIGHT/6 -10);          
+        glVertex2f(camera->x + 150  -20, camera->y - 2*WINDOW_HEIGHT/6);
+        glVertex2f(camera->x + 150 , camera->y - 2*WINDOW_HEIGHT/6 +10);
+        glVertex2f(camera->x + 150 , camera->y - 2*WINDOW_HEIGHT/6 -10);          
       glEnd();
     break;
 
     case 2:
       glBegin(GL_TRIANGLES);        
-        glVertex2f(WINDOW_WIDTH/3 + WINDOW_WIDTH/50 , 2*WINDOW_HEIGHT/6 +10);
-        glVertex2f(WINDOW_WIDTH/3 + WINDOW_WIDTH/50, 2*WINDOW_HEIGHT/6 -10);
-        glVertex2f(WINDOW_WIDTH/3 + WINDOW_WIDTH/50 + 20, 2*WINDOW_HEIGHT/6);
+        glVertex2f(camera->x - 150 , camera->y - WINDOW_HEIGHT/6 +10);
+        glVertex2f(camera->x - 150, camera->y - WINDOW_HEIGHT/6 -10);
+        glVertex2f(camera->x - 150 + 20, camera->y - WINDOW_HEIGHT/6);
       glEnd();
 
       glBegin(GL_TRIANGLES);
-        glVertex2f(2*WINDOW_WIDTH/3 - WINDOW_WIDTH/50 -20, 2*WINDOW_HEIGHT/6);
-        glVertex2f(2*WINDOW_WIDTH/3 - WINDOW_WIDTH/50 , 2*WINDOW_HEIGHT/6 +10);
-        glVertex2f(2*WINDOW_WIDTH/3 - WINDOW_WIDTH/50, 2*WINDOW_HEIGHT/6 -10);
+        glVertex2f(camera->x + 150 -20, camera->y - WINDOW_HEIGHT/6);
+        glVertex2f(camera->x + 150 , camera->y - WINDOW_HEIGHT/6 +10);
+        glVertex2f(camera->x + 150, camera->y - WINDOW_HEIGHT/6 -10);
       glEnd();
       break;
 
     case 3:
       glBegin(GL_TRIANGLES);
-        glVertex2f(WINDOW_WIDTH/3 + WINDOW_WIDTH/50 , 3*WINDOW_HEIGHT/6 +10);
-        glVertex2f(WINDOW_WIDTH/3 + WINDOW_WIDTH/50, 3*WINDOW_HEIGHT/6 -10);
-        glVertex2f(WINDOW_WIDTH/3 + WINDOW_WIDTH/50 + 20, 3*WINDOW_HEIGHT/6);
+        glVertex2f(camera->x - 150 , camera->y +10);
+        glVertex2f(camera->x - 150, camera->y -10);
+        glVertex2f(camera->x - 150 + 20, camera->y);
       glEnd();
 
       glBegin(GL_TRIANGLES);
-        glVertex2f(2*WINDOW_WIDTH/3 - WINDOW_WIDTH/50 -20, 3*WINDOW_HEIGHT/6);
-        glVertex2f(2*WINDOW_WIDTH/3 - WINDOW_WIDTH/50 , 3*WINDOW_HEIGHT/6 +10);
-        glVertex2f(2*WINDOW_WIDTH/3 - WINDOW_WIDTH/50, 3*WINDOW_HEIGHT/6 -10);
+        glVertex2f(camera->x + 150 -20, camera->y);
+        glVertex2f(camera->x + 150 , camera->y +10);
+        glVertex2f(camera->x + 150, camera->y -10);
       glEnd();
       break;
   }

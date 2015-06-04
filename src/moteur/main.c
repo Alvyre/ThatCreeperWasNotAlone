@@ -133,8 +133,8 @@ int main(int argc, char** argv) {
     if (menu.active)
     {
       if( Mix_PlayingMusic() != 1) Mix_PlayMusic(musicLevel[0], -1); //Jouer infiniment la musique
-      dessinMenu(textureID);
-      dessinActiveMenu(menu.levelNumber);
+      dessinMenu(&camera);
+      dessinActiveMenu(menu.levelNumber, &camera);
     } else {
 
       /* AFFICHAGE */
@@ -232,7 +232,7 @@ int main(int argc, char** argv) {
           }
         }
       } else {
-        touchesMenu(e, &menu, musicLevel);
+        touchesMenu(e, &menu, musicLevel, &camera);
         if (!menu.active)
         {
           goto levelStart;
@@ -264,14 +264,8 @@ int main(int argc, char** argv) {
             case 'p':
               if (!menu.active)
               {
-                glPushMatrix();
-                glMatrixMode(GL_PROJECTION);
-                // FIXME : reset ?
-                glLoadIdentity();
                 menu.active = true;
               } else {
-                glMatrixMode(GL_MODELVIEW);
-                glPopMatrix();
                 menu.active = false;
               }
               break;

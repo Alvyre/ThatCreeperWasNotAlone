@@ -11,8 +11,8 @@ void dessinCarre(int posX, int posY, int numTexture, float offsetX, float offset
 void dessinEmptyCarre(int posX, int posY, Color3f *color);
 void dessinPerso(Personnage *perso, int numPerso);
 void dessinActiveCursor(Personnage *perso);
-void dessinMenu();
+void dessinMenu(Camera *camera);
 void loadTexture(const char* filename, GLuint textureID[11], int numTexture);
-void dessinActiveMenu(int numMenu);
+void dessinActiveMenu(int numMenu, Camera *camera);
 void drawBackground(Level *level, int levelNumber);
 #endif
