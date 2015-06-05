@@ -13,7 +13,7 @@ bool collisionAvecJoueur(Personnage* persos, int nbJoueurs, AABB boxPerso,  int 
 bool collide(AABB a, AABB b);
 
 
-#define SOLIDE 1		//bloc de type solide
+
 #define END_PERSO_1 -1			//bloc de type fin du jeu
 #define END_PERSO_2 -2
 #define END_PERSO_3 -3

@@ -123,11 +123,6 @@ int main(int argc, char** argv) {
   musicLevel[3] = Mix_LoadMUS("./sounds/level3.mp3");
 
 
-  
-
-
-
-
   while(loop) {
     /* temps au début de la boucle */
     Uint32 startTime = SDL_GetTicks();
@@ -151,7 +146,6 @@ int main(int argc, char** argv) {
       // Gestion des fins de niveaux
       // Vérifie que chaque perso est sur sa case de fin,
       // dans le cas échéant, passe au niveau suivant
-      // FIXME : switch dégueux trouver autre chose (essayé avec un for sur le nombre de perso, marche pas)
       switch(nbrPerso){
         case 1:
         if (persoHandler[0].end)
@@ -263,8 +257,7 @@ int main(int argc, char** argv) {
 
         case SDL_KEYDOWN:
         switch(e.key.keysym.sym){
-          case 'q' : 
-          case SDLK_ESCAPE :
+          case SDLK_ESCAPE : 
           freeLevel(level);
           free(persoHandler);
           for(i =0;i<4;++i)
