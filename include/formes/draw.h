@@ -15,4 +15,5 @@ void dessinMenu(Camera *camera);
 void loadTexture(const char* filename, GLuint textureID[11], int numTexture);
 void dessinActiveMenu(int numMenu, Camera *camera);
 void drawBackground(Level *level, int levelNumber);
+void freeTextures(const GLuint textureID[11]);
 #endif

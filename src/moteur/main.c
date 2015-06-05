@@ -25,7 +25,6 @@ void reshape(int winWidth, int winHeight) {
   glViewport(0, 0, winWidth, winHeight);
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
-  //gluOrtho2D(left,right,top,bot);
   gluOrtho2D(0, WINDOW_WIDTH, WINDOW_HEIGHT, 0);
 }
 
@@ -258,6 +257,7 @@ int main(int argc, char** argv) {
         case SDL_KEYDOWN:
         switch(e.key.keysym.sym){
           case SDLK_ESCAPE : 
+          freeTextures(textureID);
           freeLevel(level);
           free(persoHandler);
           for(i =0;i<4;++i)

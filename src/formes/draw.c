@@ -155,8 +155,6 @@ void loadTexture(const char* filename, GLuint textureID[11], int numTexture){
   glBindTexture(GL_TEXTURE_2D, numTexture);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image->w, image->h, 0, format, GL_UNSIGNED_BYTE, image->pixels);
-  // TODO : Supprimer les texture lors de la fermeture du prog
-  //glDeleteTextures(10, &textureID);
   SDL_FreeSurface(image);
 }
 
@@ -224,4 +222,13 @@ void drawBackground(Level *level, int levelNumber){
 
   glEnd();
   glDisable(GL_TEXTURE_2D);
+}
+
+
+void freeTextures(const GLuint textureID[11]){
+  int i = 0;
+  for (i = 0; i < 10; i++)
+  {
+    glDeleteTextures(i, textureID);
+  }
 }
